@@ -1,7 +1,11 @@
 {
   "extends": ["taro/react"],
   "rules": {
+    "indent": ["error", 2],
+    "semi": ["error", "always"],
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }]
   }
 }
