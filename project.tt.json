@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "vip-mini",
+  "appid": "testAppId",
+  "setting": {
+    "es6": false,
+    "minified": false
+  }
+}
