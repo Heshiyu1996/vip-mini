@@ -1,5 +1,9 @@
 import { Component, PropsWithChildren } from 'react'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
+import User from './components/user';
+import Book from './components/book';
+import Service from './components/service';
+import Facility from './components/facility';
 import './index.less'
 
 export default class Index extends Component<PropsWithChildren> {
@@ -16,8 +20,17 @@ export default class Index extends Component<PropsWithChildren> {
 
   render () {
     return (
-      <View className='index'>
-        <Text>Hello world!</Text>
+      <View className='m-index'>
+        <View className='bg'></View>
+        <View className='u-title'>
+          <View className='cover'></View>
+        </View>
+        
+        <User />
+        <Book />
+        <Service />
+        <Facility />
+
       </View>
     )
   }
