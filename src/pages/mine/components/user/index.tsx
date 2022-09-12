@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { View } from '@tarojs/components';
+import { View, Text } from '@tarojs/components';
 import './index.less';
 
 export default class User extends Component {
@@ -15,7 +15,9 @@ export default class User extends Component {
         </View>
 
         <View className='u-content'>
-          <View className='vip'></View>
+          <View className='vip'>
+            <Text className='link'>查看会员权益</Text>
+          </View>
           <View className='wallet-wrapper'>
             <View className='balance-wrapper'>
               <View className='item'>

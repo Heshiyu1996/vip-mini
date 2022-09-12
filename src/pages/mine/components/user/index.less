@@ -8,7 +8,7 @@
     left: 17px;
     right: 17px;
     height: 94px;
-    background: #FFFFFF;
+    // background: #FFFFFF;
 
     .avatar {
       position: absolute;
@@ -49,19 +49,35 @@
 
   .u-content {
     position: absolute;
-    top: 114px;
+    top: 120px;
     width: 100%;
 
     .vip {
       width: 375px;
       height: 111px;
       margin: 0 auto;
-      background-color: red;
+      background-image: url('https://vip.gdxsjt.com/medias/uploads/null_mp_20220912153728_a45acd.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+
+      .link {
+        position: absolute;
+        top: 50px;
+        left: 34px;
+        opacity: 0.66;
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #000000;
+        letter-spacing: 0.93px;
+        font-weight: 400;
+      }
     }
 
     .wallet-wrapper {
       height: 242px;
       padding: 0 28px;
+      margin-top: -30px;
       background: #FFFFFF;
       box-shadow: 0 -2px 4px -2px rgba(0,0,0,0.50);
       border-radius: 14px;
@@ -120,11 +136,25 @@
               width: 40px;
               height: 40px;
               margin: 0 auto;
-              // background-image: url();
-              background-color: red;
               background-position: center;
               background-repeat: no-repeat;
               background-size: 100% 100%;
+
+              &.recharge {
+                background-image: url('https://vip.gdxsjt.com/medias/uploads/null_mp_20220912153520_ccce25.svg');
+              }
+
+              &.recharge-list {
+                background-image: url('https://vip.gdxsjt.com/medias/uploads/null_mp_20220912153604_65e183.svg');
+              }
+
+              &.consumption-list {
+                background-image: url('https://vip.gdxsjt.com/medias/uploads/null_mp_20220912153630_2d1a38.svg');
+              }
+
+              &.contract {
+                background-image: url('https://vip.gdxsjt.com/medias/uploads/null_mp_20220912153649_3e2ca6.svg');
+              }
             }
 
             .label {
