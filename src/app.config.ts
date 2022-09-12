@@ -7,6 +7,7 @@ export default defineAppConfig({
     'pages/order/index',
     'pages/mine/index',
     'pages/balance-record/index',
+    'pages/vip-instruction/index',
   ],
   window: {
     backgroundTextStyle: 'light',
