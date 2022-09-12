@@ -6,6 +6,7 @@ export default defineAppConfig({
     'pages/book-detail/index',
     'pages/order/index',
     'pages/mine/index',
+    'pages/balance-record/index',
   ],
   window: {
     backgroundTextStyle: 'light',
