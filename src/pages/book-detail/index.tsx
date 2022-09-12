@@ -1,4 +1,5 @@
-import { View, Text } from '@tarojs/components';
+import { View, Text, Form, Switch, Input } from '@tarojs/components';
+
 import './index.less';
 
 const PageBookDetail = () => {
@@ -34,7 +35,22 @@ const PageBookDetail = () => {
       <View className='card form-wrapper'>
         <View className='title'>入住信息</View>
         <View className='content'>
-          <View></View>
+          <View className='item'>
+            <Text className='label'>房间数</Text>
+            <Input className='value' />
+          </View>
+          <View className='item'>
+            <Text className='label'>入住人</Text>
+            <Input className='value' />
+          </View>
+          <View className='item'>
+            <Text className='label'>手机号</Text>
+            <Input className='value' />
+          </View>
+          <View className='item'>
+            <Text className='label'>备注</Text>
+            <Input className='value' />
+          </View>
         </View>
       </View>
 
