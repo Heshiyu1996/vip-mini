@@ -2,6 +2,7 @@ import { View, Text } from '@tarojs/components';
 import { useState } from 'react';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import ReChargeList from './components/recharge-list';
+import ConsumptionList from './components/consumption-list';
 import './index.less';
 
 const tabList = [
@@ -24,7 +25,7 @@ const PageBalanceRecord = () => {
         </AtTabsPane>
 
         <AtTabsPane className='content'  current={current} index={1}>
-          <ReChargeList />
+          <ConsumptionList />
         </AtTabsPane>
       </AtTabs>
     </View>
