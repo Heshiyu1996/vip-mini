@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { AtModal } from "taro-ui"
 import './index.less';
 
@@ -10,12 +11,15 @@ const text = `2022年7月9日更新入住要求:
 5、客人佩戴口罩进入自助餐厅及取餐。`
 
 const ModalPolicyCovid = () => {
+  const [visible, setVisible] = useState(true);
+
   return (
     <AtModal
       className="u-modal-policy-covid"
-      isOpened
+      isOpened={visible}
       title='防疫政策'
       confirmText='我知道了'
+      onConfirm={() => setVisible(false)}
       content={text}
     />
   );
