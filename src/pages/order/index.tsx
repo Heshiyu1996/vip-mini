@@ -1,4 +1,4 @@
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import './index.less';
 
 const PageOrder = () => {

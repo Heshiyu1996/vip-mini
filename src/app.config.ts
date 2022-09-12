@@ -5,6 +5,7 @@ export default defineAppConfig({
     'pages/book/index',
     'pages/book-detail/index',
     'pages/order/index',
+    'pages/mine/index',
   ],
   window: {
     backgroundTextStyle: 'light',
