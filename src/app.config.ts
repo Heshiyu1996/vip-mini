@@ -3,6 +3,7 @@ export default defineAppConfig({
     'pages/index/index',
     'pages/code/index',
     'pages/book/index',
+    'pages/book-detail/index',
   ],
   window: {
     backgroundTextStyle: 'light',

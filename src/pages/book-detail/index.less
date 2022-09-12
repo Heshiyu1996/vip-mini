@@ -1,0 +1,170 @@
+.m-book-detail {
+  min-height: 100vh;
+  background-color: #F7F7F7;
+  padding-bottom: 80px;
+
+  .info-wrapper {
+    padding: 0 17px;
+    background-color: #FFF;
+
+    .item {
+      padding: 10px 0 18px 0;
+      border-bottom: 1px solid #EEEEEE;
+
+      .title {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        color: #000000;
+        letter-spacing: 0.19px;
+        font-weight: 400;
+      }
+  
+      .content {
+        margin-top: 8px;
+        font-size: 10px;
+        color: #AEAEAE;
+        letter-spacing: 0.78px;
+        font-weight: 400;
+      }
+    }
+
+    .basis {
+      .type {
+        opacity: 0.66;
+        font-size: 18px;
+        color: #000000;
+        letter-spacing: 1.4px;
+        font-weight: 400;
+      }
+    
+      .desc {
+        margin-top: 10px;
+        font-size: 10px;
+        color: #AEAEAE;
+        letter-spacing: 0.78px;
+        font-weight: 400;
+      }
+    }
+
+    .facility-extra {
+      .title::before {
+        content: ' ';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        background-image: url('https://vip.gdxsjt.com/medias/uploads/null_mp_20220912135030_acc3e4.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+
+    .policy {
+      .title::before {
+        content: ' ';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        background-image: url('https://vip.gdxsjt.com/medias/uploads/null_mp_20220911172737_d4c76d.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+  }
+
+  .card {
+    margin-top: 18px;
+    padding: 0 18px;
+    background-color: #FFF;
+
+    .title {
+      height: 63px;
+      line-height: 63px;
+      border-bottom: 1px solid #EEEEEE;
+      opacity: 0.66;
+      font-size: 20px;
+      color: #000000;
+      letter-spacing: 1.55px;
+      font-weight: 600;
+    }
+
+    &.gift-wrapper {
+      .content {
+        height: 52px;
+        line-height: 52px;
+        font-size: 10px;
+        color: #AEAEAE;
+        letter-spacing: 0.78px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .bottom-wrapper {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 18px;
+    background-color: #F7F7F7;
+    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.10);
+    box-sizing: border-box;
+
+    .price-wrapper {
+      display: inline-block;
+
+      .label {
+        opacity: 0.66;
+        font-family: PingFangSC-Regular;
+        font-size: 18px;
+        color: #000000;
+        letter-spacing: 1.4px;
+        font-weight: 400;
+      }
+
+      .value {
+        margin-left: 4px;
+        font-family: PingFangSC-Semibold;
+        font-size: 18px;
+        color: #DA4949;
+        letter-spacing: 0.29px;
+        font-weight: 600;
+      }
+    }
+
+    .btn-detail {
+      position: absolute;
+      left: 200px;
+      font-family: PingFangSC-Regular;
+      font-size: 10px;
+      color: #AEAEAE;
+      letter-spacing: 0.78px;
+      font-weight: 400;
+    }
+
+    .btn-submit {
+      position: absolute;
+      right: 14px;
+      bottom: 19px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 146px;
+      height: 43px;
+      background: #3D7DFF;
+      background-image: linear-gradient(135deg, #6C7C89 0%, #152736 100%);
+      border-radius: 21.5px;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.29px;
+      text-align: center;
+      font-weight: 400;
+    }
+  }
+}
