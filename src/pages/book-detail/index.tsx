@@ -1,5 +1,5 @@
-import { View, Text, Form, Switch, Input } from '@tarojs/components';
-
+import { View, Text, Input } from '@tarojs/components';
+import ModalPolicyCovid from './components/policy-covid';
 import './index.less';
 
 const PageBookDetail = () => {
@@ -69,6 +69,8 @@ const PageBookDetail = () => {
         <Text className='btn-detail'>明细</Text>
         <Text className='btn-submit'>提交订单</Text>
       </View>
+
+      <ModalPolicyCovid />
     </View>
   );
 }
