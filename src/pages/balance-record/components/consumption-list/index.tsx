@@ -20,5 +20,5 @@ const ReConsumption = () => {
       </View>
     </View>
   );
-}
+};
 export default ReConsumption;

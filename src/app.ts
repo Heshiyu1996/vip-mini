@@ -1,6 +1,6 @@
-import { Component, PropsWithChildren } from 'react'
+import { Component, PropsWithChildren } from 'react';
 import 'taro-ui/dist/style/index.scss';
-import './app.less'
+import './app.less';
 
 class App extends Component<PropsWithChildren> {
 
@@ -12,8 +12,8 @@ class App extends Component<PropsWithChildren> {
 
   render () {
     // this.props.children 是将要会渲染的页面
-    return this.props.children
+    return this.props.children;
   }
 }
 
-export default App
+export default App;

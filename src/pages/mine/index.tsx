@@ -8,5 +8,5 @@ const PageMine = () => {
       <User />
     </View>
   );
-}
+};
 export default PageMine;

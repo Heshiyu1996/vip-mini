@@ -28,5 +28,5 @@ const PageOrder = () => {
       </View>
     </View>
   );
-}
+};
 export default PageOrder;

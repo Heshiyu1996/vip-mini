@@ -73,5 +73,5 @@ const PageBookDetail = () => {
       <ModalPolicyCovid />
     </View>
   );
-}
+};
 export default PageBookDetail;

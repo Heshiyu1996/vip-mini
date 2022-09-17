@@ -1,6 +1,6 @@
 import { View, Text } from '@tarojs/components';
 import { useState } from 'react';
-import { AtTabs, AtTabsPane } from 'taro-ui'
+import { AtTabs, AtTabsPane } from 'taro-ui';
 import ReChargeList from './components/recharge-list';
 import ConsumptionList from './components/consumption-list';
 import './index.less';
@@ -8,14 +8,14 @@ import './index.less';
 const tabList = [
   { title: '充值' }, 
   { title: '消费' },
-]
+];
 
 const PageBalanceRecord = () => {
   const [current, setCurrent] = useState(0);
 
   const onClick = (val) => {
     setCurrent(val);
-  }
+  };
 
   return (
     <View className='m-balance-record'>
@@ -30,5 +30,5 @@ const PageBalanceRecord = () => {
       </AtTabs>
     </View>
   );
-}
+};
 export default PageBalanceRecord;

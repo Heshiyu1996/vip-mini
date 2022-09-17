@@ -8,6 +8,7 @@ export default defineAppConfig({
     'pages/mine/index',
     'pages/balance-record/index',
     'pages/vip-instruction/index',
+    'pages/hotel-intro/index',
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -15,4 +16,4 @@ export default defineAppConfig({
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black'
   }
-})
+});

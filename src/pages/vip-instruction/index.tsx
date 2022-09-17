@@ -9,5 +9,5 @@ const PageVipInstruction = () => {
       </View>
     </View>
   );
-}
+};
 export default PageVipInstruction;

@@ -21,5 +21,5 @@ const PageBook = () => {
       </View>
     </View>
   );
-}
+};
 export default PageBook;

@@ -20,5 +20,5 @@ const ReChargeList = () => {
       </View>
     </View>
   );
-}
+};
 export default ReChargeList;

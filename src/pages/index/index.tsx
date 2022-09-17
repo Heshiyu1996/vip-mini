@@ -1,10 +1,10 @@
-import { Component, PropsWithChildren } from 'react'
-import { View } from '@tarojs/components'
+import { Component, PropsWithChildren } from 'react';
+import { View } from '@tarojs/components';
 import User from './components/user';
 import Book from './components/book';
 import Service from './components/service';
 import Facility from './components/facility';
-import './index.less'
+import './index.less';
 
 export default class Index extends Component<PropsWithChildren> {
   render () {
@@ -21,6 +21,6 @@ export default class Index extends Component<PropsWithChildren> {
         <Facility />
 
       </View>
-    )
+    );
   }
 }
