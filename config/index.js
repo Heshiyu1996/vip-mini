@@ -1,3 +1,5 @@
+import path from 'path';
+
 const config = {
   projectName: 'vip-mini',
   date: '2022-9-11',
@@ -7,6 +9,9 @@ const config = {
     640: 2.34 / 2,
     750: 1,
     828: 1.81 / 2
+  },
+  alias: {
+    '@': path.resolve(__dirname, '..', 'src')
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
@@ -74,11 +79,11 @@ const config = {
       }
     }
   }
-}
+};
 
 module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
-    return merge({}, config, require('./dev'))
+    return merge({}, config, require('./dev'));
   }
-  return merge({}, config, require('./prod'))
-}
+  return merge({}, config, require('./prod'));
+};

@@ -1,0 +1,24 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/login/input-code/index",
+          "pathName": "pages/login/input-code/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}
