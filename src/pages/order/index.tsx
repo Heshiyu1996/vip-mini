@@ -1,7 +1,16 @@
+import Taro, { useDidShow } from '@tarojs/taro';
 import { View } from '@tarojs/components';
+import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
 const PageOrder = () => {
+  
+  useDidShow(() => {
+    const pageCtx = Taro.getCurrentInstance().page;
+    const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
+    tabbar?.setSelected(3);
+  }, []);
+
   return (
     <View className='m-order'>
       <View className='order-list'>

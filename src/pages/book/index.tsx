@@ -1,7 +1,16 @@
+import Taro, { useDidShow } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
+import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
 const PageBook = () => {
+  
+  useDidShow(() => {
+    const pageCtx = Taro.getCurrentInstance().page;
+    const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
+    tabbar?.setSelected(1);
+  }, []);
+
   return (
     <View className='m-book'>
       <View className='room-list'>
