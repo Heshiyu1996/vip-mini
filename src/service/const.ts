@@ -1,5 +1,5 @@
 
-export const BASE_API = "https://yuheng.gzisv.com";
+export const BASE_API = "https://vip.gdxsjt.com/mp";
 // export const BASE_API = "https://miniprogram.yuhengdaijia.com";
 
 export const HTTP_STATUS = {

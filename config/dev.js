@@ -5,5 +5,15 @@ module.exports = {
   defineConstants: {
   },
   mini: {},
-  h5: {}
-}
+  h5: {
+    devServer: {
+      proxy: {
+        '/api':{
+          target: 'http://vip.gdxsjt.com/mp',
+          changeOrigin: true,
+          secure: false
+        }
+      }
+    }
+  }
+};
