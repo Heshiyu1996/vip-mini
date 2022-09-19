@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { View, Text } from '@tarojs/components';
 import { AtInput, AtButton } from 'taro-ui';
 import { debounce } from '@/utils/tool';
-import { getVerifyCode, checkIfRegistered, login, regist } from '@/service/api/login';
+import { getVerifyCode, getUserInfo, checkIfRegistered, login, regist } from '@/service/api/login';
 
 import './index.less';
 
@@ -71,6 +71,7 @@ export default class PageInputCode extends Component<{}, IState> {
     this.setState({ smsCode: val });
   };
 
+  // 获取验证码
   fetchVerifyCode = debounce(() => {
     const params: IRequestVerifyCodeParams = {
       mobileNumber: this.mobileNumber
@@ -175,7 +176,6 @@ export default class PageInputCode extends Component<{}, IState> {
     });
     // TODO: 登录/注册成功后下发的用户信息
     console.log(result, 123);
-    
   };
 
   render () {
@@ -183,18 +183,11 @@ export default class PageInputCode extends Component<{}, IState> {
 
     return (
       <View className='m-page-input-code'>
-        <View className='header'>
-          <View>请输入验证码</View>
-          <View className='tip'>
-            <Text>已发送至手机：+86 {encryptedMobileNumber}</Text>
-          </View>
-        </View>
-
         <View className='content'>
-          <View className='operation'>
-            <AtButton disabled={countdown !== FULL_TIME} className='u-verify-code' size='small' onClick={this.fetchVerifyCode}>
-              {countdown === FULL_TIME ? '获取验证码' : `${countdown}s后重试`}
-            </AtButton>
+          <View className='header'>
+            <View className='tip'>
+              <Text>已发送至手机：+86 {encryptedMobileNumber}</Text>
+            </View>
           </View>
 
           <AtInput
@@ -207,10 +200,14 @@ export default class PageInputCode extends Component<{}, IState> {
             placeholder='请输入验证码'
             value={smsCode}
             onChange={this.handleChange}
-          />
+          >
+            <AtButton disabled={countdown !== FULL_TIME} className='u-verify-code' size='small' onClick={this.fetchVerifyCode}>
+              {countdown === FULL_TIME ? '获取验证码' : `${countdown}s后重试`}
+            </AtButton>
+          </AtInput>
         </View>
 
-        <AtButton className='u-submit' openType='getUserInfo' type='primary' onClick={this.beforeSubmit} disabled={smsCode.length < MAX_LENGTH} >
+        <AtButton className='u-submit' openType='getUserInfo' type='primary' onClick={this.beforeSubmit} disabled={smsCode.length < MAX_LENGTH}>
             提交
         </AtButton>
       </View>
