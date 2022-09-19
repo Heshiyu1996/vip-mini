@@ -66,28 +66,36 @@
 
   .price-wrapper {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: none;
+    overflow-x: scroll;
+    padding: 0 18px;
     align-items: center;
     height: 77px;
+    margin-top: 10px;
     background-color: #FFF;
 
     .item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 92px;
+      display: inline-block;
+      min-width: 92px;
       height: 30px;
+      line-height: 30px;
+      margin-right: 30px;
       font-family: PingFangSC-Regular;
       font-size: 12px;
       color: #000000;
       letter-spacing: 0.19px;
       font-weight: 400;
+      text-align: center;
       background-color: #EEE;
       transition: all .3s ease;
 
       &.active {
         background: #152736;
         color: #FFFFFF;
+      }
+
+      &:last-child {
+        margin-right: 0;
       }
     }
   }
@@ -100,7 +108,7 @@
     .item {
       display: inline-block;
       margin-top: 26px;
-      width: 84px;
+      min-width: 84px;
       height: 84px;
       margin-right: 54px;
       text-align: center;
@@ -127,6 +135,7 @@
       }
 
       .desc {
+        max-width: 80px;
         opacity: 0.66;
         font-family: PingFangSC-Regular;
         font-size: 14px;
@@ -134,6 +143,9 @@
         letter-spacing: 1.09px;
         text-align: center;
         font-weight: 400;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
     }
   }
