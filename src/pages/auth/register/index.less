@@ -1,20 +1,18 @@
-.m-page-input-code {
+.m-page-register {
   position: relative;
   padding: 50px 20px;
 
-  .header {
-    font-size: 20px;
+  .u-form {
+    .at-input {
+      margin-left: 0;
 
-    .tip {
-      font-size: 12px;
-      margin-top: 3px;
-      color: #ccc;
-    }
-  }
-
-  .content {
-    .tip {
-      vertical-align: middle;
+      &:first-child {
+        border: 0;
+      }
+      
+      .weui-input {
+        font-size: 1.086rem !important;
+      }
     }
 
     .u-verify-code {
@@ -25,27 +23,11 @@
       vertical-align: middle;
       font-size: 14px;
     }
-    
-    .u-input {
-      width: 100%;
-      height: 46px;
-      margin-left: 0;
-
-      .at-input__input {
-        height: 100%;
-      }
-
-      .weui-input {
-        font-size: 24px !important;
-        // letter-spacing: 10px !important;
-      }
-    }
   }
-
 
   .u-submit {
     position: fixed;
-    top: 300px;
+    top: 400px;
     left: 20px;
     right: 20px;
     display: flex;

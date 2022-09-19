@@ -1,194 +1,82 @@
-import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { View, Text } from '@tarojs/components';
-import { AtInput, AtButton } from 'taro-ui';
-import { debounce } from '@/utils/tool';
-import { getVerifyCode, getUserInfo, checkIfRegistered, login, regist } from '@/service/api/login';
+import { View, } from '@tarojs/components';
+import { AtInput, AtButton, AtForm } from 'taro-ui';
+import { 
+  // getVerifyCode, 
+  regist
+} from '@/service/api/login';
 
 import './index.less';
 
 const MAX_LENGTH = 4;
 
 interface IState {
+  nickname: string;
+  idNumber: string;
   smsCode: string;
   countdown: number;
-  encryptedMobileNumber: string;
-}
-interface IRequestVerifyCodeParams {
-  mobileNumber: string;
-  encryptedData?: string;
-  iv?: string;
 }
 
 const FULL_TIME = 4;
 
-export default class PageInputCode extends Component<{}, IState> {
+export default class PageRegister extends Component<{}, IState> {
   constructor(props) {
     super(props);
 
-    const { 
-      // encryptedMobileNumber,
-      mobileNumber, 
-      encryptedData, 
-      iv 
-    } = Taro.getCurrentInstance()?.router?.params || {};
-
     this.state = {
+      nickname: '',
+      idNumber: '',
+
       smsCode: '',
       countdown: FULL_TIME,
-      encryptedMobileNumber: '',
     };
-
-    this.mobileNumber = mobileNumber;
-    this.encryptedData = encryptedData;
-    this.iv = iv;
-    this.timer = null;
   }
 
   componentDidMount() {
-    // this.fetchVerifyCode();
-    // this.setInputMaxlength();
   }
 
-  encryptedMobileNumber: string;
-  timer: NodeJS.Timer;
-  mobileNumber: string;
-  encryptedData: string;
-  iv: string;
-  answer: string;
-
-  // TODO: 逻辑无效？
-  setInputMaxlength = () => {
-    setTimeout(() => {
-      // 兼容TaroUI的Input无法接受maxlength
-      const InputElement = document.getElementById('smsCode');
-      // @ts-ignore
-      InputElement.props.maxlength = MAX_LENGTH;
-    });
+  handleChange = (val, key) =>{
+    this.setState({ [key]: val });
   };
 
-  handleChange = (val) => {
-    this.setState({ smsCode: val });
-  };
-
-  // 获取验证码
-  fetchVerifyCode = debounce(() => {
-    const params: IRequestVerifyCodeParams = {
-      mobileNumber: this.mobileNumber
+  onSubmit = async () => {
+    const { nickname, idNumber } = this.state;
+    const params = {
+      nickname,
+      idNumber
     };
-    // 微信一键授权
-    const byWechatLogin = this.mobileNumber === 'auth';
-    if (byWechatLogin) {
-      this.encryptedData && (params.encryptedData = this.encryptedData);
-      this.iv && (params.iv = this.iv);
+    try {
+      const res = await regist(params);
+      console.log(res, 998);
+            
+    } catch (error) {
+      
     }
-
-    getVerifyCode(params).then(res => {
-      const { mobileNumber: encryptedMobileNumber, validationCode } = res?.data;
-      this.setState({ encryptedMobileNumber });
-      this.answer = validationCode;
-
-      // FIXME: 为了测试，验证码答案公布
-      Taro.showToast({
-        title: validationCode,
-        icon: 'none',
-        duration: 3000
-      });
-    });
-
-    // 启动计时器
-    this.setState(({ countdown: prevCountDown }) => ({ countdown: prevCountDown - 1 }));
-
-    this.timer = setInterval(() => {
-      const { countdown } = this.state;
-      if (countdown <= 0) {
-        clearInterval(this.timer);
-        this.setState({ countdown: FULL_TIME });
-        return;
-      }
-      this.setState(({ countdown: prevCountDown }) => ({ countdown: prevCountDown - 1 }));
-    }, 1000);
-  });
-
-  beforeSubmit = async () => {
-    if (this.answer !== this.state.smsCode) {
-      Taro.showToast({
-        title: '验证码不正确，请重试!',
-        icon: 'none',
-        duration: 2000
-      });
-      return;
-    }
-
-    const response = await checkIfRegistered();
-    const { driver } = response?.data || {};
-    console.log(response, driver);
-    
-    this.submit(driver);
-  };
-
-  submit = (isDriver) => {
-    // 已是司机，直接登录
-    if (isDriver) {
-      login().then(res => {
-        console.log(res, 334);
-
-        Taro.setStorage({
-          key: 'userInfo',
-          data: res.data
-        });
-        Taro.login();
-        
-        this.afterSubmit(res);
-      });
-      return;
-    }
-
-    // 获取用户微信信息
-    Taro.getUserProfile({
-      desc: '用于完善司机资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: ({ userInfo: { nickName, avatarUrl } }) => {
-        // 未注册司机，先注册
-        const params = {
-          nickname: nickName,
-          avatarUrl,
-          // TODO: 跳过司机认证过程，idNumber默认为1996
-          idNumber: 1996
-        };
-        console.log(params, 41);
-        regist(params).then(res => this.afterSubmit(res));
-      },
-      fail: (err) => {
-        console.log(err, 42);
-        Taro.showToast({
-          title: '注册失败，请授权后再试',
-          icon: 'none',
-          duration: 2000
-        });
-      }
-    });
-  };
-
-  afterSubmit = (result) => {
-    // 跳转到登录页
-    Taro.switchTab({
-      url: '/pages/index/index'
-    });
-    // TODO: 登录/注册成功后下发的用户信息
-    console.log(result, 123);
   };
 
   render () {
-    const { encryptedMobileNumber, smsCode, countdown } = this.state;
+    const { nickname, idNumber, smsCode, countdown } = this.state;
 
     return (
-      <View className='m-page-input-code'>
-        <View className='content'>
-          <View className='header'>
-            <View className='tip'>
-              <Text>已发送至手机：+86 {encryptedMobileNumber}</Text>
-            </View>
-          </View>
+      <View className='m-page-register'>
+        <AtForm
+          className='u-form'
+          onSubmit={this.onSubmit}
+        >
+          <AtInput 
+            name='value' 
+            type='text' 
+            placeholder='请输入姓名' 
+            value={nickname} 
+            onChange={(val) => this.handleChange(val, 'nickname')} 
+          />
+          <AtInput 
+            name='value' 
+            type='text' 
+            placeholder='请输入身份证' 
+            value={idNumber} 
+            onChange={(val) => this.handleChange(val, 'idNumber')} 
+          />
 
           <AtInput
             focus
@@ -199,17 +87,22 @@ export default class PageInputCode extends Component<{}, IState> {
             type='phone'
             placeholder='请输入验证码'
             value={smsCode}
-            onChange={this.handleChange}
+            onChange={(val) => this.handleChange(val, 'smsCode')} 
           >
-            <AtButton disabled={countdown !== FULL_TIME} className='u-verify-code' size='small' onClick={this.fetchVerifyCode}>
-              {countdown === FULL_TIME ? '获取验证码' : `${countdown}s后重试`}
+            <AtButton className='u-verify-code' size='small'>
+              获取验证码
             </AtButton>
+            {/* <AtButton disabled={countdown !== FULL_TIME} className='u-verify-code' size='small' onClick={this.fetchVerifyCode}>
+              {countdown === FULL_TIME ? '获取验证码' : `${countdown}s后重试`}
+            </AtButton> */}
           </AtInput>
-        </View>
-
-        <AtButton className='u-submit' openType='getUserInfo' type='primary' onClick={this.beforeSubmit} disabled={smsCode.length < MAX_LENGTH}>
+          <AtButton className='u-submit' formType='submit' type='primary'>
             提交
-        </AtButton>
+          </AtButton>
+          {/* <AtButton className='u-submit' formType='submit' type='primary' onClick={this.beforeSubmit} disabled={smsCode.length < MAX_LENGTH}>
+            提交
+          </AtButton> */}
+        </AtForm>
       </View>
     );
   }
