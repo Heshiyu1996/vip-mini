@@ -1,0 +1,94 @@
+.m-page-recharge {
+  height: 100vh;
+  background-color: #F7F7F7;
+
+  .title {
+    position: absolute;
+    z-index: 1;
+    top: 18px;
+    width: 100%;
+    text-align: center;
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #000000;
+    letter-spacing: 1.24px;
+    font-weight: 400;
+  }
+
+  .u-balance {
+    position: relative;
+    height: 155px;
+    padding: 65px 16px;
+    background-color: #FFF;
+    box-sizing: border-box;
+
+    .label {
+      position: absolute;
+      top: 65px;
+      font-family: PingFangSC-Regular;
+      font-size: 12px;
+      color: #000000;
+      letter-spacing: 0.19px;
+      font-weight: 400;
+    }
+
+    .value {
+      position: absolute;
+      top: 91px;
+      font-family: PingFangSC-Regular;
+      font-size: 24px;
+      color: #000000;
+      letter-spacing: 0.39px;
+      font-weight: 400;
+
+      &::after {
+        content: ' 元';
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #000000;
+        letter-spacing: 0.19px;
+        font-weight: 400;
+      }
+    }
+
+    .btn-history {
+      position: absolute;
+      right: 18px;
+      bottom: 20px;
+      font-family: PingFangSC-Regular;
+      font-size: 12px;
+      color: #AEAEAE;
+      letter-spacing: 0.19px;
+      text-align: center;
+      font-weight: 400;
+    }
+  }
+
+  .price-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 77px;
+    background-color: #FFF;
+
+    .item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 92px;
+      height: 30px;
+      font-family: PingFangSC-Regular;
+      font-size: 12px;
+      color: #000000;
+      letter-spacing: 0.19px;
+      font-weight: 400;
+      background-color: #EEE;
+      transition: all .3s ease;
+
+      &.active {
+        background: #152736;
+        color: #FFFFFF;
+      }
+    }
+  }
+}

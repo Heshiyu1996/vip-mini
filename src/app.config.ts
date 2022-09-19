@@ -9,6 +9,7 @@ export default defineAppConfig({
     'pages/book-detail/index',
     'pages/order/index',
     'pages/mine/index',
+    'pages/recharge/index',
     'pages/balance-record/index',
     'pages/vip-instruction/index',
     'pages/hotel-intro/index',
