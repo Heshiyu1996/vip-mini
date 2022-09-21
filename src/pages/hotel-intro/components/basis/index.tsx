@@ -1,9 +1,16 @@
 import { View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import './index.less';
 
 const Basis = () => {
   const goMap = () => {
     window.open('https://surl.amap.com/2VnasEaYe29');
+  };
+
+  const doCall = () => {
+    Taro.makePhoneCall({
+      phoneNumber: '1340000' //仅为示例，并非真实的电话号码
+    });
   };
 
   return (
@@ -15,7 +22,7 @@ const Basis = () => {
           <View className='icon map'></View>
           <View>地图</View>
         </View>
-        <View className='btn btn-phone'>
+        <View className='btn btn-phone' onClick={doCall}>
           <View className='icon phone'></View>
           <View>电话</View>
         </View>
