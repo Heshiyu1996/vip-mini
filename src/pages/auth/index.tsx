@@ -1,21 +1,21 @@
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { View, Text, Button } from '@tarojs/components';
-import { getUserSession } from '@/service';
+import { View, Button } from '@tarojs/components';
+import { getUserSession, checkIfRegistered, associateUserSession } from '@/service';
 import { wxGetLoginCode } from '@/utils/wx-tool';
 
 import './index.less';
 
 export default class Login extends Component {
   componentDidMount () {
-    // this.initCode();
+    // 更新 userSession
+    this.initCode();
   }
 
   initCode = async () => {
     const code = await wxGetLoginCode();
 
-    getUserSession({ code }).then(({ data }) => {
-      console.log(data, 123);
+    getUserSession({ code }).then((data) => {
       // 更新userSession
       Taro.setStorage({
         key: 'userSession',
@@ -39,8 +39,25 @@ export default class Login extends Component {
     }
     
     const { encryptedData, iv } = ev?.detail;
-    // 跳转验证码页
-    Taro.navigateTo({ url: `/pages/login/input-code/index?mobileNumber=auth&encryptedData=${encryptedData}&iv=${iv}` });
+    const params = {
+      encryptedData,
+      iv,
+    };
+
+    // 获得用户手机号(用于关联sesssion)
+    await associateUserSession(params);
+
+    // 判断是否已注册
+    const res = await checkIfRegistered();
+    const alreadyRegistered = res;
+    
+    if (alreadyRegistered) {
+      // 跳转登录页
+      Taro.navigateTo({ url: `/pages/auth/login/index` });
+    } else {
+      // 跳转注册页
+      Taro.navigateTo({ url: `/pages/auth/register/index` });
+    }
   };
 
   render () {
@@ -57,11 +74,6 @@ export default class Login extends Component {
         <View className='u-operation'>
           {/* 微信用户一键登录 */}
           <Button className='u-wx-login' openType='getPhoneNumber' onGetPhoneNumber={this.fetUserMobileNumber} plain />
-          {/* <Button className='u-wx-login' openType='getPhoneNumber' onClick={this.fetUserMobileNumber} plain /> */}
-
-          {/* <View className='u-phone-login' onClick={() => Taro.navigateTo({ url: '/pages/login/input-phone/index' })}>
-            <Text>输入手机号码登录/注册</Text>
-          </View> */}
         </View>
       </View>
     );

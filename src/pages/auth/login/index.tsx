@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { View, Text } from '@tarojs/components';
 import { AtInput, AtButton } from 'taro-ui';
 import { debounce } from '@/utils/tool';
-import { getVerifyCode, getUserInfo, checkIfRegistered, login, regist } from '@/service/api/login';
+import { getVerifyCode, checkIfRegistered, login, regist } from '@/service/api/login';
 
 import './index.less';
 
@@ -14,11 +14,6 @@ interface IState {
   countdown: number;
   encryptedMobileNumber: string;
 }
-interface IRequestVerifyCodeParams {
-  mobileNumber: string;
-  encryptedData?: string;
-  iv?: string;
-}
 
 const FULL_TIME = 4;
 
@@ -26,35 +21,22 @@ export default class PageInputCode extends Component<{}, IState> {
   constructor(props) {
     super(props);
 
-    const { 
-      // encryptedMobileNumber,
-      mobileNumber, 
-      encryptedData, 
-      iv 
-    } = Taro.getCurrentInstance()?.router?.params || {};
-
     this.state = {
       smsCode: '',
       countdown: FULL_TIME,
       encryptedMobileNumber: '',
     };
 
-    this.mobileNumber = mobileNumber;
-    this.encryptedData = encryptedData;
-    this.iv = iv;
     this.timer = null;
   }
 
   componentDidMount() {
-    // this.fetchVerifyCode();
+    this.fetchVerifyCode();
     // this.setInputMaxlength();
   }
 
   encryptedMobileNumber: string;
   timer: NodeJS.Timer;
-  mobileNumber: string;
-  encryptedData: string;
-  iv: string;
   answer: string;
 
   // TODO: 逻辑无效？
@@ -73,18 +55,10 @@ export default class PageInputCode extends Component<{}, IState> {
 
   // 获取验证码
   fetchVerifyCode = debounce(() => {
-    const params: IRequestVerifyCodeParams = {
-      mobileNumber: this.mobileNumber
-    };
-    // 微信一键授权
-    const byWechatLogin = this.mobileNumber === 'auth';
-    if (byWechatLogin) {
-      this.encryptedData && (params.encryptedData = this.encryptedData);
-      this.iv && (params.iv = this.iv);
-    }
-
-    getVerifyCode(params).then(res => {
+    // 获取验证码
+    getVerifyCode().then(res => {
       const { mobileNumber: encryptedMobileNumber, validationCode } = res?.data;
+      // 服务端下发的加密手机号
       this.setState({ encryptedMobileNumber });
       this.answer = validationCode;
 
@@ -131,8 +105,6 @@ export default class PageInputCode extends Component<{}, IState> {
     // 已是司机，直接登录
     if (isDriver) {
       login().then(res => {
-        console.log(res, 334);
-
         Taro.setStorage({
           key: 'userInfo',
           data: res.data

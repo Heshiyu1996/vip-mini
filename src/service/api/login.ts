@@ -4,10 +4,13 @@ import { get, post } from '@/service/http';
 export const checkIfRegistered = () => get('/api/user/isRegistered');
 
 // 获取验证码
-export const getVerifyCode = (params) => get(`/api/user/${params.mobileNumber}/smsCode`, params);
+export const getVerifyCode = () => get(`/api/user/smsCode`, );
 
 // 获取userSession
 export const getUserSession = (params) => get(`/api/user/session/${params.code}`, params);
+
+// 获得用户手机号(用于关联sesssion)
+export const associateUserSession = (params) => get('/api/user/mobileNumber', params);
 
 // 登录（服务端）
 export const login = (params?) => get(`/api/user/login`, params);
