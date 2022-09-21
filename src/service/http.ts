@@ -1,10 +1,10 @@
 import Taro from '@tarojs/taro';
 
 import { IHttpMethod } from './interface';
-import { BASE_API, HTTP_STATUS, ERROR_TYPE_CODE } from './const';
+import { 
+  // BASE_API, 
+  HTTP_STATUS, ERROR_TYPE_CODE } from './const';
 import { logError } from './utils';
-
-const token = '123';
 
 // 参考：https://segmentfault.com/a/1190000016533592
 const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
@@ -19,25 +19,22 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
 
   const option = {
     isShowLoading: false,
-    url: BASE_API + url,
+    // url: BASE_API + url,
+    url,
     data: data,
     method: method,
     header: { 
       'content-type': contentType,
-      'token': token,
       userSession: Taro.getStorageSync('userSession'),
-      'yuheng-application-via': 'driver'
     },
     success(res) {
-      console.log(res, 66);
-      
       // TODO: 后期需增加：登录态判断
       if (res.data?.code === HTTP_STATUS.NOT_FOUND) {
-        return logError('api', '请求资源不存在');
+        throw logError('api', '请求资源不存在');
       } else if (res.data?.code === HTTP_STATUS.BAD_GATEWAY) {
-        return logError('api', '服务端出现了问题');
+        throw logError('api', '服务端出现了问题');
       } else if (res.data?.code === HTTP_STATUS.FORBIDDEN) {
-        return logError('api', '没有权限访问');
+        throw logError('api', '没有权限访问');
       } else if (res.data?.code === HTTP_STATUS.SUCCESS) {
         return res.data;
       }
@@ -46,6 +43,7 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
       logError('api', '请求接口出现问题', e);
     }
   };
+  
   // 直接返回res.data
   return Taro.request(option)
     .then(res => {
@@ -68,7 +66,8 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
         }
         throw res?.data;
       }
-      return res?.data;
+      // 直接返回data
+      return res?.data?.data;
     });
 };
 

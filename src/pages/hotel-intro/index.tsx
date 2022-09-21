@@ -3,17 +3,15 @@ import { View } from '@tarojs/components';
 import { getStoreList } from '@/service/api/hotel-intro';
 import Basis from './components/basis';
 import Video from './components/video';
-import Picture from './components/picture';
-import Merchant from './components/merchant';
-import Information from './components/information';
+import IntroItem from './components/intro-item';
 import './index.less';
 
 const HotelInfo = () =>  {
-  const [info, setInfo] = useState({});
+  const [info, setInfo] = useState([]);
 
   const fetchStoreList = async () => {
     const res = await getStoreList();
-    console.log(res, 444);
+    setInfo(res);
   };
   useEffect(() => {
     fetchStoreList();
@@ -30,13 +28,9 @@ const HotelInfo = () =>  {
       <Basis />
       {/* 酒店视频 */}
       <Video />
-      {/* 酒店图片 */}
-      <Picture />
-      {/* 酒店资质 */}
-      <Merchant />
-      {/* 商户信息 */}
-      <Information />
-
+      {
+        info?.map((item) => <IntroItem data={item} />)
+      }
     </View>
   );
 };
