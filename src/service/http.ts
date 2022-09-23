@@ -81,8 +81,14 @@ export const post = (url, data = '', contentType?) => {
   return baseOptions(params, 'POST');
 };
 
+export const deleteRequest = (url, data = '', contentType?) => {
+  let params = { url, data, contentType };
+  return baseOptions(params, 'DELETE');
+};
+
 
 export default {
   get,
-  post
+  post,
+  deleteRequest
 };

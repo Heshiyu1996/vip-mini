@@ -1,5 +1,5 @@
 .m-order {
-  height: 100vh;
+  min-height: 100vh;
   padding: 16px;
   background: #F7F7F7;
 
@@ -46,6 +46,10 @@
           color: #000000;
           letter-spacing: 1.4px;
           font-weight: 400;
+          max-width: 130px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .desc {
@@ -66,6 +70,10 @@
           letter-spacing: 0.78px;
           text-align: right;
           font-weight: 400;
+          max-width: 80px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .price {
@@ -102,5 +110,12 @@
         }
       }
     }
+  }
+
+  .tip {
+    margin: 40px 0;
+    color: #999;
+    font-size: 16px;
+    text-align: center;
   }
 }
