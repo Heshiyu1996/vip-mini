@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useReachBottom } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { getRechargeList } from '@/service/api/recharge';
+import Empty from '@/components/empty';
 import { RechargeChannelMap } from '../../type';
 import './index.less';
 
@@ -42,18 +43,23 @@ const RechargeList = () => {
   return (
     <View className='u-recharge-list'>
       {
-        list?.map((item) => 
-          <View key={item.id} className='item'>
-            <View className='channel'>{RechargeChannelMap[item.channel]}消费</View>
-            <View className='time'>{item.createTime || '-'}</View>
-            <View className='price'>
-              {item.amount}
-            </View>
-          </View>)
-      }
-      {hasMore ? 
-        <View className='tip' onClick={() => fetchRechargeList()}>加载更多</View> : 
-        <View className='tip'>没有更多了</View>
+        list?.length ?
+          <View>
+            {list?.map((item) => 
+              <View key={item.id} className='item'>
+                <View className='channel'>{RechargeChannelMap[item.channel]}充值</View>
+                <View className='time'>{item.createTime || '-'}</View>
+                <View className='price'>
+                  {item.amount}
+                </View>
+              </View>)}
+            {hasMore ? 
+              <View className='tip' onClick={() => fetchRechargeList()}>加载更多</View> : 
+              <View className='tip'>没有更多了</View>
+            }
+          </View>
+          : 
+          <Empty className='empty-wrapper' />
       }
     </View>
   );

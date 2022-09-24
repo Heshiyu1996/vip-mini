@@ -32,7 +32,7 @@ const User = () => {
         <View className='wallet-wrapper'>
           <View className='balance-wrapper'>
             <View className='item'>
-              <View className='value'>{formatPrice(userInfo.totalBalance)}</View>
+              <View className='value'>{formatPrice(userInfo.totalBalance || '-')}</View>
               <View className='label'>余额</View>
             </View>
             <View className='item'>

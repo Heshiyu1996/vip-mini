@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useReachBottom } from '@tarojs/taro';
 import { getConsumptionList } from '@/service/api/recharge';
 import { View } from '@tarojs/components';
+import Empty from '@/components/empty';
 import { RechargeChannelMap } from '../../type';
 import './index.less';
 
@@ -39,31 +40,27 @@ const ConsumptionList = () => {
     return list?.length < refTotal.current;
   }, [list, refTotal.current]);
 
-
   return (
     <View className='u-consumption-list'>
       {
-        list?.map((item) => 
-          <View key={item.id} className='item'>
-            <View className='channel'>{RechargeChannelMap[item.channel]}充值</View>
-            <View className='time'>{item.createTime || '-'}</View>
-            <View className='price'>
-              {item.amount}
-            </View>
-          </View>)
+        list?.length ?
+          <View>
+            {list?.map((item) => 
+              <View key={item.id} className='item'>
+                <View className='channel'>{RechargeChannelMap[item.channel]}消费</View>
+                <View className='time'>{item.createTime || '-'}</View>
+                <View className='price'>
+                  {item.amount}
+                </View>
+              </View>)}
+            {hasMore ? 
+              <View className='tip' onClick={() => fetchConsumptionList()}>加载更多</View> : 
+              <View className='tip'>没有更多了</View>
+            }
+          </View>
+          : 
+          <Empty className='empty-wrapper' />
       }
-      {hasMore ? 
-        <View className='tip' onClick={() => fetchConsumptionList()}>加载更多</View> : 
-        <View className='tip'>没有更多了</View>
-      }
-      
-      {/* <View className='item'>
-        <View className='channel'>微信充值</View>
-        <View className='time'>2022.05.21 10:51:38</View>
-        <View className='price'>
-          949 元
-        </View>
-      </View> */}
     </View>
   );
 };

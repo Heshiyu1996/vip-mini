@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import Taro, { useDidShow, useReachBottom } from '@tarojs/taro';
-import { View } from '@tarojs/components';
+import { View, Image } from '@tarojs/components';
 import { getOrderList, deleteOrder } from '@/service/api/order';
 import Empty from '@/components/empty';
 import type CustomTabBar from '../../custom-tab-bar';
@@ -37,12 +37,14 @@ const PageOrder = () => {
   const removeOrder = async (id) => {
     try {
       const res = await deleteOrder({ id });
-      Taro.showToast({
-        title: '删除成功',
-        icon: 'success',
-        duration: 2000
-      });
-      fetchOrderList();
+      if (res) {
+        Taro.showToast({
+          title: '删除成功',
+          icon: 'success',
+          duration: 2000
+        });
+        fetchOrderList();
+      }
     } catch (error) {
       console.log(error, 4123);
     }
@@ -69,7 +71,7 @@ const PageOrder = () => {
             <View>
               {list?.map((item) => 
                 <View key={item.id} className='item'>
-                  <View className='img' />
+                  <Image className='img' src={item.coverImage} />
                   <View className='info'>
                     <View className='type'>{item.roomType}</View>
                     <View className='desc'>
