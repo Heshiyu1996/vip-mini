@@ -17,10 +17,7 @@ export default class Login extends Component {
 
     getUserSession({ code }).then((data) => {
       // 更新userSession
-      Taro.setStorage({
-        key: 'userSession',
-        data
-      });
+      Taro.setStorageSync('userSession', data);
     });
   };
 

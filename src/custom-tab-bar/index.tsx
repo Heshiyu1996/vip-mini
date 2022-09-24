@@ -47,7 +47,7 @@ export default class CustomTabbar extends Component {
   };
 
   switchTab(index, url) {
-    this.setSelected(index);
+    // this.setSelected(index);
     Taro.switchTab({ url });
   }
 
