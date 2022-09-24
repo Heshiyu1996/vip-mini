@@ -41,7 +41,7 @@ export default class User extends Component {
                   <View className='icon recharge-list'></View>
                   <View className='label'>充值记录</View>
                 </View>
-                <View className='btn' onClick={() => Taro.navigateTo({ url: `pages/balance-record/index` })}>
+                <View className='btn' onClick={() => Taro.navigateTo({ url: `pages/balance-record/index?type=1` })}>
                   <View className='icon consumption-list'></View>
                   <View className='label'>消费记录</View>
                 </View>

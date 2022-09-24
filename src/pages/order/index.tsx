@@ -2,17 +2,10 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 import Taro, { useDidShow, useReachBottom } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { getOrderList, deleteOrder } from '@/service/api/order';
-// import type CustomTabBar from '../../custom-tab-bar';
+import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
 const PageOrder = () => {
-  
-  useDidShow(() => {
-    const pageCtx = Taro.getCurrentInstance().page;
-    const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
-    tabbar?.setSelected(3);
-  }, []);
-
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
   const refTotal = useRef(1);
@@ -36,6 +29,10 @@ const PageOrder = () => {
     fetchOrderList(true);
   }, []);
 
+  const hasMore = useMemo(() => {
+    return list?.length < refTotal.current;
+  }, [list, refTotal.current]);
+
   const removeOrder = async (id) => {
     try {
       const res = await deleteOrder({ id });
@@ -50,16 +47,18 @@ const PageOrder = () => {
     }
   };
 
-  const hasMore = useMemo(() => {
-    return list?.length < refTotal.current;
-  }, [list, refTotal.current]);
-
   useReachBottom(() => {
     // 是否还可加载
     if (hasMore) {
       fetchOrderList();
     }
   });
+  
+  useDidShow(() => {
+    const pageCtx = Taro.getCurrentInstance().page;
+    const tabbar = Taro.getTabBar<CustomTabBar>?.(pageCtx);
+    tabbar?.setSelected(3);
+  }, []);
 
   return (
     <View className='m-order'>

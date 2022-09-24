@@ -1,4 +1,5 @@
-import { View, Text } from '@tarojs/components';
+import { getCurrentInstance } from '@tarojs/taro';
+import { View } from '@tarojs/components';
 import { useState } from 'react';
 import { AtTabs, AtTabsPane } from 'taro-ui';
 import ReChargeList from './components/recharge-list';
@@ -11,7 +12,8 @@ const tabList = [
 ];
 
 const PageBalanceRecord = () => {
-  const [current, setCurrent] = useState(0);
+  const defaultCurrent = getCurrentInstance().router.params?.type || 0;
+  const [current, setCurrent] = useState(Number(defaultCurrent));
 
   const onClick = (val) => {
     setCurrent(val);
