@@ -5,12 +5,11 @@ import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
 const PageMine = () => {
-  
   useDidShow(() => {
     const pageCtx = Taro.getCurrentInstance().page;
     const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
     tabbar?.setSelected(4);
-  }, []);
+  });
 
   return (
     <View className='m-mine'>

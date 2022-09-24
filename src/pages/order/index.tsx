@@ -59,9 +59,9 @@ const PageOrder = () => {
   
   useDidShow(() => {
     const pageCtx = Taro.getCurrentInstance().page;
-    const tabbar = Taro.getTabBar<CustomTabBar>?.(pageCtx);
+    const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
     tabbar?.setSelected(3);
-  }, []);
+  });
 
   return (
     <View className='m-order'>
@@ -75,21 +75,22 @@ const PageOrder = () => {
                   <View className='info'>
                     <View className='type'>{item.roomType}</View>
                     <View className='desc'>
-                      <View>到店日期: {item.orderStartDate}</View>
-                      <View>离店日期: {item.orderEndDate}</View>
+                      <View>到店: {item.orderStartDate}</View>
+                      <View>离店: {item.orderEndDate}</View>
                     </View>
                     <View className='status'>{item.orderStatus}</View>
-                    <View className='price'>949</View>
+                    <View className='price'>{item.totalPrice}</View>
                     <View className='btn-delete' onClick={() => removeOrder(item.id)}>删除</View>
                   </View>
-                  {hasMore ? 
-                    <View className='tip' onClick={() => fetchOrderList()}>加载更多</View> : 
-                    <View className='tip'>没有更多了</View>
-                  }
                 </View>)}
+
+              {hasMore ? 
+                <View className='tip' onClick={() => fetchOrderList()}>加载更多</View> : 
+                <View className='tip'>没有更多了</View>
+              }
             </View>
             :
-            <Empty />
+            <Empty className='empty-wrapper' />
         }
       </View>
     </View>

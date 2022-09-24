@@ -11,7 +11,7 @@ const Index = () => {
   
   useDidShow (() => {
     const pageCtx = Taro.getCurrentInstance().page;
-    const tabbar = Taro.getTabBar<CustomTabBar>?.(this.pageCtx);
+    const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
     tabbar?.setSelected(0);
   }); 
 

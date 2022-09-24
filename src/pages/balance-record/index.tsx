@@ -1,4 +1,4 @@
-import { getCurrentInstance } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { useState } from 'react';
 import { AtTabs, AtTabsPane } from 'taro-ui';
@@ -12,7 +12,7 @@ const tabList = [
 ];
 
 const PageBalanceRecord = () => {
-  const defaultCurrent = getCurrentInstance().router.params?.type || 0;
+  const defaultCurrent = Taro.getCurrentInstance().router.params?.type || 0;
   const [current, setCurrent] = useState(Number(defaultCurrent));
 
   const onClick = (val) => {

@@ -36,9 +36,9 @@ const PageBook = () => {
   
   useDidShow(() => {
     const pageCtx = Taro.getCurrentInstance().page;
-    const tabbar = Taro.getTabBar<CustomTabBar>?.(pageCtx);
+    const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
     tabbar?.setSelected(1);
-  }, []);
+  });
 
   return (
     <View className='m-book'>
