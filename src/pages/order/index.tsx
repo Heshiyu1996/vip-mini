@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 import Taro, { useDidShow, useReachBottom } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { getOrderList, deleteOrder } from '@/service/api/order';
+import Empty from '@/components/empty';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
@@ -64,24 +65,29 @@ const PageOrder = () => {
     <View className='m-order'>
       <View className='order-list'>
         {
-          list?.map((item) => 
-            <View key={item.id} className='item'>
-              <View className='img' />
-              <View className='info'>
-                <View className='type'>{item.roomType}</View>
-                <View className='desc'>
-                  <View>到店日期: {item.orderStartDate}</View>
-                  <View>离店日期: {item.orderEndDate}</View>
-                </View>
-                <View className='status'>{item.orderStatus}</View>
-                <View className='price'>949</View>
-                <View className='btn-delete' onClick={() => removeOrder(item.id)}>删除</View>
-              </View>
-            </View>)
-        }
-        {hasMore ? 
-          <View className='tip' onClick={() => fetchOrderList()}>加载更多</View> : 
-          <View className='tip'>没有更多了</View>
+          list?.length ?
+            <View>
+              {list?.map((item) => 
+                <View key={item.id} className='item'>
+                  <View className='img' />
+                  <View className='info'>
+                    <View className='type'>{item.roomType}</View>
+                    <View className='desc'>
+                      <View>到店日期: {item.orderStartDate}</View>
+                      <View>离店日期: {item.orderEndDate}</View>
+                    </View>
+                    <View className='status'>{item.orderStatus}</View>
+                    <View className='price'>949</View>
+                    <View className='btn-delete' onClick={() => removeOrder(item.id)}>删除</View>
+                  </View>
+                  {hasMore ? 
+                    <View className='tip' onClick={() => fetchOrderList()}>加载更多</View> : 
+                    <View className='tip'>没有更多了</View>
+                  }
+                </View>)}
+            </View>
+            :
+            <Empty />
         }
       </View>
     </View>

@@ -25,14 +25,10 @@ const User = () => {
         <View className='cover'></View>
       </View>
       <View className='u-user'>
-        {/* 真实环境 */}
-        {/* <AtAvatar className='avatar' size='large' circle openData={{ type: 'userAvatarUrl' }}></AtAvatar>
-          <OpenData className='nickname' type='userNickName' /> */}
         <Image className='avatar mock' src={userInfo.avatarUrl || defaultAvatarUrl}></Image>
         <View className='nickname mock'>{userInfo.ownerName}</View>
         <View className='greeting'>
-            下午好，尊贵的{userInfo.currentLevel}会员
-          {/* <AtIcon className='icon-right' value='chevron-right' size='8'></AtIcon> */}
+            下午好，尊贵的{userInfo.currentLevel}
         </View>
       </View>
     </View>
