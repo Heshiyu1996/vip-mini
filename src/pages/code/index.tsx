@@ -4,8 +4,6 @@ import { QRCode } from 'taro-code';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
-const URL = window.location.href;
-
 const PageCode = () => {
   
   useDidShow(() => {
@@ -20,14 +18,14 @@ const PageCode = () => {
       <View className='code-wrapper'>
         <View className='logo'></View>
         <View className='qrcode'>
-          { URL ? <QRCode
+          <QRCode
             // TODO: 会员ID
             text='1'
             size={200}
             scale={4}
             errorCorrectLevel='M'
             typeNumber={2}
-          /> : null }
+          />
         </View>
         <View className='tip'>会员码每 30 秒自动更新</View>
 
