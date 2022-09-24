@@ -3,7 +3,8 @@ import { View, Text } from '@tarojs/components';
 import { AtInput, AtButton } from 'taro-ui';
 import { 
   getVerifyCode, 
-  regist
+  regist,
+  login
 } from '@/service/api/login';
 import { debounce, isName, isIdCard } from '@/utils/tool';
 import Taro from '@tarojs/taro';
@@ -99,7 +100,8 @@ const PageRegister = () => {
               icon: 'none',
               duration: 2000
             });
-            Taro.switchTab({ url: '/pages/index/index' });
+            // 调用登录后进入首页
+            login().then(() => Taro.switchTab({ url: '/pages/index/index' }));
           }
         } catch (error) {
           // 已注册，跳转到登录页
