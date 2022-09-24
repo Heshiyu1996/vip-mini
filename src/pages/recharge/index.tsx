@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { useState, useEffect, useMemo } from 'react';
 import { View, Text } from '@tarojs/components';
-import { getVipList, getUserInfo } from '@/service';
+import { getVipList, getUserInfo, recharge } from '@/service';
 import './index.less';
 
 const PageRecharge = () => {
@@ -45,6 +45,14 @@ const PageRecharge = () => {
   useEffect(() => {
     fetchUserInfo();
   }, []);
+
+  // 充值
+  const submit = async () => {
+    const params = {};
+    const res = await recharge(params);
+    console.log(res, vipConfig.find((item) => item.id === selected), 132132);
+    
+  };
 
   return (
     <View className='m-page-recharge'>
@@ -110,7 +118,7 @@ const PageRecharge = () => {
       </View>
 
       <View className='footer'>
-        <View className='btn-recharge'>立即充值</View>
+        <View className='btn-recharge' onClick={submit}>立即充值</View>
 
         <View className='notice'>
           <View>说明:</View>
