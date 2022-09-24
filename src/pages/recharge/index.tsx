@@ -17,7 +17,7 @@ const PageRecharge = () => {
   const fetchVipConfigList = async () => {
     try {
       const res = await getVipList();
-      setVipConfigList(res?.data?.list);
+      setVipConfigList(res);
     } catch (error) {
       
     }
@@ -26,6 +26,14 @@ const PageRecharge = () => {
   useEffect(() => {
     fetchVipConfigList();
   }, []);
+
+  useEffect(() => {
+    if (!vipConfig?.length) return;
+
+    // 默认选中第一个
+    const defaultItem = vipConfig?.[0];
+    setSelected(defaultItem?.id);
+  }, [vipConfig]);
 
   return (
     <View className='m-page-recharge'>
@@ -36,50 +44,57 @@ const PageRecharge = () => {
         <Text className='btn-history' onClick={() => Taro.navigateTo({ url: `/pages/balance-record/index` })}>充值历史</Text>
       </View>
 
-      <View className='price-wrapper'>
-        {
-          vipConfig?.map((item) => 
-            <View 
-              key={item.id} 
-              className={`item ${selected === item.id ? 'active' : ''}`}
-              onClick={() => setSelected(item.id)}
-            >
-              {item.minimumRechargeAmount}元
-            </View>
-          )
-        }
+      <View className='price-selector'>
+        <View className='bg'></View>
+        <View className='price-wrapper'>
+          {
+            vipConfig?.map((item) => 
+              <View 
+                key={item.id} 
+                className={`item ${selected === item.id ? 'active' : ''}`}
+                onClick={() => setSelected(item.id)}
+              >
+                {item.minimumRechargeAmount}元
+              </View>
+            )
+          }
+        </View>
       </View>
 
       <View className='right-wrapper'>
-        <View className='item'>
-          <View className='icon'></View>
-          <View className='label'>会员折扣</View>
-          <View className='desc'>门市价{currentConfig?.vipDiscount}折</View>
+        <View className='row'>
+          <View className='item'>
+            <View className='icon vip-discount'></View>
+            <View className='label'>会员折扣</View>
+            <View className='desc'>门市价{currentConfig?.vipDiscount}折</View>
+          </View>
+          <View className='item'>
+            <View className='icon hot-spring-or-park-discount'></View>
+            <View className='label'>温泉/乐园</View>
+            <View className='desc'>直客通价{currentConfig?.hotSpringOrParkDiscount}元</View>
+          </View>
+          <View className='item'>
+            <View className='icon vip-day-discount'></View>
+            <View className='label'>会员日折扣</View>
+            <View className='desc'>门市价{currentConfig?.vipDayDiscount}折</View>
+          </View>
         </View>
-        <View className='item'>
-          <View className='icon'></View>
-          <View className='label'>温泉/乐园</View>
-          <View className='desc'>直客通价{currentConfig?.hotSpringOrParkDiscount}元</View>
-        </View>
-        <View className='item'>
-          <View className='icon'></View>
-          <View className='label'>会员日折扣</View>
-          <View className='desc'>门市价{currentConfig?.vipDayDiscount}折</View>
-        </View>
-        <View className='item'>
-          <View className='icon'></View>
-          <View className='label'>餐饮折扣</View>
-          <View className='desc'>门市价{currentConfig?.vipDayDiscount}折</View>
-        </View>
-        <View className='item'>
-          <View className='icon'></View>
-          <View className='label'>生日大礼包</View>
-          <View className='desc'>{currentConfig?.birthdayPackage}</View>
-        </View>
-        <View className='item'>
-          <View className='icon'></View>
-          <View className='label'>专享特权</View>
-          <View className='desc'>{currentConfig?.privilege}</View>
+        <View className='row'>
+          <View className='item'>
+            <View className='icon dining-discount'></View>
+            <View className='label'>餐饮折扣</View>
+            <View className='desc'>门市价{currentConfig?.diningDiscount}折</View>
+          </View>
+          <View className='item'>
+            <View className='icon birthday-package'></View>
+            <View className='label'>生日大礼包</View>
+            <View className='desc'>{currentConfig?.birthdayPackage}</View>
+          </View>
+          <View className='item'>
+            <View className='icon privilege'></View>
+            <View className='label'>专享特权</View>
+            <View className='desc'>{currentConfig?.privilege}</View>
+          </View>
         </View>
       </View>
 
