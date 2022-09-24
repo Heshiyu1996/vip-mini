@@ -20,10 +20,10 @@ export default defineAppConfig({
     navigationBarTextStyle: 'black'
   },
   tabBar: {
-    custom: true,
-    color: '#000000',
-    selectedColor: '#DC143C',
-    backgroundColor: '#ffffff',
+    // custom: true,
+    color: '#AEAEAE',
+    selectedColor: '#152736',
+    backgroundColor: 'red',
     list: [
       {
         pagePath: 'pages/index/index',
