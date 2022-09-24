@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { useState, useEffect, useMemo } from 'react';
 import { View, Text } from '@tarojs/components';
-import { getVipList } from '@/service/api/recharge';
+import { getVipList, getUserInfo } from '@/service';
 import './index.less';
 
 const PageRecharge = () => {
@@ -35,12 +35,23 @@ const PageRecharge = () => {
     setSelected(defaultItem?.id);
   }, [vipConfig]);
 
+  // 获取用户余额
+  const [totalBalance, setTotalBalance] = useState(0);
+  const fetchUserInfo = async () => {
+    const res = await getUserInfo();
+    const { totalBalance } = res;
+    setTotalBalance(totalBalance);
+  };
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
   return (
     <View className='m-page-recharge'>
       <View className='title'>会员卡充值</View>
       <View className='u-balance'>
         <Text className='label'>账户余额</Text>
-        <Text className='value'>9931</Text>
+        <Text className='value'>{totalBalance}</Text>
         <Text className='btn-history' onClick={() => Taro.navigateTo({ url: `/pages/balance-record/index` })}>充值历史</Text>
       </View>
 
