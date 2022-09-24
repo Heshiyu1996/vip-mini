@@ -56,7 +56,7 @@ const PageRecharge = () => {
 
   return (
     <View className='m-page-recharge'>
-      <View className='title'>会员卡充值</View>
+      {/* <View className='title'>会员卡充值</View> */}
       <View className='u-balance'>
         <Text className='label'>账户余额</Text>
         <Text className='value'>{totalBalance}</Text>
