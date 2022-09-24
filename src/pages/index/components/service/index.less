@@ -3,18 +3,19 @@
   top: 476px;
   left: 17px;
   right: 17px;
-  // height: 140px;
   display: flex;
   justify-content: space-between;
 
   .item-wrapper {
+    position: relative;
     display: inline-block;
     width: 118px;
     height: 55px;
-    padding-top: 5px;
-    padding-left: 5px;
+    padding-top: 6px;
+    padding-left: 10px;
     box-sizing: border-box;
     background-color: #FFFFFF;
+    border-radius: 8px;
 
     .label {
       opacity: 0.66;
@@ -29,6 +30,35 @@
       color: #AEAEAE;
       letter-spacing: 0.78px;
       font-weight: 400;
+    }
+
+    .icon {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      position: absolute;
+      right: 6px;
+      bottom: 0;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+
+      &.vip {
+        background-image: url("https://vip.gdxsjt.com/medias/uploads/null_mp_20220924143030_f42da4.svg");
+      }
+
+      &.hotel {
+        right: 8px;
+        background-image: url("https://vip.gdxsjt.com/medias/uploads/null_mp_20220924143115_ba3aa4.svg");
+      }
+
+      &.contract {
+        right: -2px;
+        width: 40px;
+        height: 40px;
+        bottom: -8px;
+        background-image: url("https://vip.gdxsjt.com/medias/uploads/null_mp_20220924143124_09f984.svg");
+      }
     }
   }
 }
