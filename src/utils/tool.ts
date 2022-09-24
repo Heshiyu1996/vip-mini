@@ -84,3 +84,7 @@ export function isIdCard(idCard) {
     return false;
   }
 }
+
+export function formatPrice (price) {
+  return String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

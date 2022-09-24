@@ -16,7 +16,6 @@ const User = () => {
   useEffect(() => {
     fetchUserInfo();
   }, []);
-  
 
   return (
     <View className='m-index'>
