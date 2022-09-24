@@ -8,7 +8,6 @@ import {
 } from '@/service/api/login';
 import { debounce, isName, isIdCard } from '@/utils/tool';
 import Taro from '@tarojs/taro';
-import { ERROR_TYPE_CODE } from '@/service/const';
 import './index.less';
 
 const MAX_LENGTH_CODE = 4;
@@ -104,10 +103,8 @@ const PageRegister = () => {
             login().then(() => Taro.switchTab({ url: '/pages/index/index' }));
           }
         } catch (error) {
-          // 已注册，跳转到登录页
-          if (error?.data?.errorType === ERROR_TYPE_CODE.USER_EXIST) {
-            Taro.navigateTo({ url: `/pages/auth/login/index` });
-          }
+          // 已注册，调用登录后进入首页
+          login().then(() => Taro.switchTab({ url: '/pages/index/index' }));
         }
       },
       fail: () => {

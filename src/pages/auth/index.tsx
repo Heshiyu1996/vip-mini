@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Button } from '@tarojs/components';
-import { getUserSession, checkIfRegistered, associateUserSession } from '@/service';
+import { getUserSession, checkIfRegistered, associateUserSession, login } from '@/service';
 import { wxGetLoginCode } from '@/utils/wx-tool';
 
 import './index.less';
@@ -52,8 +52,8 @@ export default class Login extends Component {
     const alreadyRegistered = res;
     
     if (alreadyRegistered) {
-      // 跳转登录页
-      Taro.navigateTo({ url: `/pages/auth/login/index` });
+      // 调用登录后进入首页
+      login().then(() => Taro.switchTab({ url: '/pages/index/index' }));
     } else {
       // 跳转注册页
       Taro.navigateTo({ url: `/pages/auth/register/index` });
