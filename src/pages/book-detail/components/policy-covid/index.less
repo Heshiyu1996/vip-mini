@@ -1,6 +1,4 @@
 .u-modal-policy-covid {
-  // transform: scale(0.4);
-
   .at-modal__overlay {
     width: 100vw;
     height: 100vh;
@@ -8,7 +6,7 @@
 
   .at-modal__container {
     width: 354px;
-    height: 480px;
+    height: 400px;
     
     .at-modal__header {
       color: #000000;
@@ -21,10 +19,15 @@
     }
 
     .at-modal__content {
-      max-height: 300px;
+      min-height: 250px;
+      max-height: 250px;
       padding: 0 35px;
       font-size: 14px;
       color: #333333;
+
+      &::-webkit-scrollbar {
+        width: 0 !important;
+      }
     }
 
     .at-modal__footer {
@@ -36,7 +39,7 @@
         display: none;
       }
       
-      .hydrated {
+      button {
         display: flex;
         justify-content: center;
         align-items: center;
