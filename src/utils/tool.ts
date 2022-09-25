@@ -88,3 +88,36 @@ export function isIdCard(idCard) {
 export function formatPrice (price) {
   return String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+// 根据日期（格式：YYYY-MM-DD）获取当天星期几
+export function getDay (date) {
+  const list = ['日', '一', '二', '三', '四', '五', '六'];
+  return list[new Date(date).getDay()];
+}
+
+// 根据两日期（格式：YYYY-MM-DD）获取相差几天
+export function getDateGap (dateStart, dateEnd) {
+  return (new Date(dateEnd) - new Date(dateStart)) / (1000 * 60 * 60 * 24);
+}
+
+// 根据日期（格式：YYYY-MM-DD）获取当天后一天
+export function getTomorrow (date) {
+  if (!date) return '1970-01-01';
+  const  newDate = new Date(date);
+  const tomorrow = newDate.setDate(newDate.getDate() + 1);
+  const year = new Date(tomorrow).getFullYear();
+  const month = new Date(tomorrow).getMonth() + 1;
+  const day = new Date(tomorrow).getDate();
+  return `${year}-${month}-${day}`;
+}
+
+// 根据日期（格式：YYYY-MM-DD）获取当天前一天
+export function getYesterday (date) {
+  if (!date) return '2999-01-01';
+  const  newDate = new Date(date);
+  const tomorrow = newDate.setDate(newDate.getDate() + 1);
+  const year = new Date(tomorrow).getFullYear();
+  const month = new Date(tomorrow).getMonth() + 1;
+  const day = new Date(tomorrow).getDate();
+  return `${year}-${month}-${day}`;
+}
