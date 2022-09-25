@@ -22,42 +22,7 @@ const PageOrder = () => {
       pageSize: 10
     };
     const res = await getOrderList(params);
-    // const { list: data, total } = res || {};
-    const total = 10;
-    const data = [
-      {
-        "id": 4,
-        "vipCardName": "朱先生",
-        "vipCardId": 3,
-        "roomTypeId": 4,
-        "roomType": "adf",
-        "orderDays": 3,
-        "orderStartDate": "2022-08-19 12:00:00",
-        "orderEndDate": "2022-08-20 14:00:00",
-        "transactionChannelId": 1,
-        "transactionChannel": "微信",
-        "orderStatusCode": "ACCEPTED",
-        "orderStatus": "已确认",
-        "totalPrice": 1111.8,
-        "coverImage": "https://vip.gdxsjt.com/medias/uploads/room_room-config_20220829151239_a9b81b.jpg"
-      },
-      {
-        "id": 3,
-        "vipCardName": "朱先生",
-        "vipCardId": 3,
-        "roomTypeId": 4,
-        "roomType": "adf1",
-        "orderDays": 3,
-        "orderStartDate": "2022-08-21 12:00:00",
-        "orderEndDate": "2022-08-25 14:00:00",
-        "transactionChannelId": 1,
-        "transactionChannel": "微信",
-        "orderStatusCode": "ACCEPTED",
-        "orderStatus": "已确认",
-        "totalPrice": 33.33,
-        "coverImage": "https://vip.gdxsjt.com/medias/uploads/room_room-config_20220825214903_0f9e06.png"
-      }
-    ];
+    const { list: data, total } = res || {};
     // 记录总数
     refTotal.current = total;
     // 更新list
