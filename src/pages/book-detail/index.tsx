@@ -2,6 +2,7 @@ import { getRoomList } from '@/service';
 import { View, Text, Input } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useEffect, useState } from 'react';
+import BillDetail from './components/price-detail';
 import ModalPolicyCovid from './components/policy-covid';
 import './index.less';
 
@@ -75,14 +76,13 @@ const PageBookDetail = () => {
       </View>
       
       <View className='bottom-wrapper'>
-        <View className='price-wrapper'>
-          <Text className='label'>订单金额</Text>
-          <Text className='value'>¥ 949</Text>
-        </View>
-        <Text className='btn-detail'>明细</Text>
+        {/* 总价与账单明细 */}
+        <BillDetail />
+
         <Text className='btn-submit'>提交订单</Text>
       </View>
 
+      {/* 防疫政策 */}
       <ModalPolicyCovid />
     </View>
   );

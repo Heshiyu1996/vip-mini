@@ -1,0 +1,73 @@
+.u-price-detail {
+  .u-total-price {
+    display: flex;
+    align-items: center;
+  }
+
+  .price-wrapper {
+    display: inline-block;
+
+    .label {
+      opacity: 0.66;
+      font-family: PingFangSC-Regular;
+      font-size: 18px;
+      color: #000000;
+      letter-spacing: 1.4px;
+      font-weight: 400;
+    }
+
+    .value {
+      margin-left: 4px;
+      font-family: PingFangSC-Semibold;
+      font-size: 18px;
+      color: #DA4949;
+      letter-spacing: 0.29px;
+      font-weight: 600;
+    }
+  }
+
+  .btn-detail {
+    position: absolute;
+    left: 170px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #AEAEAE;
+    letter-spacing: 0.78px;
+    font-weight: 400;
+  }
+
+  .u-modal-price-detail {
+    .layout-body {
+      font-size: 18px;
+    }
+
+    .price-item-wrapper {
+      margin-top: 30px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      .title {
+        font-weight: bold;
+        color: #000000;
+        // text-align: center;
+        margin: 10px 0;
+      }
+
+      .item {
+        display: flex;
+        justify-content: center;
+
+        .label {
+          flex: 1;
+        }
+
+        .value {
+          width: 80px;
+          text-align: right;
+        }
+      }
+    }
+  }
+}

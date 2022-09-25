@@ -29,6 +29,10 @@ const PageBook = () => {
   useEffect(() => {
     fetchBookList();
   }, []);
+
+  const goToDetail = (id) => {
+    Taro.navigateTo({ url: `/pages/book-detail/index?id=${id}` });
+  };
   
   useDidShow(() => {
     const pageCtx = Taro.getCurrentInstance().page;
@@ -41,7 +45,7 @@ const PageBook = () => {
       <View className='room-list'>
         {
           list?.map((item) => 
-            <View key={item.id} className='item'>
+            <View key={item.id} className='item' onClick={() => goToDetail(item.id)}>
               <Image className='img' src={item.images?.[0] || DefaultImg} />
               <View className='info'>
                 <View className='type'>{item.roomType}</View>

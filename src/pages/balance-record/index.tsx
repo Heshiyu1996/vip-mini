@@ -15,7 +15,7 @@ const tabList = [
 ];
 
 const PageBalanceRecord = () => {
-  const defaultCurrent = Taro.getCurrentInstance().router.params?.type || 0;
+  const defaultCurrent = Taro.getCurrentInstance().router?.params?.type || 0;
   const [current, setCurrent] = useState(Number(defaultCurrent));
 
   const onClick = (val) => {
