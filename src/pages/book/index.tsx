@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Taro, { useDidShow } from '@tarojs/taro';
-import { View, Text } from '@tarojs/components';
+import { View, Text, Image } from '@tarojs/components';
 import { getRoomList } from '@/service/api/book';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
@@ -9,34 +9,26 @@ const { statusBarHeight } = Taro.getSystemInfoSync();
 const { height } = Taro.getMenuButtonBoundingClientRect();
 const titleBarHeight = statusBarHeight + height;
 
+const DefaultImg = 'https://vip.gdxsjt.com/medias/uploads/room_room-config_20220823222146_e97996.png';
+
 const PageBook = () => {
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
-  const refTotal = useRef(1);
-  const fetchOrderList = async (isNew?) => {
-    const currentPage = isNew ? 1 : refCurrentPage.current;
+  const fetchBookList = async () => {
     const params = {
-      currentPage,
-      pageSize: 10
+      startDate: '2022-09-25',
+      endDate: '2022-09-26',
     };
-    const res = await getRoomList(params);
-    const { list: data, total } = res || {};
-    // 记录总数
-    refTotal.current = total;
+    const data = await getRoomList(params);
     // 更新list
-    const newList = list.concat(data);
+    const newList = data;
     setList(newList);
     // 更新当前页码
     refCurrentPage.current++;
   };
   useEffect(() => {
-    fetchOrderList(true);
+    fetchBookList();
   }, []);
-
-  const hasMore = useMemo(() => {
-    return list?.length < refTotal.current;
-  }, [list, refTotal.current]);
-
   
   useDidShow(() => {
     const pageCtx = Taro.getCurrentInstance().page;
@@ -47,19 +39,22 @@ const PageBook = () => {
   return (
     <View className='m-book' style={{ paddingTop: `${titleBarHeight}px` }}>
       <View className='room-list'>
-        <View className='item'>
-          <View className='img' />
-          <View className='info'>
-            <View className='type'>高级大床房</View>
-            <View className='desc'>35㎡ 有窗 大床1.8m（1张）</View>
-            <View className='icon down' />
-            <View className='price-wrapper'>
-              <Text className='price origin'>949</Text>
-              <Text className='price current'>949</Text>
-            </View>
-            <View className='tag'>金礼卡9.5折</View>
-          </View>
-        </View>
+        {
+          list?.map((item) => 
+            <View key={item.id} className='item'>
+              <Image className='img' src={item.images?.[0] || DefaultImg} />
+              <View className='info'>
+                <View className='type'>{item.roomType}</View>
+                <View className='desc'>{item.roomFacility}</View>
+                {/* <View className='icon down' /> */}
+                <View className='price-wrapper'>
+                  {(item.currentPrice !== item.originPrice) && <Text className='price origin'>{item.originPrice}</Text>}
+                  <Text className='price current'>{item.currentPrice}</Text>
+                </View>
+                {!!item.tag && <View className='tag'>{item.tag}</View>}
+              </View>
+            </View>)
+        }
       </View>
     </View>
   );

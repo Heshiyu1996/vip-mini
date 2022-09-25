@@ -1,5 +1,5 @@
 .m-book {
-  padding: 0 16px;
+  padding: 0 16px 100px;
 
   .room-list {
     .item {
@@ -12,11 +12,14 @@
       border-bottom: 1px solid #EEEEEE;
       box-sizing: border-box;
 
+      &:last-child {
+        border: 0;
+      }
+
       .img {
         display: inline-block;
         width: 80px;
         height: 80px;
-        background-image: url('https://vip.gdxsjt.com/medias/uploads/store_storeInfo_20220828163007_073633.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -37,10 +40,16 @@
         }
 
         .desc {
+          max-width: 64%;
           font-size: 10px;
           color: #AEAEAE;
           letter-spacing: 0.78px;
           font-weight: 400;
+          display: -webkit-box;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          overflow: hidden;
         }
 
         .icon.down {
