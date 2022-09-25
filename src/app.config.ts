@@ -17,10 +17,11 @@ export default defineAppConfig({
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
+    navigationBarTextStyle: 'black',
+    navigationStyle: 'custom'
   },
   tabBar: {
-    // custom: true,
+    custom: true,
     color: '#AEAEAE',
     selectedColor: '#152736',
     backgroundColor: 'red',

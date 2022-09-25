@@ -8,7 +8,7 @@
   z-index: 3;
   padding-bottom: calc(14px + env(safe-area-inset-bottom));
 
-  .bg {
+  .tab-bar-bg {
     position: fixed;
     bottom: 20px;
     left: 0;
@@ -17,7 +17,7 @@
     z-index: 0;
   }
 
-  .bg-bottom {
+  .tab-bar-bg-bottom {
     position: absolute;
     z-index: 0;
     bottom: -50px;
@@ -27,7 +27,7 @@
     background-color: #FFF;
   }
 
-  .btn-wrapper {
+  .tab-bar-btn-wrapper {
     position: absolute;
     z-index: 1;
     left: 0;
@@ -64,15 +64,15 @@
     }
   }
 
-  .btn-code {
-    position: absolute;
-    z-index: 2;
+  .tab-bar-btn-code {
+    position: fixed;
+    z-index: 9;
     width: 70px;
     height: 70px;
     border-radius: 70px;
     left: 50%;
     transform: translateX(-50%);
-    top: 65px;
+    bottom: 10px;
     visibility: hidden;
   }
 }

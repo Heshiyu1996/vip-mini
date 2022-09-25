@@ -8,7 +8,6 @@ import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
 const Index = () => {
-  
   useDidShow (() => {
     const pageCtx = Taro.getCurrentInstance().page;
     const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);

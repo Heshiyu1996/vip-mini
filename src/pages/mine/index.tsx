@@ -4,6 +4,10 @@ import User from './components/user';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
+const { statusBarHeight } = Taro.getSystemInfoSync();
+const { height } = Taro.getMenuButtonBoundingClientRect();
+const titleBarHeight = statusBarHeight + height;
+
 const PageMine = () => {
   useDidShow(() => {
     const pageCtx = Taro.getCurrentInstance().page;
@@ -12,7 +16,7 @@ const PageMine = () => {
   });
 
   return (
-    <View className='m-mine'>
+    <View className='m-mine' style={{ paddingTop: `${titleBarHeight}px` }}>
       <User />
     </View>
   );

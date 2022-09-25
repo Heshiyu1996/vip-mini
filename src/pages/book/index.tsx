@@ -5,6 +5,10 @@ import { getRoomList } from '@/service/api/book';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
+const { statusBarHeight } = Taro.getSystemInfoSync();
+const { height } = Taro.getMenuButtonBoundingClientRect();
+const titleBarHeight = statusBarHeight + height;
+
 const PageBook = () => {
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
@@ -41,7 +45,7 @@ const PageBook = () => {
   });
 
   return (
-    <View className='m-book'>
+    <View className='m-book' style={{ paddingTop: `${titleBarHeight}px` }}>
       <View className='room-list'>
         <View className='item'>
           <View className='img' />

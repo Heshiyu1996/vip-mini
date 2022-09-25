@@ -67,10 +67,10 @@ export default class CustomTabbar extends Component {
 
     return (
       <CoverView className='tab-bar'>
-        <CoverImage className='bg' src={ImgBg} />
-        <CoverView className='bg-bottom'></CoverView>
+        <CoverImage className='tab-bar-bg' src={ImgBg} />
+        <CoverView className='tab-bar-bg-bottom'></CoverView>
 
-        <CoverView className='btn-wrapper'>
+        <CoverView className='tab-bar-btn-wrapper'>
           {list.map((item, index) =>
             (
               <CoverView key={index} className='item' onClick={this.switchTab.bind(this, index, item.pagePath)}>
@@ -81,7 +81,7 @@ export default class CustomTabbar extends Component {
           )}
         </CoverView>
 
-        <CoverView className='btn-code' onClick={this.jumpIntellect} />
+        <CoverView className='tab-bar-btn-code' onClick={this.jumpIntellect} />
       </CoverView>
     );
   }

@@ -6,6 +6,9 @@ import ReChargeList from './components/recharge-list';
 import ConsumptionList from './components/consumption-list';
 import './index.less';
 
+const { statusBarHeight } = Taro.getSystemInfoSync();
+const { height } = Taro.getMenuButtonBoundingClientRect();
+const titleBarHeight = statusBarHeight + height;
 const tabList = [
   { title: '充值' }, 
   { title: '消费' },
