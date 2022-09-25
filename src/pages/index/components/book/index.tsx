@@ -3,6 +3,7 @@ import { View, Picker } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { getDay, getDateGap, getYesterday, getTomorrow } from '@/utils/tool';
 import './index.less';
+import Taro from '@tarojs/taro';
 
 const Book = () => {
   const [startDate, setStartDate] = useState('');
@@ -43,6 +44,18 @@ const Book = () => {
     
     return getDateGap(startDate, endDate);
   }, [startDate, endDate]);
+
+  const goToBook = () => {
+    if (!startDate || !endDate) {
+      Taro.showToast({
+        title: '请填写入住、离店日期',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+    Taro.switchTab({url: `/pages/book/index?startDate=${startDate}&endDate=${endDate}`});
+  };
   
   return (
     <View className='u-book'>
@@ -72,7 +85,7 @@ const Book = () => {
           </View>
         </View>
       </View>
-      <View className='btn-wrapper'>
+      <View className='btn-wrapper' onClick={goToBook}>
         <View className='btn-book'>立即预约</View>
       </View>
     </View>
