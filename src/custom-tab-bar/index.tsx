@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { CoverView, CoverImage } from '@tarojs/components';
+import { View, Image } from '@tarojs/components';
 // import ImgCode from '../images/tab-bar/code.png';
 import ImgBg from '../images/tab-bar/bg.png';
 import './index.less';
@@ -66,23 +66,23 @@ export default class CustomTabbar extends Component {
     const { list, selected, color, selectedColor } = this.state;
 
     return (
-      <CoverView className='tab-bar'>
-        <CoverImage className='tab-bar-bg' src={ImgBg} />
-        <CoverView className='tab-bar-bg-bottom'></CoverView>
+      <View className='tab-bar'>
+        <Image className='tab-bar-bg' src={ImgBg} />
+        <View className='tab-bar-bg-bottom'></View>
 
-        <CoverView className='tab-bar-btn-wrapper'>
+        <View className='tab-bar-btn-wrapper'>
           {list.map((item, index) =>
             (
-              <CoverView key={index} className='item' onClick={this.switchTab.bind(this, index, item.pagePath)}>
-                <CoverImage className={`icon ${item.isHide ? 'hide' : ''}`} src={selected === index ? item.selectedIconPath : item.iconPath} />
-                <CoverView style={{ color: selected === index ? selectedColor : color }}>{item.isHide ? '' : item.text}</CoverView>
-              </CoverView>
+              <View key={index} className='item' onClick={this.switchTab.bind(this, index, item.pagePath)}>
+                <Image className={`icon ${item.isHide ? 'hide' : ''}`} src={selected === index ? item.selectedIconPath : item.iconPath} />
+                <View className='text' style={{ color: selected === index ? selectedColor : color }}>{item.isHide ? '' : item.text}</View>
+              </View>
             )
           )}
-        </CoverView>
+        </View>
 
-        <CoverView className='tab-bar-btn-code' onClick={this.jumpIntellect} />
-      </CoverView>
+        <View className='tab-bar-btn-code' onClick={this.jumpIntellect} />
+      </View>
     );
   }
 }
