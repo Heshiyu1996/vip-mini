@@ -60,8 +60,8 @@ const PageBook = () => {
     const startDate = Taro.getStorageSync('startDate') || today;
     const endDate = Taro.getStorageSync('endDate');
 
-    Taro.removeStorageSync('startDate');
-    Taro.removeStorageSync('endDate');
+    // Taro.removeStorageSync('startDate');
+    // Taro.removeStorageSync('endDate');
 
     setDefaultStartDate(startDate);
     setDefaultEndDate(endDate);
@@ -75,6 +75,10 @@ const PageBook = () => {
   const onChange = (startDate, endDate) => {
     setDefaultStartDate(startDate);
     setDefaultEndDate(endDate);
+
+    // 记录参数到 storage 以便剞劂 switch 不能携带参数问题
+    Taro.setStorageSync('startDate', startDate);
+    Taro.setStorageSync('endDate', endDate);
   };
 
   return (

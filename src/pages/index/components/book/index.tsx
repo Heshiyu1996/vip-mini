@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { View, Picker } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
-import { getDay, getDateGap, getYesterday, getTomorrow } from '@/utils/tool';
+import { getDay, getDateGap, getYesterday, getTomorrow, getToday } from '@/utils/tool';
 import './index.less';
 
 const Book = (props) => {
-  const { className, visibleBtn = true, defaultStartDate = '', defaultEndDate = '', btnText = '提交', onChange, onSearch } = props;
+  const { className, visibleBtn = true, defaultStartDate = '', defaultEndDate = '', btnText = '提交', onChange = () => '', onSearch } = props;
   
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [startDay, setStartDay] = useState('');
@@ -30,26 +30,24 @@ const Book = (props) => {
   const onChangeEndDate = e => {
     const date = e.detail.value;
     setEndDate(date);
-    console.log(startDate, date, 444444);
-    
     onChange(startDate, date);
   };
 
   const modifiedStartDate = useMemo(() => {
     if (!startDate) return '请选择';
+    setStartDay(`${getDay(startDate)}`);
+
     const [_, month, day] = startDate?.split('-');
     const shortDate = `${`${Number(month)}`}月${`${Number(day)}`}日`;
-
-    setStartDay(`周${getDay(startDate)}`);
     return shortDate;
   }, [startDate]);
 
   const modifiedEndDate = useMemo(() => {
     if (!endDate) return '请选择';
+    setEndDay(`${getDay(endDate)}`);
+
     const [_, month, day] = endDate?.split('-');
     const shortDate = `${`${Number(month)}`}月${`${Number(day)}`}日`;
-
-    setEndDay(`周${getDay(endDate)}`);
     return shortDate;
   }, [endDate]);
 
@@ -70,7 +68,7 @@ const Book = (props) => {
     <View className={`u-book ${className}`}>
       <View className='date-wrapper'>
         {/* 入住日期 */}
-        <Picker mode='date' end={getYesterday(endDate)} onChange={onChangeStartDate}>
+        <Picker mode='date' start={getToday()} end={getYesterday(endDate)} onChange={onChangeStartDate}>
           <View className='date-item'>
             <View className='label'>入住</View>
             <View className='value-date'>{modifiedStartDate}</View>

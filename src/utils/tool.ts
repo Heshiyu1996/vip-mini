@@ -91,8 +91,20 @@ export function formatPrice (price) {
 
 // 根据日期（格式：YYYY-MM-DD）获取当天星期几
 export function getDay (date) {
-  const list = ['日', '一', '二', '三', '四', '五', '六'];
-  return list[new Date(date).getDay()];
+  const today = getToday();
+  if (date === today) {
+    return '今天';
+  }
+  if (date === getTomorrow(today)) {
+    return '明天';
+  }
+
+  if (date === getAfterTomorrow(today)) {
+    return '后天';
+  }
+  const list = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  const index = new Date(date).getDay();
+  return list[index];
 }
 
 // 根据两日期（格式：YYYY-MM-DD）获取相差几天
@@ -106,8 +118,18 @@ export function getTomorrow (date) {
   const newDate = new Date(date);
   const tomorrow = newDate.setDate(newDate.getDate() + 1);
   const year = new Date(tomorrow).getFullYear();
-  const month = new Date(tomorrow).getMonth() + 1;
+  const month = (new Date(tomorrow).getMonth() + 1) < 10 ? `0${new Date(tomorrow).getMonth() + 1}` : `${new Date(tomorrow).getMonth() + 1}`;
   const day = new Date(tomorrow).getDate();
+  return `${year}-${month}-${day}`;
+}
+// 根据日期（格式：YYYY-MM-DD）获取当天后两天
+export function getAfterTomorrow (date) {
+  if (!date) return '1970-01-01';
+  const newDate = new Date(date);
+  const afterTomorrow = newDate.setDate(newDate.getDate() + 2);
+  const year = new Date(afterTomorrow).getFullYear();
+  const month = (new Date(afterTomorrow).getMonth() + 1) < 10 ? `0${new Date(afterTomorrow).getMonth() + 1}` : `${new Date(afterTomorrow).getMonth() + 1}`;
+  const day = new Date(afterTomorrow).getDate();
   return `${year}-${month}-${day}`;
 }
 
@@ -115,13 +137,23 @@ export function getTomorrow (date) {
 export function getYesterday (date) {
   if (!date) return '2999-01-01';
   const newDate = new Date(date);
-  const tomorrow = newDate.setDate(newDate.getDate() + 1);
-  const year = new Date(tomorrow).getFullYear();
-  const month = new Date(tomorrow).getMonth() + 1;
-  const day = new Date(tomorrow).getDate();
+  const yesterday = newDate.setDate(newDate.getDate() - 1);
+  const year = new Date(yesterday).getFullYear();
+  const month = (new Date(yesterday).getMonth() + 1) < 10 ? `0${new Date(yesterday).getMonth() + 1}` : `${new Date(yesterday).getMonth() + 1}`;
+  const day = new Date(yesterday).getDate();
   return `${year}-${month}-${day}`;
 }
 export function getToday () {
   const datetime = new Date();
-  return `${datetime.getFullYear()}-${datetime.getMonth() + 1}-${datetime.getDate()}`;
+  const year = datetime.getFullYear();
+  const month = (datetime.getMonth() + 1) < 10 ? `0${datetime.getMonth() + 1}` : `${datetime.getMonth() + 1}`;
+  const date = datetime.getDate();
+  const day = `${year}-${month}-${date}`;
+  return day;
+}
+
+export function getShortDate (date) {
+  const [year, month, day] = date?.split('-');
+  const shortDate = `${`${Number(year)}`}-${`${Number(month)}`}-${`${Number(day)}`}`;
+  return shortDate;
 }

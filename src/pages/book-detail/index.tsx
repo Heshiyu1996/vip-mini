@@ -2,10 +2,10 @@ import { getRoomList } from '@/service';
 import { View, Text, Input } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useEffect, useMemo, useState } from 'react';
-import BillDetail from './components/price-detail';
+import { getDateGap, getDay } from '@/utils/tool';
+import PriceDetail from './components/price-detail';
 import ModalPolicyCovid from './components/policy-covid';
 import './index.less';
-import { getDateGap, getDay } from '@/utils/tool';
 
 const PageBookDetail = () => {
   const [data, setData] = useState({});
@@ -44,7 +44,8 @@ const PageBookDetail = () => {
     <View className='m-book-detail'>
       <View className='info-wrapper'>
         <View className='item date'>
-          {startDate} 周{getDay(startDate)} ~ {endDate} 周{getDay(endDate)} (共 {getDateGap(startDate, endDate)} 晚)
+          {startDate} ({getDay(startDate)}) ~ {endDate} ({getDay(endDate)})
+          <View className='count'>共 {getDateGap(startDate, endDate)} 晚</View>
         </View>
         <View className='item basis'>
           <View className='type'>{data.roomType}</View>
@@ -94,7 +95,7 @@ const PageBookDetail = () => {
       
       <View className='bottom-wrapper'>
         {/* 总价与账单明细 */}
-        <BillDetail />
+        <PriceDetail roomId={data.id} startDate={startDate} endDate={endDate} />
 
         <Text className='btn-submit' onClick={onSubmit}>提交订单</Text>
       </View>

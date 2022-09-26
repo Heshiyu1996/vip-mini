@@ -4,15 +4,16 @@ import { AtFloatLayout, AtIcon } from "taro-ui";
 import { getPriceDetail } from '@/service';
 import './index.less';
 
-const ModalPriceDetail = () => {
+const ModalPriceDetail = (props) => {
+  const { roomId, startDate, endDate } = props;
   const [visible, setVisible] = useState(false);
 
   const [data, setData] = useState({});
   const fetchPriceDetail = async () => {
     const params = {
-      startDate: '2022-09-25',
-      endDate: '2022-09-25',
-      roomId: '4'
+      roomId,
+      startDate,
+      endDate,
     };
     const res = await getPriceDetail(params) || {};
     // const res = {
@@ -30,8 +31,10 @@ const ModalPriceDetail = () => {
     setData(res);
   };
   useEffect(() => {
+    if (!roomId || !startDate || !endDate) return;
+
     fetchPriceDetail();
-  }, []);
+  }, [roomId, startDate, endDate]);
 
   return (
     <View className='u-price-detail'>
