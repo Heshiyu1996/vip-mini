@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
-import { View, Image } from '@tarojs/components';
+import { View, Image, CoverView } from '@tarojs/components';
 // import ImgCode from '../images/tab-bar/code.png';
 import ImgBg from '../images/tab-bar/bg.png';
 import './index.less';
@@ -81,7 +81,7 @@ export default class CustomTabbar extends Component {
           )}
         </View>
 
-        <View className='tab-bar-btn-code' onClick={this.jumpIntellect} />
+        <CoverView className='tab-bar-btn-code' onClick={this.jumpIntellect} />
       </View>
     );
   }
