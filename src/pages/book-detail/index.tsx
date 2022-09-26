@@ -1,19 +1,22 @@
 import { getRoomList } from '@/service';
 import { View, Text, Input } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import BillDetail from './components/price-detail';
 import ModalPolicyCovid from './components/policy-covid';
 import './index.less';
+import { getDateGap, getDay } from '@/utils/tool';
 
 const PageBookDetail = () => {
   const [data, setData] = useState({});
+  const startDate = Taro.getCurrentInstance().router?.params?.startDate;
+  const endDate = Taro.getCurrentInstance().router?.params?.endDate;
 
   const fetchDetail = async () => {
     const targetId = Taro.getCurrentInstance().router?.params?.id || '-1';
     const params = {
-      startDate: '2022-09-25',
-      endDate: '2022-09-26',
+      startDate,
+      endDate,
     };
     const res = await getRoomList(params);
     const info = res?.find((item) => item.id === Number(targetId)) || {};
@@ -23,11 +26,25 @@ const PageBookDetail = () => {
     fetchDetail();
   }, []);
 
+  const onSubmit = async () => {
+    Taro.showToast({
+      title: '正在对接微信支付，请稍等',
+      icon: 'none',
+      duration: 2000
+    });
+  };
+
+  const privilegePackages = useMemo(() => {
+    const userInfo = Taro.getStorageSync('userInfo');
+    // 拿到会员卡code
+    console.log(userInfo);
+  }, []);
+
   return (
     <View className='m-book-detail'>
       <View className='info-wrapper'>
         <View className='item date'>
-          7月9日
+          {startDate} 周{getDay(startDate)} ~ {endDate} 周{getDay(endDate)} (共 {getDateGap(startDate, endDate)} 晚)
         </View>
         <View className='item basis'>
           <View className='type'>{data.roomType}</View>
@@ -79,7 +96,7 @@ const PageBookDetail = () => {
         {/* 总价与账单明细 */}
         <BillDetail />
 
-        <Text className='btn-submit'>提交订单</Text>
+        <Text className='btn-submit' onClick={onSubmit}>提交订单</Text>
       </View>
 
       {/* 防疫政策 */}

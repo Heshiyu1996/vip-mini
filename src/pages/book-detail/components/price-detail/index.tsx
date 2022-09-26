@@ -53,31 +53,44 @@ const ModalPriceDetail = () => {
         isOpened={visible}
         onClose={() => setVisible(false)}
       >
-        <View className='price-item-wrapper'>
-          <View className='title'>费用列表</View>
-          {
-            !data?.priceDetail?.length ? 
-              '-'
-              :
-              data?.priceDetail?.map((item) => 
-                <View key={item.date} className='item'>
-                  <View className='label'>{item.date}</View>
-                  <View className='value'>¥ {item.price}</View>
+        <View className='item-wrapper'>
+          <View className='summary'>
+            <View className='label'>订单总价</View>
+            <View className='value'>¥ {data?.totalPrice?.toFixed(2)}</View>
+          </View>
+
+          <View className='price-list'>
+            {
+              Object.keys(data?.priceDetail || [])?.map((date) =>
+                <View key={date} className='item'>
+                  <View className='label'>{date} 入住</View>
+                  <View className='value'>¥ {data?.priceDetail?.[date]?.toFixed(2)}</View>
                 </View>)
-          }
+            }
+          </View>
         </View>
-        <View className='price-item-wrapper'>
-          <View className='title'>优惠列表</View>
-          {
-            !data?.discountDetail?.length ? 
-              '-'
-              :
-              data?.discountDetail?.map((item) => 
-                <View key={item.item} className='item'>
-                  <View className='label'>{item.item}</View>
-                  <View className='value'>¥ {item.price}</View>
+        <View className='item-wrapper'>
+          <View className='summary'>
+            <View className='label'>共减</View>
+            <View className='value'>¥ {(data?.totalPrice - data?.actualPrice)?.toFixed(2)}</View>
+          </View>
+
+          <View className='price-list'>
+            {
+              Object.keys(data?.discountDetail || [])?.map((date) =>
+                <View key={date} className='item'>
+                  <View className='label'>{date}</View>
+                  <View className='value'>¥ {data?.discountDetail?.[date]?.toFixed(2)}</View>
                 </View>)
-          }
+            }
+          </View>
+        </View>
+
+        <View className='item-wrapper'>
+          <View className='summary'>
+            <View className='label'>合计</View>
+            <View className='value'>¥ {(data?.actualPrice)?.toFixed(2)}</View>
+          </View>
         </View>
       </AtFloatLayout>
 

@@ -1,5 +1,11 @@
 .m-book {
-  padding: 0 16px 100px;
+  padding: 16px 16px 100px;
+
+  .book-selector {
+    // position: sticky;
+    // top: calc(20px + env(safe-area-inset-top));
+    background-color: #eee;
+  }
 
   .room-list {
     .item {
@@ -40,7 +46,7 @@
         }
 
         .desc {
-          max-width: 64%;
+          max-width: 60%;
           font-size: 10px;
           color: #AEAEAE;
           letter-spacing: 0.78px;
@@ -99,7 +105,9 @@
           position: absolute;
           bottom: 18px;
           right: 0;
-          width: 80px;
+          min-width: 80px;
+          max-width: 100px;
+          padding: 0 4px;
           height: 24px;
           line-height: 24px;
           font-size: 12px;
@@ -108,6 +116,9 @@
           font-weight: 400;
           border: 1px solid #FF8B33;
           text-align: center;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
       }
     }

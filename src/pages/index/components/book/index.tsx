@@ -1,23 +1,38 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { View, Picker } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { getDay, getDateGap, getYesterday, getTomorrow } from '@/utils/tool';
 import './index.less';
-import Taro from '@tarojs/taro';
 
-const Book = () => {
-  const [startDate, setStartDate] = useState('');
+const Book = (props) => {
+  const { className, visibleBtn = true, defaultStartDate = '', defaultEndDate = '', btnText = '提交', onChange, onSearch } = props;
+  
+  const [startDate, setStartDate] = useState(defaultStartDate);
   const [startDay, setStartDay] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [endDate, setEndDate] = useState(defaultEndDate);
   const [endDay, setEndDay] = useState('');
+
+  useEffect(() => {
+    if (!defaultStartDate) return;
+    setStartDate(defaultStartDate);
+  }, [defaultStartDate]);
+
+  useEffect(() => {
+    if (!defaultEndDate) return;
+    setEndDate(defaultEndDate);
+  }, [defaultEndDate]);
 
   const onChangeStartDate = e => {
     const date = e.detail.value;
     setStartDate(date);
+    onChange(date, endDate);
   };
   const onChangeEndDate = e => {
     const date = e.detail.value;
     setEndDate(date);
+    console.log(startDate, date, 444444);
+    
+    onChange(startDate, date);
   };
 
   const modifiedStartDate = useMemo(() => {
@@ -45,20 +60,14 @@ const Book = () => {
     return getDateGap(startDate, endDate);
   }, [startDate, endDate]);
 
-  const goToBook = () => {
-    if (!startDate || !endDate) {
-      Taro.showToast({
-        title: '请填写入住、离店日期',
-        icon: 'none',
-        duration: 2000
-      });
-      return;
+  const handleSearch = () => {
+    if (onSearch) {
+      onSearch(startDate, endDate);
     }
-    Taro.switchTab({url: `/pages/book/index?startDate=${startDate}&endDate=${endDate}`});
   };
   
   return (
-    <View className='u-book'>
+    <View className={`u-book ${className}`}>
       <View className='date-wrapper'>
         {/* 入住日期 */}
         <Picker mode='date' end={getYesterday(endDate)} onChange={onChangeStartDate}>
@@ -85,9 +94,9 @@ const Book = () => {
           </View>
         </View>
       </View>
-      <View className='btn-wrapper' onClick={goToBook}>
-        <View className='btn-book'>立即预约</View>
-      </View>
+      {visibleBtn && <View className='btn-wrapper' onClick={handleSearch}>
+        <View className='btn-book'>{btnText}</View>
+      </View>}
     </View>
   );
 };

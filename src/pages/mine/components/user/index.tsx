@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Taro from '@tarojs/taro';
+import { AtIcon } from 'taro-ui';
 import { View, Text, Image } from '@tarojs/components';
 import { getUserInfo } from '@/service';
 import { formatPrice } from '@/utils/tool';
@@ -27,7 +28,11 @@ const User = () => {
 
       <View className='u-content'>
         <View className='vip' onClick={() => Taro.navigateTo({ url: `/pages/vip-instruction/index` })}>
-          <Text className='link'>查看会员权益</Text>
+          <Text className='level'>{userInfo.currentLevel}</Text>
+          <View className='link'>
+          查看会员权益
+            <AtIcon className='icon-right' value='chevron-right' size='12'></AtIcon>
+          </View>
         </View>
         <View className='wallet-wrapper'>
           <View className='balance-wrapper'>

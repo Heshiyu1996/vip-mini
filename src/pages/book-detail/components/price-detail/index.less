@@ -37,35 +37,63 @@
   }
 
   .u-modal-price-detail {
+    .at-float-layout__container {
+      min-height: 400px;
+      max-height: 400px;
+    }
+
     .layout-body {
       font-size: 18px;
     }
 
-    .price-item-wrapper {
-      margin-top: 30px;
+    .item-wrapper {
+      width: 100%;
+      font-size: 24px;
+      margin-top: 20px;
 
       &:first-child {
         margin-top: 0;
       }
 
-      .title {
-        font-weight: bold;
-        color: #000000;
-        // text-align: center;
-        margin: 10px 0;
-      }
-
-      .item {
+      .summary {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        font-size: 20px;
 
         .label {
-          flex: 1;
+          display: inline-block;
+          font-weight: bold;
+          color: #000;
         }
 
         .value {
-          width: 80px;
-          text-align: right;
+          display: inline-block;
+          font-weight: bold;
+          color: #000;
+        }
+      }
+
+      .price-list {
+        font-size: 16px;
+        margin-top: 4px;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        .item {
+          display: flex;
+          justify-content: center;
+  
+          .label {
+            flex: 1;
+          }
+  
+          .value {
+            width: 80px;
+            text-align: right;
+            color: #DA4949;
+          }
         }
       }
     }

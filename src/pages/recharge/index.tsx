@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { useState, useEffect, useMemo } from 'react';
 import { View, Text } from '@tarojs/components';
-import { getVipList, getUserInfo, recharge } from '@/service';
+import { getUserInfo, recharge } from '@/service';
 import './index.less';
 
 const PageRecharge = () => {
@@ -13,18 +13,10 @@ const PageRecharge = () => {
     const target = vipConfig.find((item) => item.id === selected) || {};
     return target;
   }, [selected, vipConfig]);
-  
-  const fetchVipConfigList = async () => {
-    try {
-      const res = await getVipList();
-      setVipConfigList(res);
-    } catch (error) {
-      
-    }
-  };
 
   useEffect(() => {
-    fetchVipConfigList();
+    const config = Taro.getStorageSync('vipConfig');
+    setVipConfigList(config);
   }, []);
 
   useEffect(() => {

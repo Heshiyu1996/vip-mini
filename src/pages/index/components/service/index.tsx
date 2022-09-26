@@ -1,11 +1,12 @@
 import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
+import { SERVICE_PHONE_NUMBER } from '@/utils/config';
 import './index.less';
 
 const Service = () => {
   const doCall = () => {
     Taro.makePhoneCall({
-      phoneNumber: '1340000' //仅为示例，并非真实的电话号码
+      phoneNumber: SERVICE_PHONE_NUMBER
     });
   };
   return (
