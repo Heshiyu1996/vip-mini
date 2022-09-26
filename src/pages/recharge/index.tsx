@@ -44,6 +44,11 @@ const PageRecharge = () => {
     const res = await recharge(params);
     console.log(res, vipConfig.find((item) => item.id === selected), 132132);
     
+    Taro.showToast({
+      title: '正在对接微信支付，请稍等',
+      icon: 'none',
+      duration: 2000
+    });
   };
 
   return (
