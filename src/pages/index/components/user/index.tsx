@@ -18,17 +18,11 @@ const User = () => {
   }, []);
 
   return (
-    <View className='m-index'>
-      <View className='bg'></View>
-      <View className='u-title'>
-        <View className='cover'></View>
-      </View>
-      <View className='u-user'>
-        <Image className='avatar mock' src={userInfo.avatarUrl || defaultAvatarUrl}></Image>
-        <View className='nickname mock'>{userInfo.ownerName}</View>
-        <View className='greeting'>
-            下午好，尊贵的{userInfo.currentLevel}
-        </View>
+    <View className='u-user'>
+      <Image className='avatar mock' src={userInfo.avatarUrl || defaultAvatarUrl}></Image>
+      <View className='nickname mock'>{userInfo.ownerName}</View>
+      <View className='greeting'>
+          下午好，尊贵的{userInfo.currentLevel}
       </View>
     </View>
   );

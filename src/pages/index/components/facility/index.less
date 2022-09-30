@@ -1,8 +1,7 @@
 .u-facility {
-  position: absolute;
-  top: 556px;
-  left: 17px;
-  right: 17px;
+  margin-top: 28px;
+  margin-left: 17px;
+  margin-right: 17px;
 
   .u-title {
     opacity: 0.66;
@@ -15,17 +14,20 @@
   }
 
   .u-content {
-    display: flex;
-    justify-content: space-between;
-
     .item-wrapper {
       display: inline-block;
-      width: 182px;
-      height: 203px;
+      padding: 10px;
+      margin: 0 auto;
+      margin-top: 10px;
       border-radius: 8px;
       background-color: #FFFFFF;
 
+      &:first-child {
+        margin-top: 0;
+      }
+
       .label {
+        margin-bottom: 10px;
         opacity: 0.66;
         font-family: PingFangSC-Semibold;
         font-size: 14px;
@@ -34,23 +36,10 @@
         font-weight: 600;
       }
 
-      &.main {
-        padding: 4px 12px 12px;
-        box-sizing: border-box;
-      }
-
-      &.vertical {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: transparent;
-      }
-
       .poster {
         display: inline-block;
         width: 100%;
         height: 160px;
-        background-image: url('https://vip.gdxsjt.com/medias/uploads/store_storeInfo_20220828163007_073633.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: 100% 100%;

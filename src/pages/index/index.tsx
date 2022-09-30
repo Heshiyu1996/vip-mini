@@ -36,7 +36,6 @@ const Index = () => {
 
   return (
     <View className='m-index'>
-      <View className='bg'></View>
       <View className='u-title'>
         <View className='cover'></View>
       </View>

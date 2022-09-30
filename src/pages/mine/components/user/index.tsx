@@ -5,6 +5,7 @@ import { View, Text, Image } from '@tarojs/components';
 import { getUserInfo } from '@/service';
 import { formatPrice } from '@/utils/tool';
 import './index.less';
+import { SERVICE_PHONE_NUMBER } from '@/utils/config';
 
 const User = () => {
   // 获取用户信息
@@ -16,6 +17,14 @@ const User = () => {
   useEffect(() => {
     fetchUserInfo();
   }, []);
+
+
+  const doCall = () => {
+    Taro.makePhoneCall({
+      phoneNumber: SERVICE_PHONE_NUMBER
+    });
+  };
+
   return (
     <View className='u-mine-user'>
       <View className='u-info'>
@@ -60,7 +69,7 @@ const User = () => {
                 <View className='icon consumption-list'></View>
                 <View className='label'>消费记录</View>
               </View>
-              <View className='btn' onClick={() => Taro.makePhoneCall({ phoneNumber: '1340000' })}>
+              <View className='btn' onClick={doCall}>
                 <View className='icon contract'></View>
                 <View className='label'>联系客服</View>
               </View>
