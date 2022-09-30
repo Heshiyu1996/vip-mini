@@ -10,7 +10,7 @@ import './index.less';
 const today = getToday();
 const { statusBarHeight } = Taro.getSystemInfoSync();
 const { height } = Taro.getMenuButtonBoundingClientRect();
-const titleBarHeight = statusBarHeight + height;
+const titleBarHeight = statusBarHeight + height + 10;
 
 const DefaultImg = 'https://vip.gdxsjt.com/medias/uploads/room_room-config_20220823222146_e97996.png';
 
