@@ -12,6 +12,7 @@ export default defineAppConfig({
     'pages/balance-record/index',
     'pages/vip-instruction/index',
     'pages/hotel-intro/index',
+    'pages/web-view/index'
   ],
   window: {
     backgroundTextStyle: 'light',

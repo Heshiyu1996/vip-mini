@@ -4,7 +4,7 @@ import { getToday } from '@/utils/tool';
 import User from './components/user';
 import Book from './components/book';
 import Service from './components/service';
-import Facility from './components/facility';
+import Activity from './components/activity';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
@@ -43,7 +43,7 @@ const Index = () => {
       <User />
       <Book className='item-book' defaultStartDate={today} btnText='立即预约' onSearch={goToBook} />
       <Service />
-      <Facility />
+      <Activity />
 
     </View>
   );
