@@ -7,6 +7,7 @@ import { getRoomList, bookRoom } from '@/service';
 import PriceDetail from './components/price-detail';
 import ModalPolicyCovid from './components/policy-covid';
 import './index.less';
+import PaymentType from './components/payment-type';
 
 const PageBookDetail = () => {
   const [data, setData] = useState({});
@@ -27,11 +28,24 @@ const PageBookDetail = () => {
     fetchDetail();
   }, []);
 
+  const beforeSubmit = () => {
+    if (!amount || !contactName || !contactNumber) {
+      Taro.showToast({
+        title: '请填写完整预订信息',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+    setVisiblePaymentTypeDrawer(true);
+  };
+
   const [amount, setAmount] = useState(1);
   const [contactName, setContactName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [remark, setRemark] = useState('');
-  const onSubmit = async () => {
+  const [visiblePaymentTypeDrawer, setVisiblePaymentTypeDrawer] = useState(false);
+  const onSubmit = async (type) => {
     const params = {
       id,
       amount,
@@ -40,29 +54,19 @@ const PageBookDetail = () => {
       remark,
       startDate,
       endDate,
-      type: 0
+      type,
     };
-    if (!amount || !contactName || !contactNumber) {
+    console.log(params);
+    const res = await bookRoom(params);
+    if (res) {
       Taro.showToast({
-        title: '请填写完整预订信息',
+        title: '预订成功，正在跳转订单页',
         icon: 'none',
         duration: 2000
       });
+      Taro.switchTab({ url: '/pages/order/index' });
     }
-    console.log(params);
-    const res = await bookRoom(params);
-    // Taro.showToast({
-    //   title: '正在对接微信支付，请稍等',
-    //   icon: 'none',
-    //   duration: 2000
-    // });
   };
-
-  const privilegePackages = useMemo(() => {
-    const userInfo = Taro.getStorageSync('userInfo');
-    // 拿到会员卡code
-    console.log(userInfo);
-  }, []);
 
   return (
     <View className='m-book-detail'>
@@ -127,11 +131,17 @@ const PageBookDetail = () => {
         {/* 总价与账单明细 */}
         <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} />
 
-        <Text className='btn-submit' onClick={onSubmit}>提交订单</Text>
+        <Text className='btn-submit' onClick={beforeSubmit}>提交订单</Text>
       </View>
 
       {/* 防疫政策 */}
       <ModalPolicyCovid />
+
+      <PaymentType 
+        visible={visiblePaymentTypeDrawer} 
+        setVisible={setVisiblePaymentTypeDrawer}
+        onFinish={onSubmit}
+      />
     </View>
   );
 };

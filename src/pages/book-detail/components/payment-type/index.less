@@ -1,0 +1,81 @@
+.u-payment-type {
+
+  .u-modal-type-detail {
+
+    .layout-header {
+      padding-bottom: 10px;
+    }
+
+    .layout-header__title {
+      font-size: 18px;
+    }
+
+    .at-float-layout__container {
+      min-height: 450px;
+      max-height: 450px;
+
+      .layout-header__btn-close {
+        top: -10px;
+        right: -4px;
+        transform: scale(0.6);
+      }
+    }
+
+    .layout-body {
+      background-color: #F7F7F7;
+      font-size: 18px;
+    }
+
+    .layout-body__content {
+      max-height: 350px;
+      min-height: 350px;
+    }
+
+    .item-wrapper {
+      width: 100%;
+      font-size: 24px;
+
+      .item {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        padding: 14px;
+        border-radius: 8px;
+        background-color: #FFF;
+        margin-top: 20px;
+        font-size: 20px;
+
+        .icon {
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          margin-right: 10px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+
+          &.balance {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20221016230217_93b0fc.svg);
+          }
+
+          &.wechat {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20221016224908_8dfa5a.svg);
+          }
+
+          &.ticket {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20221016225255_704020.svg);
+          }
+        }
+
+        .icon-right {
+          position: absolute;
+          right: 16px;
+        }
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
