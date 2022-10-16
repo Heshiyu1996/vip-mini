@@ -25,6 +25,11 @@ const User = () => {
     });
   };
 
+  const calcBalance = (price) => {
+    if (!price) return '0';
+    return `${formatPrice(price)}(${userInfo.giftBalance})`;
+  };
+
   return (
     <View className='u-mine-user'>
       <View className='u-info'>
@@ -46,13 +51,19 @@ const User = () => {
         <View className='wallet-wrapper'>
           <View className='balance-wrapper'>
             <View className='item'>
-              <View className='value'>{typeof userInfo.totalBalance !== 'undefined' ? formatPrice(userInfo.totalBalance)  : '-'}</View>
-              <View className='label'>余额</View>
+              <View className='value'>
+                {calcBalance(userInfo.totalBalance)}
+              </View>
+              <View className='label'>余额（含赠送金）</View>
             </View>
             <View className='item'>
+              <View className='value'>{userInfo.roomTicket}</View>
+              <View className='label'>住房券</View>
+            </View>
+            {/* <View className='item'>
               <View className='value'>-</View>
               <View className='label'>积分</View>
-            </View>
+            </View> */}
           </View>
           <View className='service'>
             <View className='title'>我的服务</View>

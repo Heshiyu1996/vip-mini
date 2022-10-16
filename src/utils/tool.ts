@@ -86,6 +86,7 @@ export function isIdCard(idCard) {
 }
 
 export function formatPrice (price) {
+  if (typeof price === 'undefined') return '-';
   return String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
