@@ -131,10 +131,26 @@
         }
 
         .value {
+          display: flex;
           flex: 1;
           font-size: 16px;
           display: inline-block;
+        }
 
+        .room-amount {
+          display: flex;
+          border: 0;
+
+          .at-input-number__btn {
+            color: #152736;
+            transform: scale(0.6);
+          }
+
+          input {
+            flex: 1;
+            border: 0;
+            font-size: 18px;
+          }
         }
       }
     }

@@ -5,12 +5,13 @@ import { getPriceDetail } from '@/service';
 import './index.less';
 
 const ModalPriceDetail = (props) => {
-  const { roomId, startDate, endDate } = props;
+  const { amount, roomId, startDate, endDate } = props;
   const [visible, setVisible] = useState(false);
 
   const [data, setData] = useState({});
   const fetchPriceDetail = async () => {
     const params = {
+      amount,
       roomId,
       startDate,
       endDate,

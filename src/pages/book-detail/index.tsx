@@ -1,8 +1,9 @@
-import { getRoomList } from '@/service';
 import { View, Text, Input } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useEffect, useMemo, useState } from 'react';
+import { AtInputNumber } from 'taro-ui';
 import { getDateGap, getDay } from '@/utils/tool';
+import { getRoomList, bookRoom } from '@/service';
 import PriceDetail from './components/price-detail';
 import ModalPolicyCovid from './components/policy-covid';
 import './index.less';
@@ -26,12 +27,25 @@ const PageBookDetail = () => {
     fetchDetail();
   }, []);
 
+  const [amount, setAmount] = useState(0);
+  const [contactName, setContactName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [remark, setRemark] = useState('');
   const onSubmit = async () => {
-    Taro.showToast({
-      title: '正在对接微信支付，请稍等',
-      icon: 'none',
-      duration: 2000
-    });
+    const params = {
+      amount,
+      contactName,
+      contactNumber,
+      remark
+    };
+    console.log(params);
+    // const res = await getRoomList(params);
+    // bookRoom();
+    // Taro.showToast({
+    //   title: '正在对接微信支付，请稍等',
+    //   icon: 'none',
+    //   duration: 2000
+    // });
   };
 
   const privilegePackages = useMemo(() => {
@@ -69,19 +83,25 @@ const PageBookDetail = () => {
         <View className='content'>
           <View className='item'>
             <Text className='label'>房间数</Text>
-            <Input className='value' />
+            <AtInputNumber
+              className='value room-amount'
+              min={0}
+              step={1}
+              value={amount}
+              onChange={val => setAmount(val)}
+            />
           </View>
           <View className='item'>
             <Text className='label'>入住人</Text>
-            <Input className='value' />
+            <Input className='value' value={contactName} onInput={val => setContactName(val.detail.value)} />
           </View>
           <View className='item'>
             <Text className='label'>手机号</Text>
-            <Input className='value' />
+            <Input className='value' value={contactNumber} onInput={val => setContactNumber(val.detail.value)} />
           </View>
           <View className='item'>
             <Text className='label'>备注</Text>
-            <Input className='value' />
+            <Input className='value' value={remark} onInput={val => setRemark(val.detail.value)} />
           </View>
         </View>
       </View>
@@ -95,7 +115,7 @@ const PageBookDetail = () => {
       
       <View className='bottom-wrapper'>
         {/* 总价与账单明细 */}
-        <PriceDetail roomId={data.id} startDate={startDate} endDate={endDate} />
+        <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} />
 
         <Text className='btn-submit' onClick={onSubmit}>提交订单</Text>
       </View>
