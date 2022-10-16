@@ -1,31 +1,34 @@
 import Taro from '@tarojs/taro';
 import { useState, useEffect, useMemo } from 'react';
 import { View, Text } from '@tarojs/components';
-import { getUserInfo, recharge } from '@/service';
+import { getUserInfo, recharge, getRechargeConfigList } from '@/service';
 import './index.less';
 
 const PageRecharge = () => {
-  const [vipConfig, setVipConfigList] = useState([]);
+  const [rechargeConfig, setRechargeConfigList] = useState([]);
   const [selected, setSelected] = useState();
 
   const currentConfig = useMemo(() => {
-    if (!selected || !vipConfig?.length) return;
-    const target = vipConfig.find((item) => item.id === selected) || {};
+    if (!selected || !rechargeConfig?.length) return;
+    const target = rechargeConfig.find((item) => item.id === selected) || {};
     return target;
-  }, [selected, vipConfig]);
+  }, [selected, rechargeConfig]);
 
+  const fetchRechargeConfig = async () => {
+    const res = await getRechargeConfigList();
+    setRechargeConfigList(res?.list);
+  };
   useEffect(() => {
-    const config = Taro.getStorageSync('vipConfig');
-    setVipConfigList(config);
+    fetchRechargeConfig();
   }, []);
 
   useEffect(() => {
-    if (!vipConfig?.length) return;
+    if (!rechargeConfig?.length) return;
 
     // 默认选中第一个
-    const defaultItem = vipConfig?.[0];
+    const defaultItem = rechargeConfig?.[0];
     setSelected(defaultItem?.id);
-  }, [vipConfig]);
+  }, [rechargeConfig]);
 
   // 获取用户余额
   const [totalBalance, setTotalBalance] = useState(0);
@@ -42,7 +45,7 @@ const PageRecharge = () => {
   const submit = async () => {
     const params = {};
     const res = await recharge(params);
-    console.log(res, vipConfig.find((item) => item.id === selected), 132132);
+    console.log(res, rechargeConfig.find((item) => item.id === selected), 132132);
     
     Taro.showToast({
       title: '正在对接微信支付，请稍等',
@@ -63,13 +66,13 @@ const PageRecharge = () => {
         <View className='bg'></View>
         <View className='price-wrapper'>
           {
-            vipConfig?.map((item) => 
+            rechargeConfig?.map((item) => 
               <View 
                 key={item.id} 
                 className={`item ${selected === item.id ? 'active' : ''}`}
                 onClick={() => setSelected(item.id)}
               >
-                {item.minimumRechargeAmount}元
+                {item.amount}元
               </View>
             )
           }
@@ -77,6 +80,20 @@ const PageRecharge = () => {
       </View>
 
       <View className='right-wrapper'>
+        <View className='row'>
+          {!!currentConfig?.giftAmount && <View className='item'>
+            <View className='icon vip-discount'></View>
+            <View className='label'>赠送金</View>
+            <View className='desc'>{currentConfig?.giftAmount}元</View>
+          </View>}
+          {!!currentConfig?.roomTicketAmount && <View className='item'>
+            <View className='icon hot-spring-or-park-discount'></View>
+            <View className='label'>住房券</View>
+            <View className='desc'>{currentConfig?.roomTicketAmount}张</View>
+          </View>}
+        </View>
+      </View>
+      {/* <View className='right-wrapper'>
         <View className='row'>
           <View className='item'>
             <View className='icon vip-discount'></View>
@@ -111,7 +128,7 @@ const PageRecharge = () => {
             <View className='desc'>{currentConfig?.privilege}</View>
           </View>
         </View>
-      </View>
+      </View> */}
 
       <View className='footer'>
         <View className='btn-recharge' onClick={submit}>立即充值</View>

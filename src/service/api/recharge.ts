@@ -11,3 +11,6 @@ export const getConsumptionList = (params) => get(`/api/payment/consumption/list
 
 // 充值
 export const recharge = (params) => post(`/api/payment/recharge/add`, params);
+
+// 查询充值配置列表
+export const getRechargeConfigList = (params) => get(`/api/payment/rechargeConfig/list`, params);
