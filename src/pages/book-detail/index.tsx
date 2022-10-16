@@ -12,35 +12,45 @@ const PageBookDetail = () => {
   const [data, setData] = useState({});
   const startDate = Taro.getCurrentInstance().router?.params?.startDate;
   const endDate = Taro.getCurrentInstance().router?.params?.endDate;
+  const id = Taro.getCurrentInstance().router?.params?.id || '-1';
 
   const fetchDetail = async () => {
-    const targetId = Taro.getCurrentInstance().router?.params?.id || '-1';
     const params = {
       startDate,
       endDate,
     };
     const res = await getRoomList(params);
-    const info = res?.find((item) => item.id === Number(targetId)) || {};
+    const info = res?.find((item) => item.id === Number(id)) || {};
     setData(info);
   };
   useEffect(() => {
     fetchDetail();
   }, []);
 
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const [contactName, setContactName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [remark, setRemark] = useState('');
   const onSubmit = async () => {
     const params = {
+      id,
       amount,
       contactName,
       contactNumber,
-      remark
+      remark,
+      startDate,
+      endDate,
+      type: 0
     };
+    if (!amount || !contactName || !contactNumber) {
+      Taro.showToast({
+        title: '请填写完整预订信息',
+        icon: 'none',
+        duration: 2000
+      });
+    }
     console.log(params);
-    // const res = await getRoomList(params);
-    // bookRoom();
+    const res = await bookRoom(params);
     // Taro.showToast({
     //   title: '正在对接微信支付，请稍等',
     //   icon: 'none',
@@ -85,7 +95,7 @@ const PageBookDetail = () => {
             <Text className='label'>房间数</Text>
             <AtInputNumber
               className='value room-amount'
-              min={0}
+              min={1}
               step={1}
               value={amount}
               onChange={val => setAmount(val)}

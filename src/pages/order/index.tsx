@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import Taro, { useDidShow, useReachBottom } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
-import { getOrderList, deleteOrder } from '@/service/api/order';
+import { getOrderList, deleteOrder, applyRefundOrder } from '@/service/api/order';
 import Empty from '@/components/empty';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
@@ -55,6 +55,23 @@ const PageOrder = () => {
     }
   };
 
+  const refundOrder = async (id) => {
+    try {
+      const res = await applyRefundOrder({ id });
+      if (res) {
+        Taro.showToast({
+          title: '申请成功，请留意退款状态',
+          icon: 'success',
+          duration: 2000
+        });
+        fetchOrderList();
+      }
+    } catch (error) {
+      console.log(error, 4123);
+    }
+  };
+
+
   useReachBottom(() => {
     // 是否还可加载
     if (hasMore) {
@@ -85,7 +102,10 @@ const PageOrder = () => {
                     </View>
                     <View className='status'>{item.orderStatus}</View>
                     <View className='price'>{item.totalPrice}</View>
-                    <View className='btn-delete' onClick={() => removeOrder(item.id)}>删除</View>
+                    <View className='btn-wrapper'>
+                      <View className='btn btn-refund' onClick={() => removeOrder(item.id)}>申请退款</View>
+                      <View className='btn btn-remove' onClick={() => refundOrder(item.id)}>删除</View>
+                    </View>
                   </View>
                 </View>)}
 
