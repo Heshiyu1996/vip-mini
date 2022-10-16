@@ -47,7 +47,7 @@ const ConsumptionList = () => {
           <View>
             {list?.map((item) => 
               <View key={item.id} className='item'>
-                <View className='channel'>{RechargeChannelMap[item.channel]}消费</View>
+                <View className='channel'>{item.assetsTypeText}</View>
                 <View className='time'>{item.createTime || '-'}</View>
                 <View className='price'>
                   {item.amount}

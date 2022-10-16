@@ -3,7 +3,6 @@ import { useReachBottom } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { getRechargeList } from '@/service/api/recharge';
 import Empty from '@/components/empty';
-import { RechargeChannelMap } from '../../type';
 import './index.less';
 
 const RechargeList = () => {
@@ -47,7 +46,7 @@ const RechargeList = () => {
           <View>
             {list?.map((item) => 
               <View key={item.id} className='item'>
-                <View className='channel'>{RechargeChannelMap[item.channel]}充值</View>
+                <View className='channel'>{item.assetsTypeText}</View>
                 <View className='time'>{item.createTime || '-'}</View>
                 <View className='price'>
                   {item.amount}
