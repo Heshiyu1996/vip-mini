@@ -11,7 +11,7 @@ const text = `2022年7月9日更新入住要求:
 5、客人佩戴口罩进入自助餐厅及取餐。`;
 
 const ModalPolicyCovid = () => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   return (
     <AtModal

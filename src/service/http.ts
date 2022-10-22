@@ -28,26 +28,17 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
       userSession: Taro.getStorageSync('userSession'),
     },
     success(res) {
+      console.log(res, '<== 接口返回值');
       // TODO: 后期需增加：登录态判断
-      if (res.data?.code === HTTP_STATUS.NOT_FOUND) {
+      if (res.data?.code === HTTP_STATUS.SUCCESS) {
+        return res.data;
+      } else if (res.data?.code === HTTP_STATUS.NOT_FOUND) {
         throw logError('api', '请求资源不存在');
       } else if (res.data?.code === HTTP_STATUS.BAD_GATEWAY) {
         throw logError('api', '服务端出现了问题');
       } else if (res.data?.code === HTTP_STATUS.FORBIDDEN) {
         throw logError('api', '没有权限访问');
-      } else if (res.data?.code === HTTP_STATUS.SUCCESS) {
-        return res.data;
-      }
-    },
-    error(e) {
-      logError('api', '请求接口出现问题', e);
-    }
-  };
-  
-  // 直接返回res.data
-  return Taro.request(option)
-    .then(res => {
-      if (res?.data?.code === HTTP_STATUS.CLIENT_ERROR) {
+      } else if (res?.data?.code === HTTP_STATUS.CLIENT_ERROR) {
         setTimeout(() => {
           Taro.showToast({
             title: res.data?.data?.errorMsg || res.data?.message,
@@ -60,12 +51,27 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
           ERROR_TYPE_CODE.EXPIRED_SESSION,
           ERROR_TYPE_CODE.USER_UNAUTHORIZED_MOBILE_NUMBER
         ].includes(res.data?.data?.errorType)) {
+          // TODO: 登录态跳转
+          console.log('应该跳转到登录页');
+          
           Taro.redirectTo({
-            url: '/pages/login/index'
+            url: '/pages/auth/index'
           });
         }
         throw res?.data;
       }
+      throw logError('api', '接口异常');
+    },
+    error(e) {
+      console.log(e, 448);
+      
+      logError('api', '请求接口出现问题', e);
+    }
+  };
+  
+  // 直接返回res.data
+  return Taro.request(option)
+    .then(res => {
       // 直接返回data
       return res?.data?.data;
     });

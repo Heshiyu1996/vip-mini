@@ -5,7 +5,13 @@ import './index.less';
 
 const Basis = () => {
   const goMap = () => {
-    window.open('https://surl.amap.com/2VnasEaYe29');
+    Taro.openLocation({
+      latitude: 22.608674,
+      longitude: 112.472047,
+      name: '翔顺金水台温泉特色小镇',
+      address: '广东省云浮市新兴县水台镇翔顺金水台温泉特色小镇',
+      scale: 28
+    });
   };
 
   const doCall = () => {

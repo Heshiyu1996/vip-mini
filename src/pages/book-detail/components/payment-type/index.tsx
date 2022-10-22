@@ -10,7 +10,7 @@ enum EPaymentType {
 }
 
 const ModalPriceDetail = (props) => {
-  const { visible, setVisible, onFinish } = props;
+  const { visible, disabled, setVisible, onFinish } = props;
 
   return (
     <View className='u-payment-type'>
@@ -21,7 +21,7 @@ const ModalPriceDetail = (props) => {
         title='请选择'
         onClose={() => setVisible(false)}
       >
-        <View className='item-wrapper'>
+        <View className={`item-wrapper ${disabled ? 'disabled' : ''}`}>
           <View className='item' onClick={() => onFinish(EPaymentType.balance)}>
             <Text className='icon balance' />
             <Text className='text'>卡内余额(含赠送金)</Text>

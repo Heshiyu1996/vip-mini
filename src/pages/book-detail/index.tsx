@@ -1,7 +1,7 @@
-import { View, Text, Input } from '@tarojs/components';
+import { View, Text, Input, Checkbox } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useEffect, useMemo, useState } from 'react';
-import { AtInputNumber } from 'taro-ui';
+import { useEffect, useState } from 'react';
+import { AtInputNumber, AtCheckbox, AtButton } from 'taro-ui';
 import { getDateGap, getDay } from '@/utils/tool';
 import { getRoomList, bookRoom } from '@/service';
 import PriceDetail from './components/price-detail';
@@ -29,6 +29,15 @@ const PageBookDetail = () => {
   }, []);
 
   const beforeSubmit = () => {
+    if (!selectedReadList?.length) {
+      Taro.showToast({
+        title: '请勾选“我已详细阅读并了解入住须知”',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
     if (!amount || !contactName || !contactNumber) {
       Taro.showToast({
         title: '请填写完整预订信息',
@@ -45,7 +54,12 @@ const PageBookDetail = () => {
   const [contactNumber, setContactNumber] = useState('');
   const [remark, setRemark] = useState('');
   const [visiblePaymentTypeDrawer, setVisiblePaymentTypeDrawer] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const onSubmit = async (type) => {
+    if (disabled) return;
+    Taro.showLoading({
+      title: '正在支付...',
+    });
     const params = {
       id,
       amount,
@@ -56,39 +70,45 @@ const PageBookDetail = () => {
       endDate,
       type,
     };
-    console.log(params);
-    const res = await bookRoom(params);
-    if (res) {
+    setDisabled(true);
+    try {
+      await bookRoom(params);
       Taro.showToast({
         title: '预订成功，正在跳转订单页',
         icon: 'none',
+        duration: 2000,
+      });
+      // 2s后跳转订单页面
+      setTimeout(() => {
+        Taro.switchTab({ url: '/pages/order/index' });
+        setDisabled(false);
+        Taro.hideLoading();
+      }, 2000);
+    } catch (error) {
+      Taro.showToast({
+        title: '系统异常，请稍后再试!',
+        icon: 'none',
         duration: 2000
       });
-      Taro.switchTab({ url: '/pages/order/index' });
+      Taro.hideLoading();
+      setDisabled(false);
     }
+  };
+
+  const [selectedReadList, setSelectedReadList] = useState([]);
+  const onChangeRead = (val) => {
+    setSelectedReadList(val);
   };
 
   return (
     <View className='m-book-detail'>
       <View className='info-wrapper'>
-        <View className='item date'>
-          {startDate} ({getDay(startDate)}) ~ {endDate} ({getDay(endDate)})
-          <View className='count'>共 {getDateGap(startDate, endDate)} 晚</View>
-        </View>
         <View className='item basis'>
           <View className='type'>{data.roomType}</View>
         </View>
-
-        <View className='item facility-extra'>
-          <View className='title'>房型设施</View>
-          <View className='content'>{data.roomFacility}</View>
-        </View>
-        
-        <View className='item policy'>
-          <View className='title'>入住及取消政策</View>
-          <View className='content'>
-            {data.policyDesc}
-          </View>
+        <View className='item date'>
+          {startDate} ({getDay(startDate)}) ~ {endDate} ({getDay(endDate)})
+          <Text className='count'>共 {getDateGap(startDate, endDate)} 晚</Text>
         </View>
       </View>
 
@@ -120,24 +140,45 @@ const PageBookDetail = () => {
         </View>
       </View>
 
-      <View className='card gift-wrapper'>
-        <View className='title'>入住礼包</View>
+      <View className='card info-wrapper'>
+        <View className='title'>入住须知</View>
         <View className='content'>
-          凡官方预订客房，入住即可享受自助早餐+无限次露天温泉
+          <View className='item facility-extra'>
+            <View className='sub-title'>房型设施</View>
+            <View className='content'>{data.roomFacility}</View>
+          </View>
+        
+          <View className='item policy'>
+            <View className='sub-title'>入住及取消政策</View>
+            <View className='content'>
+              {data.policyDesc}
+            </View>
+          </View>
         </View>
       </View>
       
+      <AtCheckbox
+        className='card confirm-wrapper'
+        selectedList={selectedReadList}
+        options={[{
+          label: '我已详细阅读并了解入住须知',
+          value: true
+        }]}
+        onChange={onChangeRead}
+      />
+
       <View className='bottom-wrapper'>
         {/* 总价与账单明细 */}
         <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} />
 
-        <Text className='btn-submit' onClick={beforeSubmit}>提交订单</Text>
+        <AtButton className='btn-submit' onClick={beforeSubmit}>提交订单</AtButton>
       </View>
 
       {/* 防疫政策 */}
       <ModalPolicyCovid />
 
       <PaymentType 
+        disabled={disabled}
         visible={visiblePaymentTypeDrawer} 
         setVisible={setVisiblePaymentTypeDrawer}
         onFinish={onSubmit}
