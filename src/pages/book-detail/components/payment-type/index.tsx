@@ -1,5 +1,6 @@
 import { View, Text } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import { useMemo } from 'react';
 import { AtFloatLayout, AtIcon } from "taro-ui";
 import './index.less';
 
@@ -10,8 +11,15 @@ enum EPaymentType {
 }
 
 const ModalPriceDetail = (props) => {
-  const { visible, disabled, setVisible, onFinish } = props;
+  const { visible, disabled, data, setVisible, onFinish } = props;
+  console.log(data, 333);
 
+  const disabledBtnTicket = useMemo(() => !data?.enableRoomTicket, [data]);
+  const payByTicket = () => {
+    if (disabledBtnTicket) return;
+    onFinish(EPaymentType.ticket);
+  };
+  
   return (
     <View className='u-payment-type'>
       {/* 明细浮层 */}
@@ -40,9 +48,10 @@ const ModalPriceDetail = (props) => {
             <Text className='text'>微信支付</Text>
             <AtIcon className='icon-right' value='chevron-right' color='#ccc' size='16'></AtIcon>
           </View>
-          <View className='item' onClick={() => onFinish(EPaymentType.ticket)}>
+          <View className={`item ${disabledBtnTicket ? 'disabled' : '' }`} onClick={payByTicket}>
             <Text className='icon ticket' />
             <Text className='text'>住房券</Text>
+            {disabledBtnTicket && <View className='sub-text'>(该房型不支持使用)</View>}
             <AtIcon className='icon-right' value='chevron-right' color='#ccc' size='16'></AtIcon>
           </View>
         </View>

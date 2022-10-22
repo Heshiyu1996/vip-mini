@@ -29,7 +29,6 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
     },
     success(res) {
       console.log(res, '<== 接口返回值');
-      // TODO: 后期需增加：登录态判断
       if (res.data?.code === HTTP_STATUS.SUCCESS) {
         return res.data;
       } else if (res.data?.code === HTTP_STATUS.NOT_FOUND) {
@@ -39,26 +38,7 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
       } else if (res.data?.code === HTTP_STATUS.FORBIDDEN) {
         throw logError('api', '没有权限访问');
       } else if (res?.data?.code === HTTP_STATUS.CLIENT_ERROR) {
-        setTimeout(() => {
-          Taro.showToast({
-            title: res.data?.data?.errorMsg || res.data?.message,
-            icon: 'none',
-            duration: 2000
-          });
-        });
-        if ([
-          ERROR_TYPE_CODE.NOT_LOGIN,
-          ERROR_TYPE_CODE.EXPIRED_SESSION,
-          ERROR_TYPE_CODE.USER_UNAUTHORIZED_MOBILE_NUMBER
-        ].includes(res.data?.data?.errorType)) {
-          // TODO: 登录态跳转
-          console.log('应该跳转到登录页');
-          
-          Taro.redirectTo({
-            url: '/pages/auth/index'
-          });
-        }
-        throw res?.data;
+        return res?.data;
       }
       throw logError('api', '接口异常');
     },
@@ -72,8 +52,29 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
   // 直接返回res.data
   return Taro.request(option)
     .then(res => {
-      // 直接返回data
-      return res?.data?.data;
+      if (res?.data?.code !== HTTP_STATUS.CLIENT_ERROR) {
+        // 直接返回data
+        return res?.data?.data;
+      }
+
+      // 统一登录态问题（在这里处理error，才能被业务层捕获）
+      setTimeout(() => {
+        Taro.showToast({
+          title: res.data?.data?.errorMsg || res.data?.message,
+          icon: 'none',
+          duration: 2000
+        });
+      });
+      if ([
+        ERROR_TYPE_CODE.NOT_LOGIN,
+        ERROR_TYPE_CODE.EXPIRED_SESSION,
+        ERROR_TYPE_CODE.USER_UNAUTHORIZED_MOBILE_NUMBER
+      ].includes(res.data?.data?.errorType)) {
+        Taro.redirectTo({
+          url: '/pages/auth/index'
+        });
+      }
+      throw res;
     });
 };
 
