@@ -4,7 +4,7 @@ import { getTicketList } from '@/service/api/book';
 import './index.less';
 
 const ModalTicket = forwardRef((props, ref) => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   useImperativeHandle(ref, () => ({ 
     show: () => {
       setVisible(true);

@@ -180,6 +180,7 @@ const PageBookDetail = () => {
       <PaymentType 
         disabled={disabled}
         visible={visiblePaymentTypeDrawer} 
+        data={data}
         setVisible={setVisiblePaymentTypeDrawer}
         onFinish={onSubmit}
       />

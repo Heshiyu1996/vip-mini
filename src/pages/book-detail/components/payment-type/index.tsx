@@ -10,10 +10,10 @@ enum EPaymentType {
   ticket = 2,
 }
 
-const ModalPriceDetail = (props) => {
+const PaymentType = (props) => {
   const { visible, disabled, data, setVisible, onFinish } = props;
 
-  const disabledBtnTicket = useMemo(() => !data?.enableRoomTicket, [data]);
+  const disabledBtnTicket = useMemo(() => !data?.enableRoomTicket, [data?.enableRoomTicket]);
   const payByTicket = () => {
     if (disabledBtnTicket) return;
     onFinish(EPaymentType.ticket);
@@ -59,4 +59,4 @@ const ModalPriceDetail = (props) => {
     
   );
 };
-export default ModalPriceDetail;
+export default PaymentType;
