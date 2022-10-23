@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Taro from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
 import { View, Text, Image } from '@tarojs/components';
 import { getUserInfo } from '@/service';
-import { formatPrice } from '@/utils/tool';
-import './index.less';
 import { SERVICE_PHONE_NUMBER } from '@/utils/config';
+import { formatPrice } from '@/utils/tool';
+import TicketModal from './ticket-modal';
+import './index.less';
 
 const User = () => {
   // 获取用户信息
@@ -26,10 +27,11 @@ const User = () => {
   };
 
   const calcBalance = (price) => {
-    if (!price) return '0';
-    return `${formatPrice(price)}(${userInfo.giftBalance})`;
+    if (!price) return '-';
+    return `${formatPrice(price)}`;
   };
 
+  const refTicketModal = useRef();
   return (
     <View className='u-mine-user'>
       <View className='u-info'>
@@ -53,17 +55,18 @@ const User = () => {
             <View className='item'>
               <View className='value'>
                 {calcBalance(userInfo.totalBalance)}
+                {!!userInfo.giftBalance && <Text className='sub-value'>({userInfo.giftBalance})</Text>}
               </View>
               <View className='label'>余额（含赠送金）</View>
             </View>
-            <View className='item'>
-              <View className='value'>{userInfo.roomTicket}</View>
-              <View className='label'>住房券</View>
+            <View className='item' onClick={refTicketModal?.current?.show}>
+              <View className='value'>{userInfo.roomTicket || '-'}</View>
+              <View className='label'>
+                住房券
+              </View>
             </View>
-            {/* <View className='item'>
-              <View className='value'>-</View>
-              <View className='label'>积分</View>
-            </View> */}
+            {/* 住房券使用范围 */}
+            <TicketModal ref={refTicketModal} />
           </View>
           <View className='service'>
             <View className='title'>我的服务</View>
