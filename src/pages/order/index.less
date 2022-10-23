@@ -1,9 +1,41 @@
 .m-order {
   min-height: 100vh;
-  padding: 16px;
   background: #F7F7F7;
 
+
+  .u-tabs {
+    .at-tabs__header {
+      justify-content: space-around;
+    }
+
+    .at-tabs__item {
+      flex: none;
+      width: 60px;
+      padding: 10px 0;
+      font-family: PingFangSC-Regular;
+      font-size: 16px;
+      color: #AEAEAE;
+      letter-spacing: 1.55px;
+      font-weight: 400;
+
+      &--active {
+        color: #152736;
+      }
+
+      &-underline {
+        border-bottom: 2px solid #152736;
+        background: transparent;
+      }
+    }
+
+    .content {
+      background-color: transparent;
+    }
+  }
+
   .order-list {
+    padding: 16px;
+
     .item {
       display: flex;
       align-items: center;

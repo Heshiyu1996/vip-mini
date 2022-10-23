@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
+import { AtTabs } from 'taro-ui';
 import Taro, { useDidShow, useReachBottom } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
 import { getOrderList, deleteOrder, applyRefundOrder } from '@/service/api/order';
@@ -9,17 +10,24 @@ import './index.less';
 const { statusBarHeight } = Taro.getSystemInfoSync();
 const { height } = Taro.getMenuButtonBoundingClientRect();
 const titleBarHeight = statusBarHeight + height;
+const tabList = [
+  { title: '全部', },
+  { title: '待确认' },
+  { title: '已确认' }, 
+  { title: '已拒绝' },
+];
+const tabCodeMap = ['', 'NEW', 'ACCEPTED', 'REJECTED', ];
 
 const PageOrder = () => {
-
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
   const refTotal = useRef(1);
-  const fetchOrderList = async (isNew?) => {
+  const fetchOrderList = async (isNew?, orderStatusCode = tabCodeMap[0]) => {
     const currentPage = isNew ? 1 : refCurrentPage.current;
     const params = {
       currentPage,
-      pageSize: 10
+      pageSize: 10,
+      orderStatusCode,
     };
     const res = await getOrderList(params);
     const { list: data, total } = res || {};
@@ -110,8 +118,19 @@ const PageOrder = () => {
     tabbar?.setSelected(3);
   });
 
+  const [current, setCurrent] = useState(0);
+  const onClick = (index) => {
+    setCurrent(index);
+    const status = tabCodeMap[index];
+    fetchOrderList(true, status);
+  };
+
   return (
-    <View className='m-order' style={{ paddingTop: `${titleBarHeight + 10}px` }}>
+    <View className='m-order'>
+      <View style={{ marginTop: `${titleBarHeight + 10}px` }}>
+        <AtTabs className='u-tabs' current={current} tabList={tabList} onClick={onClick} />
+      </View>
+
       <View className='order-list'>
         {
           list?.length ?
