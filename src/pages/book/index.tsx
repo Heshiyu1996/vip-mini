@@ -95,9 +95,16 @@ const PageBook = () => {
       <View className='room-list'>
         {
           list?.map((item) => 
-            <View key={item.id} className='item' onClick={() => goToDetail(item.id)}>
-              <Image className='img' src={item.images?.[0] || DefaultImg} />
-              <View className='info'>
+            <View key={item.id} className='item'>
+              <Image className='img' src={item.images?.[0] || DefaultImg} onClick={() => {
+                Taro.previewImage({
+                  current: item.images?.[0] || '', // 当前显示图片的http链接
+                  urls: item.images || [] // 需要预览的图片http链接列表
+                });
+              }}
+              />
+              <View className='tag-count'>{item?.images?.length}</View>
+              <View className='info' onClick={() => goToDetail(item.id)}>
                 <View className='type'>{item.roomType}</View>
                 <View className='desc'>{item.roomFacility}</View>
                 {/* <View className='icon down' /> */}
