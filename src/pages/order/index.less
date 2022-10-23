@@ -105,6 +105,18 @@
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
+
+          &.status-NEW {
+            color: #999;
+          }
+
+          &.status-ACCEPTED {
+            color: green;
+          }
+
+          &.status-REJECTED {
+            color: red;
+          }
         }
 
         .price {

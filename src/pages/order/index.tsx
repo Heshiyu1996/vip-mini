@@ -144,10 +144,11 @@ const PageOrder = () => {
                       <View>到店: {item.orderStartDate}</View>
                       <View>离店: {item.orderEndDate}</View>
                     </View>
-                    <View className='status'>{item.orderStatus}</View>
+                    <View className={`status status-${item.orderStatusCode}`}>{item.orderStatus}</View>
                     <View className='price'>{item.totalPrice}</View>
                     <View className='btn-wrapper'>
-                      <View className='btn btn-refund' onClick={() => beforeRefund(item.id)}>申请退款</View>
+                      {/* “待确认”、“已确认” 都可以申请退款 */}
+                      {['NEW', 'ACCEPTED'].includes(item.orderStatusCode) && <View className='btn btn-refund' onClick={() => beforeRefund(item.id)}>申请退款</View>}
                       <View className='btn btn-remove' onClick={() => beforeRemove(item.id)}>删除</View>
                     </View>
                   </View>
