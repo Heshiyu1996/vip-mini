@@ -2,7 +2,9 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 import { AtTabs } from 'taro-ui';
 import Taro, { useDidShow, useReachBottom } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
-import { getOrderList, deleteOrder, applyRefundOrder } from '@/service/api/order';
+import { getOrderList, deleteOrder, 
+  // applyRefundOrder
+} from '@/service/api/order';
 import Empty from '@/components/empty';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
@@ -76,34 +78,34 @@ const PageOrder = () => {
     }
   };
 
-  const beforeRefund = (id) => {
-    Taro.showModal({
-      title: '请确认',
-      content: '是否申请退款？',
-      success: function (res) {
-        if (res.confirm) {
-          refundOrder(id);
-        }
-      }
-    });    
-  };
-  const refundOrder = async (id) => {
-    Taro.showLoading({
-      title: '正在申请...',
-    });
-    try {
-      await applyRefundOrder({ id });
-      Taro.showToast({
-        title: '申请成功，请留意退款状态',
-        icon: 'success',
-        duration: 2000
-      });
-      fetchOrderList(true);
-      Taro.hideLoading();
-    } catch (error) {
-      console.log(error, 4123);
-    }
-  };
+  // const beforeRefund = (id) => {
+  //   Taro.showModal({
+  //     title: '请确认',
+  //     content: '是否申请退款？',
+  //     success: function (res) {
+  //       if (res.confirm) {
+  //         refundOrder(id);
+  //       }
+  //     }
+  //   });    
+  // };
+  // const refundOrder = async (id) => {
+  //   Taro.showLoading({
+  //     title: '正在申请...',
+  //   });
+  //   try {
+  //     await applyRefundOrder({ id });
+  //     Taro.showToast({
+  //       title: '申请成功，请留意退款状态',
+  //       icon: 'success',
+  //       duration: 2000
+  //     });
+  //     fetchOrderList(true);
+  //     Taro.hideLoading();
+  //   } catch (error) {
+  //     console.log(error, 4123);
+  //   }
+  // };
 
   useReachBottom(() => {
     // 是否还可加载
@@ -148,7 +150,7 @@ const PageOrder = () => {
                     <View className='price'>{item.totalPrice}</View>
                     <View className='btn-wrapper'>
                       {/* “待确认”、“已确认” 都可以申请退款 */}
-                      {['NEW', 'ACCEPTED'].includes(item.orderStatusCode) && <View className='btn btn-refund' onClick={() => beforeRefund(item.id)}>申请退款</View>}
+                      {/* {['NEW', 'ACCEPTED'].includes(item.orderStatusCode) && <View className='btn btn-refund' onClick={() => beforeRefund(item.id)}>申请退款</View>} */}
                       <View className='btn btn-remove' onClick={() => beforeRemove(item.id)}>删除</View>
                     </View>
                   </View>
