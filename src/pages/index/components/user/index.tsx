@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Image } from '@tarojs/components';
+import { View, Text, Image } from '@tarojs/components';
 import { getUserInfo } from '@/service';
 import './index.less';
 
@@ -37,7 +37,11 @@ const User = () => {
   return (
     <View className='u-user'>
       <Image className='avatar' src={userInfo.avatarUrl || defaultAvatarUrl}></Image>
-      <View className='nickname'>{userInfo.ownerName}</View>
+      <View className='nickname'>
+        {userInfo.ownerName}
+        <Text className='id'>(No.{userInfo.id})</Text>
+      </View>
+      
       <View className='greeting'>
         {getGreetTime()}，尊贵的{userInfo.currentLevel}
       </View>

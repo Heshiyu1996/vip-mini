@@ -9,8 +9,11 @@ export const getRechargeList = (params) => get(`/api/payment/recharge/list`, par
 // 查询消费记录
 export const getConsumptionList = (params) => get(`/api/payment/consumption/list`, params);
 
-// 充值
-export const recharge = (params) => post(`/api/payment/recharge/add`, params);
+// // 充值
+// export const recharge = (params) => post(`/api/payment/recharge/add`, params);
 
 // 查询充值配置列表
 export const getRechargeConfigList = (params) => get(`/api/payment/rechargeConfig/list`, params);
+
+// 微信支付下单
+export const placeOrder = (params) => post(`/api/wechatPay/placeOrder`, params);

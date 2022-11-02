@@ -1,18 +1,19 @@
 import Taro from '@tarojs/taro';
 import { useState, useEffect, useMemo } from 'react';
 import { View, Text } from '@tarojs/components';
-import { getUserInfo, recharge, getRechargeConfigList } from '@/service';
+import { getUserInfo, getRechargeConfigList, placeOrder } from '@/service';
+import { AtCheckbox } from 'taro-ui';
 import './index.less';
 
 const PageRecharge = () => {
   const [rechargeConfig, setRechargeConfigList] = useState([]);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState({});
 
   const currentConfig = useMemo(() => {
-    if (!selected || !rechargeConfig?.length) return;
-    const target = rechargeConfig.find((item) => item.id === selected) || {};
+    if (!selected?.id || !rechargeConfig?.length) return;
+    const target = rechargeConfig.find((item) => item.id === selected?.id) || {};
     return target;
-  }, [selected, rechargeConfig]);
+  }, [selected?.id, rechargeConfig]);
 
   const fetchRechargeConfig = async () => {
     const res = await getRechargeConfigList();
@@ -27,7 +28,8 @@ const PageRecharge = () => {
 
     // 默认选中第一个
     const defaultItem = rechargeConfig?.[0];
-    setSelected(defaultItem?.id);
+    // setSelected(defaultItem?.id);
+    setSelected(defaultItem);
   }, [rechargeConfig]);
 
   // 获取用户余额
@@ -41,18 +43,64 @@ const PageRecharge = () => {
     fetchUserInfo();
   }, []);
 
+  const [selectedReadList, setSelectedReadList] = useState([]);
+  const onChangeRead = (val) => {
+    setSelectedReadList(val);
+  };
+
+  const beforeSubmit = () => {
+    if (!selectedReadList?.length) {
+      Taro.showToast({
+        title: '请勾选“我已详细阅读并了解充值服务须知”',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+    submit();
+  };
+
   // 充值
   const submit = async () => {
-    const params = {};
-    const res = await recharge(params);
-    console.log(res, rechargeConfig.find((item) => item.id === selected), 132132);
-    
-    Taro.showToast({
-      title: '正在对接微信支付，请稍等',
-      icon: 'none',
-      duration: 2000
-    });
+    try {
+      const apiParams = {
+        tradeType: 'RECHARGE', // 充值
+        amount: selected?.amount, // 金额
+      };
+      const data = await placeOrder(apiParams);
+      console.log(data, 1234213421);
+
+      const wxApiParams = {
+        ...data,
+        success (res) {
+          console.log(res, 111);
+          Taro.showToast({
+            title: '充值成功，正在跳转...',
+            icon: 'none',
+            duration: 3000,
+          });
+          // 3s后跳转
+          setTimeout(() => {
+            Taro.switchTab({ url: '/pages/index/index' });
+          }, 3000);
+        },
+        fail (res) {
+          console.log(res, 222);
+
+          Taro.showToast({
+            title: '充值失败，请稍后重试...',
+            icon: 'none',
+            duration: 3000
+          });
+        }
+      };
+
+      wx.requestPayment(wxApiParams);
+    } catch (error) {
+      
+    }
   };
+
 
   return (
     <View className='m-page-recharge'>
@@ -69,8 +117,8 @@ const PageRecharge = () => {
             rechargeConfig?.map((item) => 
               <View 
                 key={item.id} 
-                className={`item ${selected === item.id ? 'active' : ''}`}
-                onClick={() => setSelected(item.id)}
+                className={`item ${selected?.id === item.id ? 'active' : ''}`}
+                onClick={() => setSelected(item)}
               >
                 {item.amount}元
               </View>
@@ -131,7 +179,17 @@ const PageRecharge = () => {
       </View> */}
 
       <View className='footer'>
-        <View className='btn-recharge' onClick={submit}>立即充值</View>
+        <AtCheckbox
+          className='confirm-wrapper'
+          selectedList={selectedReadList}
+          options={[{
+            label: '我已详细阅读并了解充值服务须知',
+            value: true
+          }]}
+          onChange={onChangeRead}
+        />
+
+        <View className='btn-recharge' onClick={beforeSubmit}>立即充值</View>
 
         <View className='notice'>
           <View>说明:</View>

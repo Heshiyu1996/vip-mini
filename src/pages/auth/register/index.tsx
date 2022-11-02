@@ -127,11 +127,11 @@ const PageRegister = () => {
       refAnswer.current = validationCode;
 
       // FIXME: 为了测试，验证码答案公布
-      Taro.showToast({
-        title: validationCode,
-        icon: 'none',
-        duration: 3000
-      });
+      // Taro.showToast({
+      //   title: validationCode,
+      //   icon: 'none',
+      //   duration: 3000
+      // });
     });
 
     // 启动计时器

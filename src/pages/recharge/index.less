@@ -237,10 +237,50 @@
   .footer {
     margin-top: 38px;
 
+    .confirm-wrapper {
+      background-color: transparent;
+
+      &::before {
+        display: none;
+      }
+
+      &::after {
+        display: none;
+      }
+
+      .at-checkbox__option {
+        padding: 0 10px;
+
+        &.at-checkbox__option--selected {
+          .at-checkbox__icon-cnt {
+            background-color: #152736;
+          }
+        }
+      }
+
+      .at-checkbox__icon-cnt {
+        width: 16px;
+        min-width: 16px;
+        height: 16px;
+        margin-right: 14px;
+        border-radius: 0%;
+
+        .at-icon-check {
+          font-size: 16px;
+        }
+      }
+      
+      .at-checkbox__title {
+        font-size: 16px;
+        color: #152736;
+      }
+    }
+
     .btn-recharge {
       width: 312px;
       height: 43px;
       margin: 0 auto;
+      margin-top: 10px;
       border-radius: 22px;
       color: #FFF;
       background-image: linear-gradient(135deg, #6C7C89 0%, #152736 100%);;

@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { AtFloatLayout, AtIcon } from "taro-ui";
 import { getPriceDetail } from '@/service';
 import './index.less';
+import Taro from '@tarojs/taro';
 
 const ModalPriceDetail = (props) => {
-  const { amount, roomId, startDate, endDate } = props;
+  const { amount, roomId, startDate, endDate, setPrice } = props;
   const [visible, setVisible] = useState(false);
 
   const [data, setData] = useState({});
   const fetchPriceDetail = async () => {
+    Taro.showLoading();
     const params = {
       amount,
       roomId,
@@ -17,25 +19,15 @@ const ModalPriceDetail = (props) => {
       endDate,
     };
     const res = await getPriceDetail(params) || {};
-    // const res = {
-    //   "totalPrice": 60,
-    //   "actualPrice": 46,
-    //   "priceDetail": [{
-    //     "date": "2010-10-02",
-    //     "price": "24"
-    //   }],
-    //   "discountDetail": [{
-    //     "item": "Ut consectetur",
-    //     "price": "17"
-    //   }]
-    // };
     setData(res);
+    setPrice(res?.actualPrice); // 更新总价（微信支付用）
+    Taro.hideLoading();
   };
   useEffect(() => {
     if (!roomId || !startDate || !endDate) return;
 
     fetchPriceDetail();
-  }, [roomId, startDate, endDate]);
+  }, [amount, roomId, startDate, endDate]);
 
   return (
     <View className='u-price-detail'>

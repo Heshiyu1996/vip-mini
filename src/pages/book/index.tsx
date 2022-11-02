@@ -60,9 +60,6 @@ const PageBook = () => {
     const startDate = Taro.getStorageSync('startDate') || today;
     const endDate = Taro.getStorageSync('endDate');
 
-    // Taro.removeStorageSync('startDate');
-    // Taro.removeStorageSync('endDate');
-
     setDefaultStartDate(startDate);
     setDefaultEndDate(endDate);
   });

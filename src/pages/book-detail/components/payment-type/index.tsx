@@ -1,3 +1,4 @@
+import { placeOrder } from '@/service';
 import { View, Text } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useMemo } from 'react';
@@ -6,17 +7,63 @@ import './index.less';
 
 enum EPaymentType {
   balance = 0,
-  wechat = 1,
+  // wechat = 1, // 微信支付不用调用业务侧下订单
   ticket = 2,
 }
 
 const PaymentType = (props) => {
-  const { visible, disabled, data, setVisible, onFinish } = props;
+  const { visible, disabled, data, price, attach, setVisible, onFinish } = props;
+  console.log(attach, 3333);
+  
 
   const disabledBtnTicket = useMemo(() => !data?.enableRoomTicket, [data?.enableRoomTicket]);
   const payByTicket = () => {
     if (disabledBtnTicket) return;
     onFinish(EPaymentType.ticket);
+  };
+
+  const payByWechat = async () => {
+    try {
+      const apiParams = {
+        tradeType: 'BOOKING_ROOM', // 订房
+        amount: price, // 金额
+        attach
+      };
+      console.log(apiParams, 888);
+      
+      const data = await placeOrder(apiParams);
+      console.log(data, 1234213421);
+
+      const wxApiParams = {
+        ...data,
+        success (res) {
+          console.log(res, 111);
+          Taro.showToast({
+            title: '充值成功，正在跳转...',
+            icon: 'none',
+            duration: 3000,
+          });
+          // 3s后跳转
+          setTimeout(() => {
+            Taro.switchTab({ url: '/pages/index/index' });
+          }, 3000);
+        },
+        fail (res) {
+          console.log(res, 222);
+
+          Taro.showToast({
+            title: '充值失败，请稍后重试...',
+            icon: 'none',
+            duration: 3000
+          });
+        }
+      };
+
+      wx.requestPayment(wxApiParams);
+    } catch (error) {
+      console.log(error, 98);
+      
+    }
   };
   
   return (
@@ -34,15 +81,7 @@ const PaymentType = (props) => {
             <Text className='text'>卡内余额(含赠送金)</Text>
             <AtIcon className='icon-right' value='chevron-right' color='#ccc' size='16'></AtIcon>
           </View>
-          {/* <View className='item' onClick={() => onFinish(EPaymentType.wechat)}> */}
-          <View className='item' onClick={() => 
-            Taro.showToast({
-              title: '微信支付对接中',
-              icon: 'none',
-              duration: 2000
-            })
-          }
-          >
+          <View className='item' onClick={payByWechat}>
             <Text className='icon wechat' />
             <Text className='text'>微信支付</Text>
             <AtIcon className='icon-right' value='chevron-right' color='#ccc' size='16'></AtIcon>

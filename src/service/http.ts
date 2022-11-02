@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro';
 
 import { IHttpMethod } from './interface';
 import { 
-  // BASE_API, 
+  BASE_API, 
   HTTP_STATUS, ERROR_TYPE_CODE } from './const';
 import { logError } from './utils';
 
@@ -19,8 +19,10 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
 
   const option = {
     isShowLoading: false,
-    // url: BASE_API + url,
-    url,
+    // 微信开发工具时打开
+    url: BASE_API + url,
+    // H5时打开
+    // url,
     data: data,
     method: method,
     header: { 

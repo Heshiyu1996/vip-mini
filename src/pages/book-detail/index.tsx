@@ -1,6 +1,6 @@
-import { View, Text, Input, Checkbox } from '@tarojs/components';
+import { View, Text, Input } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AtInputNumber, AtCheckbox, AtButton } from 'taro-ui';
 import { getDateGap, getDay } from '@/utils/tool';
 import { getRoomList, bookRoom } from '@/service';
@@ -99,6 +99,19 @@ const PageBookDetail = () => {
   const onChangeRead = (val) => {
     setSelectedReadList(val);
   };
+  
+  const attach = useMemo(() => {
+    return {
+      startDate,
+      endDate,
+      amount,
+      contactName,
+      contactNumber,
+      type: data.roomType,
+    };
+  }, [startDate, endDate, amount, contactName, contactNumber, data.roomType]);
+
+  const [actualPrice, setActualPrice] = useState(0);
 
   return (
     <View className='m-book-detail'>
@@ -141,11 +154,27 @@ const PageBookDetail = () => {
       </View>
 
       <View className='card info-wrapper'>
+        <View className='title'>入住礼包</View>
+        <View className='content'>
+          <View className='item facility-extra'>
+            <View className='sub-title'>房型设施</View>
+            <View className='content'>{data.roomFacility}</View>
+          </View>
+        </View>
+      </View>
+
+      <View className='card info-wrapper'>
         <View className='title'>入住须知</View>
         <View className='content'>
           <View className='item facility-extra'>
             <View className='sub-title'>房型设施</View>
             <View className='content'>{data.roomFacility}</View>
+          </View>
+          <View className='item gift'>
+            <View className='sub-title'>入住礼包</View>
+            <View className='content'>
+              {data.giftPackages || '无'}
+            </View>
           </View>
         
           <View className='item policy'>
@@ -169,7 +198,7 @@ const PageBookDetail = () => {
 
       <View className='bottom-wrapper'>
         {/* 总价与账单明细 */}
-        <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} />
+        <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} setPrice={setActualPrice} />
 
         <AtButton className='btn-submit' onClick={beforeSubmit}>提交订单</AtButton>
       </View>
@@ -181,6 +210,8 @@ const PageBookDetail = () => {
         disabled={disabled}
         visible={visiblePaymentTypeDrawer} 
         data={data}
+        price={actualPrice}
+        attach={attach}
         setVisible={setVisiblePaymentTypeDrawer}
         onFinish={onSubmit}
       />

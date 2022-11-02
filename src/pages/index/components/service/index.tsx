@@ -9,6 +9,7 @@ const Service = () => {
       phoneNumber: SERVICE_PHONE_NUMBER
     });
   };
+
   return (
     <View className='u-service'>
       <View className='item-wrapper' onClick={() => Taro.navigateTo({ url: `/pages/recharge/index` })}>

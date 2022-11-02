@@ -55,9 +55,14 @@ const User = () => {
             <View className='item'>
               <View className='value'>
                 {calcBalance(userInfo.totalBalance)}
-                {!!userInfo.giftBalance && <Text className='sub-value'>({userInfo.giftBalance})</Text>}
               </View>
-              <View className='label'>余额（含赠送金）</View>
+              <View className='label'>总余额</View>
+            </View>
+            <View className='item'>
+              <View className='value'>
+                {calcBalance(userInfo.giftBalance)}
+              </View>
+              <View className='label'>赠送金</View>
             </View>
             <View className='item' onClick={refTicketModal?.current?.show}>
               <View className='value'>{userInfo.roomTicket || '-'}</View>

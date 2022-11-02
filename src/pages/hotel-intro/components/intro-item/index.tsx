@@ -11,7 +11,7 @@ const ImageList = [
 
 const IntroItem = (props) => {
   const { data } = props;
-  const { label, value, images } = data || {};
+  const { label, value, images = ImageList } = data || {};
 
   const isMultiImages = useMemo(() => images?.length > 1, [images]);
   const currentRef = useRef('');
@@ -28,12 +28,12 @@ const IntroItem = (props) => {
               onClick={() => {
                 Taro.previewImage({
                   current: currentRef.current || '', // 当前显示图片的http链接
-                  urls: ImageList // 需要预览的图片http链接列表
+                  urls: images // 需要预览的图片http链接列表
                 });
               }}
             >
               {
-                ImageList?.map((item) => <Image className='item' src={item} onClick={() => (currentRef.current = item)} />)
+                images?.map((item) => <Image className='item' src={item} onClick={() => (currentRef.current = item)} />)
               }
             </View>
             :
