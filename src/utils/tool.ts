@@ -148,7 +148,7 @@ export function getToday () {
   const datetime = new Date();
   const year = datetime.getFullYear();
   const month = (datetime.getMonth() + 1) < 10 ? `0${datetime.getMonth() + 1}` : `${datetime.getMonth() + 1}`;
-  const date = datetime.getDate();
+  const date = datetime.getDate() < 10 ? `0${datetime.getDate()}` : `${datetime.getDate()}`;
   const day = `${year}-${month}-${date}`;
   return day;
 }

@@ -6,8 +6,8 @@ import { getDateGap, getDay } from '@/utils/tool';
 import { getRoomList, bookRoom } from '@/service';
 import PriceDetail from './components/price-detail';
 import ModalPolicyCovid from './components/policy-covid';
-import './index.less';
 import PaymentType from './components/payment-type';
+import './index.less';
 
 const PageBookDetail = () => {
   const [data, setData] = useState({});
@@ -108,8 +108,10 @@ const PageBookDetail = () => {
       contactName,
       contactNumber,
       type: data.roomType,
+      roomId: data.id,
+      remark,
     };
-  }, [startDate, endDate, amount, contactName, contactNumber, data.roomType]);
+  }, [startDate, endDate, amount, contactName, contactNumber, data.roomType, data.id, data.remark]);
 
   const [actualPrice, setActualPrice] = useState(0);
 
@@ -154,11 +156,20 @@ const PageBookDetail = () => {
       </View>
 
       <View className='card info-wrapper'>
+        <View className='title'>房型设施</View>
+        <View className='content'>
+          <View className='item facility-extra'>
+            {/* <View className='sub-title'>房型设施</View> */}
+            <View className='content'>{data.roomFacility}</View>
+          </View>
+        </View>
+      </View>
+
+      <View className='card info-wrapper'>
         <View className='title'>入住礼包</View>
         <View className='content'>
           <View className='item facility-extra'>
-            <View className='sub-title'>房型设施</View>
-            <View className='content'>{data.roomFacility}</View>
+            <View className='content'>{data.giftPackages || '无'}</View>
           </View>
         </View>
       </View>
@@ -166,17 +177,6 @@ const PageBookDetail = () => {
       <View className='card info-wrapper'>
         <View className='title'>入住须知</View>
         <View className='content'>
-          <View className='item facility-extra'>
-            <View className='sub-title'>房型设施</View>
-            <View className='content'>{data.roomFacility}</View>
-          </View>
-          <View className='item gift'>
-            <View className='sub-title'>入住礼包</View>
-            <View className='content'>
-              {data.giftPackages || '无'}
-            </View>
-          </View>
-        
           <View className='item policy'>
             <View className='sub-title'>入住及取消政策</View>
             <View className='content'>

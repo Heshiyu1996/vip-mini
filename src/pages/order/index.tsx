@@ -41,9 +41,9 @@ const PageOrder = () => {
     // 更新当前页码
     refCurrentPage.current++;
   };
-  useEffect(() => {
-    fetchOrderList(true);
-  }, []);
+  // useEffect(() => {
+  //   fetchOrderList(true);
+  // }, []);
 
   const hasMore = useMemo(() => {
     return list?.length < refTotal.current;
@@ -118,6 +118,10 @@ const PageOrder = () => {
     const pageCtx = Taro.getCurrentInstance().page;
     const tabbar = Taro.getTabBar<CustomTabBar>(pageCtx);
     tabbar?.setSelected(3);
+  });
+
+  useDidShow(() => {
+    fetchOrderList(true);
   });
 
   const [current, setCurrent] = useState(0);

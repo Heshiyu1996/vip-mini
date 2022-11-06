@@ -13,8 +13,6 @@ enum EPaymentType {
 
 const PaymentType = (props) => {
   const { visible, disabled, data, price, attach, setVisible, onFinish } = props;
-  console.log(attach, 3333);
-  
 
   const disabledBtnTicket = useMemo(() => !data?.enableRoomTicket, [data?.enableRoomTicket]);
   const payByTicket = () => {
@@ -32,27 +30,24 @@ const PaymentType = (props) => {
       console.log(apiParams, 888);
       
       const data = await placeOrder(apiParams);
-      console.log(data, 1234213421);
 
       const wxApiParams = {
         ...data,
-        success (res) {
-          console.log(res, 111);
+        success () {
           Taro.showToast({
-            title: '充值成功，正在跳转...',
+            title: '支付成功，正在跳转...',
             icon: 'none',
             duration: 3000,
           });
           // 3s后跳转
           setTimeout(() => {
-            Taro.switchTab({ url: '/pages/index/index' });
+            Taro.switchTab({ url: '/pages/order/index' });
           }, 3000);
         },
         fail (res) {
-          console.log(res, 222);
-
+          if (res?.errMsg.includes('cancel')) return;
           Taro.showToast({
-            title: '充值失败，请稍后重试...',
+            title: '支付失败，请稍后重试...',
             icon: 'none',
             duration: 3000
           });
