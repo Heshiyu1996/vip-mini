@@ -1,5 +1,6 @@
 import { View } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
+import { useState } from 'react';
 import { QRCode } from 'taro-code';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
@@ -12,20 +13,28 @@ const PageCode = () => {
     tabbar?.setSelected(2);
   });
 
+
+  const [vipId, setVipId] = useState('');
+  useDidShow(() => {
+    const userInfo = Taro.getStorageSync('userInfo');
+    const { id } = userInfo || {};
+    setVipId(`${id}`);
+  });
+
   return (
     <View className='m-code'>
       <View className='bg'></View>
       <View className='code-wrapper'>
         <View className='logo'></View>
         <View className='qrcode'>
-          <QRCode
+          {vipId && <QRCode
             // TODO: 会员ID
-            text='1'
+            text={vipId}
             size={200}
             scale={4}
             errorCorrectLevel='M'
             typeNumber={2}
-          />
+          />}
         </View>
         <View className='tip'>会员码每 30 秒自动更新</View>
 
