@@ -111,7 +111,7 @@ const PageBookDetail = () => {
       roomId: data.id,
       remark,
     };
-  }, [startDate, endDate, amount, contactName, contactNumber, data.roomType, data.id, data.remark]);
+  }, [startDate, endDate, amount, contactName, contactNumber, remark, data.roomType, data.id]);
 
   const [actualPrice, setActualPrice] = useState(0);
 

@@ -16,9 +16,10 @@ const tabList = [
   { title: '全部', },
   { title: '待确认' },
   { title: '已确认' }, 
-  { title: '已拒绝' },
+  { title: '已拒绝' }, 
+  { title: '已取消' },
 ];
-const tabCodeMap = ['', 'NEW', 'ACCEPTED', 'REJECTED', ];
+const tabCodeMap = ['', 'NEW', 'ACCEPTED', 'REJECTED', 'CANCELLED'];
 
 const PageOrder = () => {
   const [list ,setList] = useState([]);
