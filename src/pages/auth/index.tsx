@@ -62,7 +62,7 @@ export default class Login extends Component {
       <View className='m-login'>
         <View className='u-banner'>
           <View className='img-banner' />
-          <View className='title'>金水台VIP</View>
+          <View className='title'>翔顺金水台VIP会员</View>
         </View>
         <View className='u-tip'>
           <View className='sub-tip'>授权绑定手机号为您提供更好的服务</View>

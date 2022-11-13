@@ -1,3 +1,5 @@
+import Taro from "@tarojs/taro";
+
 export function debounce(fn, delay = 500) {
   let timer;
   return function() {
@@ -158,3 +160,17 @@ export function getShortDate (date) {
   const shortDate = `${`${Number(year)}`}-${`${Number(month)}`}-${`${Number(day)}`}`;
   return shortDate;
 }
+
+// 打开《金水台VIP会员卡充值消费服务协议》
+export const previewVipDoc = () => {
+  Taro.downloadFile({
+    url: 'https://vip.gdxsjt.com/medias/uploads/null_mp_20221113132355_94f514.docx',
+    success: function (res) {
+      var filePath = res.tempFilePath;
+      Taro.openDocument({
+        filePath: filePath,
+        fileType: 'docx'
+      });
+    }
+  });
+};

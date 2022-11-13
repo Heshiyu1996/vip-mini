@@ -1,15 +1,207 @@
-.m-vip-instruction {
-  padding: 0 16px;
+.m-page-recharge {
+  height: 100vh;
+  background-color: #F7F7F7;
 
-  .section {
-    .title {
-      margin-bottom: 8px;
-      opacity: 0.66;
-      font-family: PingFangSC-Semibold;
+  .title {
+    position: absolute;
+    z-index: 1;
+    top: 18px;
+    width: 100%;
+    text-align: center;
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #000000;
+    letter-spacing: 1.24px;
+    font-weight: 400;
+  }
+
+  .price-selector {
+    height: 106px;
+    margin-top: 10px;
+    
+    .bg {
+      position: absolute;
+      background-color: #FFF;
+      width: 100%;
+      height: 77px;
+    }
+
+    .price-wrapper {
+      display: flex;
+      flex-wrap: none;
+      height: 77px;
+      overflow-x: scroll;
+      padding: 8px 18px 40px;
+      align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 0 !important
+      }
+
+      .item {
+        display: inline-block;
+        z-index: 1;
+        min-width: 92px;
+        height: 30px;
+        line-height: 30px;
+        margin-right: 30px;
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #000000;
+        letter-spacing: 0.19px;
+        font-weight: 400;
+        text-align: center;
+        background-color: #EEE;
+        transition: all .3s ease;
+  
+        &.active {
+          position: relative;
+          background: #152736;
+          color: #FFFFFF;
+          
+          &::after {
+            content: ' ';
+            position: absolute;
+            z-index: 1;
+            top: 62px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            // width: 36px;
+            // height: 36px;
+            width: 0;
+            height: 0;
+            /* border-top: 50px solid red; */
+            border-right: 24px solid transparent;
+            border-left: 24px solid transparent; /* 去掉这行，是个直角三角形（直角边为左下角） */
+            border-bottom: 24px solid #FFF;
+            // background-color: #FFF;
+            // background-color: red;
+          }
+        }
+  
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .right-wrapper {
+    margin: 0 14px;
+    padding: 12px 12px 14px;
+    background-color: #FFF;
+
+    .row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 14px 0;
+
+      .item {
+        display: inline-block;
+        // margin-top: 26px;
+        min-width: 84px;
+        height: 64px;
+        text-align: center;
+  
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+  
+        .icon {
+          display: inline-block;
+          width: 27px;
+          height: 27px;
+  
+          &.vip-discount {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20220924101107_c72a33.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+  
+          &.hot-spring-or-park-discount {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20220924101229_716904.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+  
+          &.vip-day-discount {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20220924101429_a386d5.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+  
+          &.dining-discount {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20220924101449_78cf8d.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+  
+          &.birthday-package {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20220924101517_059f80.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+  
+          &.privilege {
+            background-image: url(https://vip.gdxsjt.com/medias/uploads/null_mp_20220924101528_4e5d62.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+  
+        .label {
+          opacity: 0.66;
+          font-family: PingFangSC-Semibold;
+          font-size: 14px;
+          color: #000000;
+          letter-spacing: 1.09px;
+          text-align: center;
+          font-weight: 600;
+        }
+  
+        .desc {
+          min-width: 100px;
+          max-width: 100px;
+          opacity: 0.66;
+          font-family: PingFangSC-Regular;
+          font-size: 14px;
+          color: #999999;
+          letter-spacing: 1.09px;
+          text-align: center;
+          font-weight: 400;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .footer {
+    margin-top: 38px;
+
+    .link-doc {
+      font-size: 12px;
+      color: #5D6ED5;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 0 14px;
+      font-family: PingFangSC-Regular;
       font-size: 14px;
-      color: #000000;
-      letter-spacing: 1.09px;
-      font-weight: 600;
+      color: #AEAEAE;
+      letter-spacing: 0.19px;
+      font-weight: 400;
+      line-height: 20px;
     }
   }
 }

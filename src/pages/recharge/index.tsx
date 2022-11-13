@@ -4,6 +4,7 @@ import { View, Text } from '@tarojs/components';
 import { getUserInfo, getRechargeConfigList, placeOrder } from '@/service';
 import { AtCheckbox } from 'taro-ui';
 import './index.less';
+import { previewVipDoc } from '@/utils/tool';
 
 const PageRecharge = () => {
   const [rechargeConfig, setRechargeConfigList] = useState([]);
@@ -85,8 +86,7 @@ const PageRecharge = () => {
           }, 3000);
         },
         fail (res) {
-          console.log(res, 222);
-
+          if (res?.errMsg.includes('cancel')) return;
           Taro.showToast({
             title: '充值失败，请稍后重试...',
             icon: 'none',
@@ -100,7 +100,6 @@ const PageRecharge = () => {
       
     }
   };
-
 
   return (
     <View className='m-page-recharge'>
@@ -183,7 +182,7 @@ const PageRecharge = () => {
           className='confirm-wrapper'
           selectedList={selectedReadList}
           options={[{
-            label: '我已详细阅读并了解充值服务须知',
+            label: '我已详细阅读并了解《充值消费服务协议》',
             value: true
           }]}
           onChange={onChangeRead}
@@ -194,6 +193,7 @@ const PageRecharge = () => {
         <View className='notice'>
           <View>说明:</View>
           <View>1. 线上充值暂支持 10000元、20000元、50000元 三类面额，若单笔大于5万（不含）请前往线下门店</View>
+          <View>2. 更多说明详见<Text className='link-doc' onClick={previewVipDoc}>《金水台VIP会员卡充值消费服务协议》</Text></View>
         </View>
       </View>
     </View>
