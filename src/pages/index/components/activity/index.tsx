@@ -53,7 +53,7 @@ const Activity = () => {
         {
           data?.map((item) => <View key={item.id} className='item-wrapper' onClick={() => goPage(item.link)}>
             <View className='label'>{item.title}</View>
-            <Image className='poster' src={defaultImage} />
+            <Image className='poster' src={item?.image} />
           </View>)
         }
       </View>

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import Taro from '@tarojs/taro';
+import { useRef, useState } from 'react';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
 import { View, Text, Image } from '@tarojs/components';
 import { getUserInfo } from '@/service';
@@ -15,10 +15,10 @@ const User = () => {
     const data = await getUserInfo();
     setUserInfo(data);
   };
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
 
+  useDidShow(() => {
+    fetchUserInfo();
+  });
 
   const doCall = () => {
     Taro.makePhoneCall({
@@ -65,7 +65,7 @@ const User = () => {
               <View className='label'>赠送金</View>
             </View>
             <View className='item' onClick={refTicketModal?.current?.show}>
-              <View className='value'>{userInfo.roomTicket || '-'}</View>
+              <View className='value'>{userInfo.roomTicket ?? '-'}</View>
               <View className='label'>
                 住房券
               </View>

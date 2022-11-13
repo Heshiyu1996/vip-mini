@@ -12,7 +12,8 @@ enum EPaymentType {
 }
 
 const PaymentType = (props) => {
-  const { visible, disabled, data, price, attach, setVisible, onFinish } = props;
+  const { visible, disabled, data, attach, setVisible, onFinish } = props;
+  const { originPrice } = data || {};
 
   const disabledBtnTicket = useMemo(() => !data?.enableRoomTicket, [data?.enableRoomTicket]);
   const payByTicket = () => {
@@ -24,10 +25,9 @@ const PaymentType = (props) => {
     try {
       const apiParams = {
         tradeType: 'BOOKING_ROOM', // 订房
-        amount: price, // 金额
+        amount: originPrice, // 金额（微信支付为原价）
         attach
       };
-      console.log(apiParams, 888);
       
       const data = await placeOrder(apiParams);
 

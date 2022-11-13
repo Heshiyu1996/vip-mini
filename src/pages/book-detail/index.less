@@ -22,8 +22,8 @@
   
       .content {
         margin-top: 8px;
-        font-size: 10px;
-        color: #AEAEAE;
+        font-size: 16px;
+        color: #999;
         letter-spacing: 0.78px;
         font-weight: 400;
         white-space: break-spaces;
@@ -127,8 +127,8 @@
       .content {
         height: 52px;
         line-height: 52px;
-        font-size: 10px;
-        color: #AEAEAE;
+        font-size: 16px;
+        color: #999;
         letter-spacing: 0.78px;
         font-weight: 400;
       }
@@ -143,10 +143,17 @@
         border-bottom: 1px solid #EEEEEE;
 
         .label {
-          width: 54px;
+          width: 60px;
           margin-right: 20px;
           font-size: 16px;
           color: #AEAEAE;
+          text-align: left;
+
+          &.required::after {
+            content: '*';
+            color: red;
+            margin-left: 4px;
+          }
         }
 
         .value {
@@ -170,6 +177,20 @@
             border: 0;
             font-size: 18px;
           }
+        }
+      }
+
+      .operate-wrapper {
+        height: 54px;
+        margin: 10px 0;
+
+        .btn-save {
+          border: 1px solid #152736;
+          border-radius: 8px;
+          text-align: center;
+          color: #152736;
+          height: 40px;
+          line-height: 40px;
         }
       }
     }

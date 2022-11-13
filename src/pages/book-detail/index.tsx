@@ -46,6 +46,17 @@ const PageBookDetail = () => {
       });
       return;
     }
+
+    const reg = /^1[3-9]\d{9}$/;
+    if (!reg.test(contactNumber)) {
+      Taro.showToast({
+        title: '请填写正确手机号',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
     setVisiblePaymentTypeDrawer(true);
   };
 
@@ -113,7 +124,34 @@ const PageBookDetail = () => {
     };
   }, [startDate, endDate, amount, contactName, contactNumber, remark, data.roomType, data.id]);
 
-  const [actualPrice, setActualPrice] = useState(0);
+  // 读取住房人缓存
+  const readBookInput = async () => {
+    try {
+      const inputStorage = Taro.getStorageSync('bookInput');
+      const { contactName, contactNumber } = inputStorage || {};
+      setContactName(contactName);
+      setContactNumber(contactNumber);
+    } catch (error) {
+      
+    }
+  };
+  useEffect(() => {
+    readBookInput();
+  }, []);
+  const saveInput = () => {
+    const inputStorage = {
+      // 入住人
+      contactName,
+      // 手机号
+      contactNumber
+    };
+    Taro.setStorageSync('bookInput', inputStorage);
+    Taro.showToast({
+      title: '保存成功',
+      icon: 'none',
+      duration: 2000
+    });
+  };
 
   return (
     <View className='m-book-detail'>
@@ -141,16 +179,19 @@ const PageBookDetail = () => {
             />
           </View>
           <View className='item'>
-            <Text className='label'>入住人</Text>
+            <Text className='label required'>入住人</Text>
             <Input className='value' value={contactName} onInput={val => setContactName(val.detail.value)} />
           </View>
           <View className='item'>
-            <Text className='label'>手机号</Text>
+            <Text className='label required'>手机号</Text>
             <Input className='value' value={contactNumber} onInput={val => setContactNumber(val.detail.value)} />
           </View>
           <View className='item'>
             <Text className='label'>备注</Text>
             <Input className='value' value={remark} onInput={val => setRemark(val.detail.value)} />
+          </View>
+          <View className='operate-wrapper'>
+            <View className='btn-save' onClick={saveInput}>保存当前填写信息</View>
           </View>
         </View>
       </View>
@@ -178,7 +219,7 @@ const PageBookDetail = () => {
         <View className='title'>入住须知</View>
         <View className='content'>
           <View className='item policy'>
-            <View className='sub-title'>入住及取消政策</View>
+            {/* <View className='sub-title'>入住及取消政策</View> */}
             <View className='content'>
               {data.policyDesc}
             </View>
@@ -198,7 +239,7 @@ const PageBookDetail = () => {
 
       <View className='bottom-wrapper'>
         {/* 总价与账单明细 */}
-        <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} setPrice={setActualPrice} />
+        <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} />
 
         <AtButton className='btn-submit' onClick={beforeSubmit}>提交订单</AtButton>
       </View>
@@ -210,7 +251,6 @@ const PageBookDetail = () => {
         disabled={disabled}
         visible={visiblePaymentTypeDrawer} 
         data={data}
-        price={actualPrice}
         attach={attach}
         setVisible={setVisiblePaymentTypeDrawer}
         onFinish={onSubmit}

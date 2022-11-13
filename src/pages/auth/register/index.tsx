@@ -11,7 +11,7 @@ import Taro from '@tarojs/taro';
 import './index.less';
 
 const MAX_LENGTH_CODE = 4;
-const FULL_TIME = 4;
+const FULL_TIME = 60;
 
 const PageRegister = () => {
   const [ownerName, setOwnerName] = useState('');

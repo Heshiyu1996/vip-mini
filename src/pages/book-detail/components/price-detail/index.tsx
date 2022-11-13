@@ -2,11 +2,11 @@ import { View, Text } from '@tarojs/components';
 import { useEffect, useState } from 'react';
 import { AtFloatLayout, AtIcon } from "taro-ui";
 import { getPriceDetail } from '@/service';
-import './index.less';
 import Taro from '@tarojs/taro';
+import './index.less';
 
 const ModalPriceDetail = (props) => {
-  const { amount, roomId, startDate, endDate, setPrice } = props;
+  const { amount, roomId, startDate, endDate } = props;
   const [visible, setVisible] = useState(false);
 
   const [data, setData] = useState({});
@@ -20,7 +20,6 @@ const ModalPriceDetail = (props) => {
     };
     const res = await getPriceDetail(params) || {};
     setData(res);
-    setPrice(res?.actualPrice); // 更新总价（微信支付用）
     Taro.hideLoading();
   };
   useEffect(() => {
