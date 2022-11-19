@@ -1,0 +1,56 @@
+.u-modal-info {
+  .at-modal__overlay {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .at-modal__container {
+    width: 354px;
+    height: 230px;
+    
+    .at-modal__header {
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      
+      &::after {
+        display: none;
+      }
+    }
+
+    .at-modal__content {
+      min-height: 100px;
+      max-height: 100px;
+      padding: 0 35px;
+      font-size: 14px;
+      color: #333333;
+
+      &::-webkit-scrollbar {
+        width: 0 !important;
+      }
+    }
+
+    .at-modal__footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+
+      &::before {
+        display: none;
+      }
+      
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 146px;
+        height: 43px;
+        background: #3D7DFF;
+        background-image: linear-gradient(135deg, #6C7C89 0%, #152736 100%);
+        border-radius: 21.5px;
+        font-size: 18px;
+        color: #FFFFFF;
+      }
+    }
+  }
+}

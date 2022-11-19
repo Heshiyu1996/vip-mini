@@ -5,6 +5,7 @@ import { getUserInfo, getRechargeConfigList, placeOrder } from '@/service';
 import { AtCheckbox } from 'taro-ui';
 import './index.less';
 import { previewVipDoc } from '@/utils/tool';
+import ModalContract from './components/modal-contract';
 
 const PageRecharge = () => {
   const [rechargeConfig, setRechargeConfigList] = useState([]);
@@ -50,26 +51,21 @@ const PageRecharge = () => {
   };
 
   const beforeSubmit = () => {
-    if (!selectedReadList?.length) {
-      Taro.showToast({
-        title: '请勾选“我已详细阅读并了解充值服务须知”',
-        icon: 'none',
-        duration: 2000
-      });
-      return;
-    }
-    submit();
+    // 显示条约弹窗
+    setVisibleContract(true);
   };
 
   // 充值
   const submit = async () => {
+    // 隐藏条约弹窗
+    setVisibleContract(false);
+
     try {
       const apiParams = {
         tradeType: 'RECHARGE', // 充值
         amount: selected?.amount, // 金额
       };
       const data = await placeOrder(apiParams);
-      console.log(data, 1234213421);
 
       const wxApiParams = {
         ...data,
@@ -100,6 +96,8 @@ const PageRecharge = () => {
       
     }
   };
+
+  const [visibleContract, setVisibleContract] = useState(true);
 
   return (
     <View className='m-page-recharge'>
@@ -140,45 +138,9 @@ const PageRecharge = () => {
           </View>}
         </View>
       </View>
-      {/* <View className='right-wrapper'>
-        <View className='row'>
-          <View className='item'>
-            <View className='icon vip-discount'></View>
-            <View className='label'>会员折扣</View>
-            <View className='desc'>门市价{currentConfig?.vipDiscount}折</View>
-          </View>
-          <View className='item'>
-            <View className='icon hot-spring-or-park-discount'></View>
-            <View className='label'>温泉/乐园</View>
-            <View className='desc'>直客通价{currentConfig?.hotSpringOrParkDiscount}元</View>
-          </View>
-          <View className='item'>
-            <View className='icon vip-day-discount'></View>
-            <View className='label'>会员日折扣</View>
-            <View className='desc'>门市价{currentConfig?.vipDayDiscount}折</View>
-          </View>
-        </View>
-        <View className='row'>
-          <View className='item'>
-            <View className='icon dining-discount'></View>
-            <View className='label'>餐饮折扣</View>
-            <View className='desc'>门市价{currentConfig?.diningDiscount}折</View>
-          </View>
-          <View className='item'>
-            <View className='icon birthday-package'></View>
-            <View className='label'>生日大礼包</View>
-            <View className='desc'>{currentConfig?.birthdayPackage}</View>
-          </View>
-          <View className='item'>
-            <View className='icon privilege'></View>
-            <View className='label'>专享特权</View>
-            <View className='desc'>{currentConfig?.privilege}</View>
-          </View>
-        </View>
-      </View> */}
 
       <View className='footer'>
-        <AtCheckbox
+        {/* <AtCheckbox
           className='confirm-wrapper'
           selectedList={selectedReadList}
           options={[{
@@ -186,8 +148,9 @@ const PageRecharge = () => {
             value: true
           }]}
           onChange={onChangeRead}
-        />
+        /> */}
 
+        <ModalContract visible={visibleContract} onOk={submit} onClose={() => setVisibleContract(false)} />
         <View className='btn-recharge' onClick={beforeSubmit}>立即充值</View>
 
         <View className='notice'>

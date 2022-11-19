@@ -4,9 +4,9 @@ import { View, Text } from '@tarojs/components';
 // import { getRechargeConfigList } from '@/service';
 import { previewVipDoc } from '@/utils/tool';
 import './index.less';
+import InfoModal from './components/info-modal';
 
 const PageVipInstruction = () => {
-  // const [vipConfigList, setVipConfigList] = useState([]);
   const [vipConfig, setVipConfigList] = useState([]);
   const [selected, setSelected] = useState({});
 
@@ -15,14 +15,6 @@ const PageVipInstruction = () => {
     const target = vipConfig.find((item) => item.id === selected?.id) || {};
     return target;
   }, [selected?.id, vipConfig]);
-
-  // const fetchRechargeConfig = async () => {
-  //   const res = await getRechargeConfigList();
-  //   setRechargeConfigList(res?.list);
-  // };
-  // useEffect(() => {
-  //   fetchRechargeConfig();
-  // }, []);
 
   useEffect(() => {
     if (!vipConfig?.length) return;
@@ -40,6 +32,18 @@ const PageVipInstruction = () => {
     setVipConfigList(configList);
     // console.log(vipConfig, 998);
   }, []);
+
+
+  const [info, setInfo] = useState({});
+  const [visible, setVisible] = useState(false);
+  const showInfo = (title, desc) => {
+    const data = { 
+      title,
+      desc
+    };
+    setInfo(data);
+    setVisible(true);
+  };
 
   return (
     <View className='m-page-recharge'>
@@ -60,56 +64,44 @@ const PageVipInstruction = () => {
         </View>
       </View>
 
-      {/* <View className='right-wrapper'>
-        <View className='row'>
-          {!!currentConfig?.giftAmount && <View className='item'>
-            <View className='icon vip-discount'></View>
-            <View className='label'>赠送金</View>
-            <View className='desc'>{currentConfig?.giftAmount}元</View>
-          </View>}
-          {!!currentConfig?.roomTicketAmount && <View className='item'>
-            <View className='icon hot-spring-or-park-discount'></View>
-            <View className='label'>住房券</View>
-            <View className='desc'>{currentConfig?.roomTicketAmount}张</View>
-          </View>}
-        </View>
-      </View> */}
       <View className='right-wrapper'>
         <View className='row'>
-          <View className='item'>
+          <View className='item' onClick={() => showInfo('会员折扣', `门市价${currentConfig?.vipDiscount}折`)}>
             <View className='icon vip-discount'></View>
             <View className='label'>会员折扣</View>
             <View className='desc'>门市价{currentConfig?.vipDiscount}折</View>
           </View>
-          <View className='item'>
+          <View className='item' onClick={() => showInfo('温泉/乐园', `直客通价${currentConfig?.hotSpringOrParkDiscount}元`)}>
             <View className='icon hot-spring-or-park-discount'></View>
             <View className='label'>温泉/乐园</View>
             <View className='desc'>直客通价{currentConfig?.hotSpringOrParkDiscount}元</View>
           </View>
-          <View className='item'>
+          <View className='item' onClick={() => showInfo('会员日折扣', `门市价${currentConfig?.vipDayDiscount}折`)}>
             <View className='icon vip-day-discount'></View>
             <View className='label'>会员日折扣</View>
             <View className='desc'>门市价{currentConfig?.vipDayDiscount}折</View>
           </View>
         </View>
         <View className='row'>
-          <View className='item'>
+          <View className='item' onClick={() => showInfo('餐饮折扣', `门市价${currentConfig?.diningDiscount}折`)}>
             <View className='icon dining-discount'></View>
             <View className='label'>餐饮折扣</View>
             <View className='desc'>门市价{currentConfig?.diningDiscount}折</View>
           </View>
-          <View className='item'>
+          <View className='item' onClick={() => showInfo('生日大礼包', `${currentConfig?.birthdayPackage}`)}>
             <View className='icon birthday-package'></View>
             <View className='label'>生日大礼包</View>
             <View className='desc'>{currentConfig?.birthdayPackage}</View>
           </View>
-          <View className='item'>
+          <View className='item' onClick={() => showInfo('专享特权', `${currentConfig?.privilege}`)}>
             <View className='icon privilege'></View>
             <View className='label'>专享特权</View>
             <View className='desc'>{currentConfig?.privilege}</View>
           </View>
         </View>
       </View>
+
+      <InfoModal visible={visible} data={info} onClose={() => setVisible(false)} />
 
       <View className='footer'>
         <View className='notice'>
