@@ -97,7 +97,7 @@ const PageRecharge = () => {
     }
   };
 
-  const [visibleContract, setVisibleContract] = useState(true);
+  const [visibleContract, setVisibleContract] = useState(false);
 
   return (
     <View className='m-page-recharge'>
