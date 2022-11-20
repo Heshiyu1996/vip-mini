@@ -1,12 +1,15 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Taro, { useDidShow } from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
 import { View, Text, Image } from '@tarojs/components';
 import { getUserInfo } from '@/service';
 import { SERVICE_PHONE_NUMBER } from '@/utils/config';
 import { formatPrice } from '@/utils/tool';
+import bus from '@/utils/bus';
 import TicketModal from './ticket-modal';
 import './index.less';
+// 默认用户头像
+const defaultAvatarUrl = "https://vip.gdxsjt.com/medias/uploads/null_mp_20220924111228_cad9ff.svg";
 
 const User = () => {
   // 获取用户信息
@@ -14,6 +17,8 @@ const User = () => {
   const fetchUserInfo = async () => {
     const data = await getUserInfo();
     setUserInfo(data);
+    // 手动设置ifLogin
+    setIfLogin(true);
   };
 
   useDidShow(() => {
@@ -32,14 +37,38 @@ const User = () => {
   };
 
   const refTicketModal = useRef();
+
+  const [ifLogin, setIfLogin] = useState(true);
+  useEffect(() => {
+    // 监听一个事件，接受参数
+    bus.on('ifLogin', (data) => {
+      console.log(data, 5412);
+      setIfLogin(data);
+    });
+  }, []);
+
+  const goLogin = () => {
+    Taro.redirectTo({
+      url: '/pages/auth/index'
+    });
+  };
+
   return (
     <View className='u-mine-user'>
       <View className='u-info'>
-        <Image className='avatar' src={userInfo.avatarUrl} />
-        <View className='nickname'>{userInfo.ownerName}</View>
-        <View className='phone'>
-          {userInfo.mobileNumber}
-        </View>
+        <Image className='avatar' src={userInfo.avatarUrl || defaultAvatarUrl} />
+        {ifLogin ? <View className='if-login'>
+          <View className='nickname'>{userInfo.ownerName}</View>
+          <View className='phone'>
+            {userInfo.mobileNumber}
+          </View>
+        </View> : 
+          <View className='no-login' onClick={goLogin}>
+            <View className='tip'>
+              请登录
+            </View>
+          </View>}
+
       </View>
 
       <View className='u-content'>

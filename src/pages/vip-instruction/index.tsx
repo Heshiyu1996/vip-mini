@@ -5,6 +5,7 @@ import { View, Text } from '@tarojs/components';
 import { previewVipDoc } from '@/utils/tool';
 import './index.less';
 import InfoModal from './components/info-modal';
+import { getVipConfigList } from '@/service';
 
 const PageVipInstruction = () => {
   const [vipConfig, setVipConfigList] = useState([]);
@@ -27,9 +28,19 @@ const PageVipInstruction = () => {
 
   console.log(vipConfig, 12312321);
 
+  const fetchVipConfigList = async () => {
+    try {
+      const data = await getVipConfigList();
+      setVipConfigList(data);
+      // Taro.setStorageSync('vipConfig', data);
+    } catch (error) {
+      
+    }
+  };
   useEffect(() => {
-    const configList = Taro.getStorageSync('vipConfig');
-    setVipConfigList(configList);
+    fetchVipConfigList();
+    // const configList = Taro.getStorageSync('vipConfig');
+    // setVipConfigList(configList);
     // console.log(vipConfig, 998);
   }, []);
 

@@ -20,36 +20,56 @@
     background-size: 100% 100%;
   }
 
-  .nickname {
-    position: absolute;
-    top: 23px;
-    left: 102px;
-    font-size: 18px;
-    color: #000000;
+  .if-login {
+    .nickname {
+      position: absolute;
+      top: 23px;
+      left: 102px;
+      font-size: 18px;
+      color: #000000;
 
-    .id {
-      margin-left: 8px;
-      font-size: 14px;
-      color: #999;
+      .id {
+        margin-left: 8px;
+        font-size: 14px;
+        color: #999;
+      }
+    }
+
+    .greeting {
+      position: absolute;
+      top: 56px;
+      left: 102px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.66;
+      font-family: PingFangSC-Regular;
+      font-size: 12px;
+      color: #000000;
+      letter-spacing: 0.93px;
+      font-weight: 400;
+
+      .icon-right {
+
+      }
     }
   }
 
-  .greeting {
-    position: absolute;
-    top: 56px;
-    left: 102px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.66;
-    font-family: PingFangSC-Regular;
-    font-size: 12px;
-    color: #000000;
-    letter-spacing: 0.93px;
-    font-weight: 400;
-
-    .icon-right {
-
+  .no-login {
+    .tip {
+      position: absolute;
+      top: 36px;
+      left: 102px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.66;
+      font-family: PingFangSC-Regular;
+      font-size: 18px;
+      color: #000000;
+      letter-spacing: 0.93px;
+      font-weight: 400;
     }
   }
+
 }

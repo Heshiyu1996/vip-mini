@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-
+import bus from '@/utils/bus';
 import { IHttpMethod } from './interface';
 import { 
   BASE_API, 
@@ -72,9 +72,8 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
         ERROR_TYPE_CODE.EXPIRED_SESSION,
         ERROR_TYPE_CODE.USER_UNAUTHORIZED_MOBILE_NUMBER
       ].includes(res.data?.data?.errorType)) {
-        Taro.redirectTo({
-          url: '/pages/auth/index'
-        });
+        // 触发一个事件，传参
+        bus.trigger('ifLogin', false);
       }
       throw res;
     });

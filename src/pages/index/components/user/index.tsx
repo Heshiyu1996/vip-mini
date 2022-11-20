@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View, Text, Image } from '@tarojs/components';
 import { getUserInfo } from '@/service';
+import Taro, { useDidShow } from '@tarojs/taro';
+import bus from '@/utils/bus';
 import './index.less';
 
 // 默认用户头像
@@ -27,24 +29,61 @@ const User = () => {
   // 获取用户信息
   const [userInfo, setUserInfo] = useState({});
   const fetchUserInfo = async () => {
-    const data = await getUserInfo();
-    setUserInfo(data);
+    try {
+      const data = await getUserInfo();
+      console.log(data, 1234);
+      setUserInfo(data);
+      // 手动设置ifLogin
+      setIfLogin(true);
+    } catch (error) {
+      // TODO: 在这判断未登录
+      console.log(error, 3949);
+      
+    }
   };
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchUserInfo();
+  // }, []);
+
+  useDidShow(() => {
     fetchUserInfo();
+  });
+
+  const [ifLogin, setIfLogin] = useState(true);
+  useEffect(() => {
+    // 监听一个事件，接受参数
+    bus.on('ifLogin', (data) => {
+      setIfLogin(data);
+    });
   }, []);
+
+  const goLogin = () => {
+    Taro.redirectTo({
+      url: '/pages/auth/index'
+    });
+  };
 
   return (
     <View className='u-user'>
       <Image className='avatar' src={userInfo.avatarUrl || defaultAvatarUrl}></Image>
-      <View className='nickname'>
-        {userInfo.ownerName}
-        <Text className='id'>(No.{userInfo.id})</Text>
-      </View>
+      {
+        ifLogin ? 
+          <View className='if-login'>
+            <View className='nickname'>
+              {userInfo.ownerName}
+              <Text className='id'>(No.{userInfo.id})</Text>
+            </View>
       
-      <View className='greeting'>
-        {getGreetTime()}，尊贵的{userInfo.currentLevel}
-      </View>
+            <View className='greeting'>
+              {getGreetTime()}，尊贵的{userInfo.currentLevel}
+            </View>
+          </View> : 
+          <View className='no-login' onClick={goLogin}>
+            <View className='tip'>
+              请登录
+            </View>
+          </View>
+      }
     </View>
   );
 };

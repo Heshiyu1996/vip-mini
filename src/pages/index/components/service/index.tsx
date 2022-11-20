@@ -12,7 +12,7 @@ const Service = () => {
 
   return (
     <View className='u-service'>
-      <View className='item-wrapper' onClick={() => Taro.navigateTo({ url: `/pages/recharge/index` })}>
+      <View className='item-wrapper' onClick={() => Taro.navigateTo({ url: `/pages/vip-instruction/index` })}>
         <View className='label'>会员等级</View>
         <View className='sub-label'>了解优惠折扣</View>
         <View className='icon vip' />

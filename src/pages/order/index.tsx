@@ -6,6 +6,7 @@ import { getOrderList, deleteOrder,
   // applyRefundOrder
 } from '@/service/api/order';
 import Empty from '@/components/empty';
+import bus from '@/utils/bus';
 import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
@@ -41,6 +42,8 @@ const PageOrder = () => {
     setList(newList);
     // 更新当前页码
     refCurrentPage.current++;
+    // 手动设置ifLogin
+    setIfLogin(true);
   };
   // useEffect(() => {
   //   fetchOrderList(true);
@@ -132,44 +135,64 @@ const PageOrder = () => {
     fetchOrderList(true, status);
   };
 
+  const [ifLogin, setIfLogin] = useState(true);
+  useEffect(() => {
+    // 监听一个事件，接受参数
+    bus.on('ifLogin', (data) => {
+      setIfLogin(data);
+    });
+  }, []);
+
+  const goLogin = () => {
+    Taro.redirectTo({
+      url: '/pages/auth/index'
+    });
+  };
+
   return (
     <View className='m-order'>
       <View style={{ marginTop: `${titleBarHeight + 10}px` }}>
         <AtTabs className='u-tabs' current={current} tabList={tabList} onClick={onClick} />
       </View>
 
-      <View className='order-list'>
-        {
-          list?.length ?
-            <View>
-              {list?.map((item) => 
-                <View key={item.id} className='item'>
-                  <Image className='img' src={item.coverImage} />
-                  <View className='info'>
-                    <View className='type'>{item.roomType}</View>
-                    <View className='desc'>
-                      <View>到店: {item.orderStartDate}</View>
-                      <View>离店: {item.orderEndDate}</View>
+      {ifLogin ? 
+        <View className='order-list'>
+          {
+            list?.length ?
+              <View>
+                {list?.map((item) => 
+                  <View key={item.id} className='item'>
+                    <Image className='img' src={item.coverImage} />
+                    <View className='info'>
+                      <View className='type'>{item.roomType}</View>
+                      <View className='desc'>
+                        <View>到店: {item.orderStartDate}</View>
+                        <View>离店: {item.orderEndDate}</View>
+                      </View>
+                      <View className={`status status-${item.orderStatusCode}`}>{item.orderStatus}</View>
+                      <View className='price'>{item.totalPrice}</View>
+                      <View className='btn-wrapper'>
+                        {/* “待确认”、“已确认” 都可以申请退款 */}
+                        {/* {['NEW', 'ACCEPTED'].includes(item.orderStatusCode) && <View className='btn btn-refund' onClick={() => beforeRefund(item.id)}>申请退款</View>} */}
+                        <View className='btn btn-remove' onClick={() => beforeRemove(item.id)}>删除</View>
+                      </View>
                     </View>
-                    <View className={`status status-${item.orderStatusCode}`}>{item.orderStatus}</View>
-                    <View className='price'>{item.totalPrice}</View>
-                    <View className='btn-wrapper'>
-                      {/* “待确认”、“已确认” 都可以申请退款 */}
-                      {/* {['NEW', 'ACCEPTED'].includes(item.orderStatusCode) && <View className='btn btn-refund' onClick={() => beforeRefund(item.id)}>申请退款</View>} */}
-                      <View className='btn btn-remove' onClick={() => beforeRemove(item.id)}>删除</View>
-                    </View>
-                  </View>
-                </View>)}
+                  </View>)}
 
-              {hasMore ? 
-                <View className='tip' onClick={() => fetchOrderList()}>加载更多</View> : 
-                <View className='tip'>没有更多了</View>
-              }
-            </View>
-            :
-            <Empty className='empty-wrapper' />
-        }
-      </View>
+                {hasMore ? 
+                  <View className='tip' onClick={() => fetchOrderList()}>加载更多</View> : 
+                  <View className='tip'>没有更多了</View>
+                }
+              </View>
+              :
+              <Empty className='empty-wrapper' />
+          }
+        </View> 
+        : 
+        <View className='no-login' onClick={goLogin}>
+          登录
+        </View>
+      }
     </View>
   );
 };
