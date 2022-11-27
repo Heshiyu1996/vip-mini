@@ -6,8 +6,8 @@ import './index.less';
 const Basis = () => {
   const goMap = () => {
     Taro.openLocation({
-      latitude: 22.608674,
-      longitude: 112.472047,
+      latitude: 22.609399,
+      longitude: 112.475393,
       name: '翔顺金水台温泉特色小镇',
       address: '广东省云浮市新兴县水台镇翔顺金水台温泉特色小镇',
       scale: 28
