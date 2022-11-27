@@ -42,7 +42,6 @@ const User = () => {
   useEffect(() => {
     // 监听一个事件，接受参数
     bus.on('ifLogin', (data) => {
-      console.log(data, 5412);
       setIfLogin(data);
     });
   }, []);

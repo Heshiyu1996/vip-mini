@@ -6,6 +6,8 @@ import {
   HTTP_STATUS, ERROR_TYPE_CODE } from './const';
 import { logError } from './utils';
 
+let lockLoginTipModal = false;
+
 // 参考：https://segmentfault.com/a/1190000016533592
 const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
   let { url, data } = params;
@@ -59,14 +61,6 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
         return res?.data?.data;
       }
 
-      // 统一登录态问题（在这里处理error，才能被业务层捕获）
-      setTimeout(() => {
-        Taro.showToast({
-          title: res.data?.data?.errorMsg || res.data?.message,
-          icon: 'none',
-          duration: 2000
-        });
-      });
       if ([
         ERROR_TYPE_CODE.NOT_LOGIN,
         ERROR_TYPE_CODE.EXPIRED_SESSION,
@@ -74,6 +68,37 @@ const baseOptions = (params, method: keyof IHttpMethod = 'GET') => {
       ].includes(res.data?.data?.errorType)) {
         // 触发一个事件，传参
         bus.trigger('ifLogin', false);
+        if (!lockLoginTipModal) {
+          lockLoginTipModal = true;
+
+          // 登录询问弹窗
+          Taro.showModal({
+            // title: '请先登录',
+            content: '请先登录',
+            confirmText: '去登录',
+            cancelText: '稍后再说',
+            success: function (res) {
+              if (res.confirm) {
+                Taro.redirectTo({
+                  url: '/pages/auth/index'
+                });
+              }
+            },
+            complete: () => {
+              // 重置visible，后续可以打开弹窗
+              lockLoginTipModal = false;
+            }
+          });
+        }
+      } else {
+        // 非登录态问题的error
+        setTimeout(() => {
+          Taro.showToast({
+            title: res.data?.data?.errorMsg || res.data?.message,
+            icon: 'none',
+            duration: 2000
+          });
+        });
       }
       throw res;
     });
