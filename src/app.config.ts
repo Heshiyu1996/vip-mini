@@ -14,6 +14,8 @@ export default defineAppConfig({
     'pages/hotel-intro/index',
     'pages/web-view/index',
     'pages/gift-store/index',
+    'pages/gift-record/index',
+
     // 奖励金
     'pages/reward/index',
     'pages/reward-record/index',
