@@ -16,6 +16,7 @@ export default defineAppConfig({
     'pages/gift-store/index',
     // 奖励金
     'pages/reward/index',
+    'pages/reward-record/index',
   ],
   window: {
     backgroundTextStyle: 'light',
