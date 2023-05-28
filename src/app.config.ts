@@ -12,7 +12,8 @@ export default defineAppConfig({
     'pages/balance-record/index',
     'pages/vip-instruction/index',
     'pages/hotel-intro/index',
-    'pages/web-view/index'
+    'pages/web-view/index',
+    'pages/gift-store/index'
   ],
   window: {
     backgroundTextStyle: 'light',
