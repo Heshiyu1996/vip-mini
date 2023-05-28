@@ -102,10 +102,10 @@ const PageGiftStore = () => {
 
   return (
     <View className='m-page-gift-store'>
-      <View className='u-balance'>
+      <View className='u-gift-balance'>
         <Text className='label'>当前积分</Text>
         <Text className='value'>{totalBalance}</Text>
-        <Text className='btn-history' onClick={() => Taro.navigateTo({ url: `/pages/balance-record/index` })}>积分记录</Text>
+        <Text className='btn-history' onClick={() => Taro.navigateTo({ url: `/pages/gift-record/index` })}>积分记录</Text>
         <View className='btn-sign' onClick={beforeSubmit}>立即签到</View>
       </View>
 
