@@ -13,7 +13,9 @@ export default defineAppConfig({
     'pages/vip-instruction/index',
     'pages/hotel-intro/index',
     'pages/web-view/index',
-    'pages/gift-store/index'
+    'pages/gift-store/index',
+    // 奖励金
+    'pages/reward/index',
   ],
   window: {
     backgroundTextStyle: 'light',
