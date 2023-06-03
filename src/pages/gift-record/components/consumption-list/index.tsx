@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useReachBottom } from '@tarojs/taro';
-import { getConsumptionList } from '@/service/api/recharge';
+import { getPointConsumptionList } from '@/service/api/gift';
 import { View } from '@tarojs/components';
 import Empty from '@/components/empty';
 import { RechargeChannelMap } from '../../type';
@@ -10,13 +10,13 @@ const ConsumptionList = () => {
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
   const refTotal = useRef(1);
-  const fetchConsumptionList = async (isNew?) => {
+  const fetchPointConsumptionList = async (isNew?) => {
     const currentPage = isNew ? 1 : refCurrentPage.current;
     const params = {
       currentPage,
       pageSize: 10
     };
-    const res = await getConsumptionList(params);
+    const res = await getPointConsumptionList(params);
     const { list: data, total } = res || {};
     // 记录总数
     refTotal.current = total;
@@ -27,12 +27,12 @@ const ConsumptionList = () => {
     refCurrentPage.current++;
   };
   useEffect(() => {
-    fetchConsumptionList(true);
+    fetchPointConsumptionList(true);
   }, []);
   useReachBottom(() => {
     // 是否还可加载
     if (hasMore) {
-      fetchConsumptionList();
+      fetchPointConsumptionList();
     }
   });
 
@@ -41,7 +41,7 @@ const ConsumptionList = () => {
   }, [list, refTotal.current]);
 
   return (
-    <View className='u-consumption-list'>
+    <View className='u-point-consumption-list'>
       {
         list?.length ?
           <View>
@@ -54,7 +54,7 @@ const ConsumptionList = () => {
                 </View>
               </View>)}
             {hasMore ? 
-              <View className='tip' onClick={() => fetchConsumptionList()}>加载更多</View> : 
+              <View className='tip' onClick={() => fetchPointConsumptionList()}>加载更多</View> : 
               <View className='tip'>没有更多了</View>
             }
           </View>

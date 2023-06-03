@@ -5,3 +5,4 @@ export * from './api/order';
 export * from './api/recharge';
 export * from './api/home';
 export * from './api/reward';
+export * from './api/gift';

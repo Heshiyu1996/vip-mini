@@ -74,7 +74,7 @@ const PageImproveInfo = () => {
         </View>
       </View>
       <View className='operate-wrapper'>
-        <View className='btn-save' onClick={onSubmit}>提交</View>
+        <View className='btn-submit' onClick={onSubmit}>提交</View>
       </View>
     </View>
   );

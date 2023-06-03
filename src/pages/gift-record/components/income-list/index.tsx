@@ -1,21 +1,21 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useReachBottom } from '@tarojs/taro';
 import { View } from '@tarojs/components';
-import { getRechargeList } from '@/service/api/recharge';
+import { getPointIncomeList } from '@/service/api/gift';
 import Empty from '@/components/empty';
 import './index.less';
 
-const RechargeList = () => {
+const IncomeList = () => {
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
   const refTotal = useRef(1);
-  const fetchRechargeList = async (isNew?) => {
+  const fetchPointIncomeList = async (isNew?) => {
     const currentPage = isNew ? 1 : refCurrentPage.current;
     const params = {
       currentPage,
       pageSize: 10
     };
-    const res = await getRechargeList(params);
+    const res = await getPointIncomeList(params);
     const { list: data, total } = res || {};
     // 记录总数
     refTotal.current = total;
@@ -26,12 +26,12 @@ const RechargeList = () => {
     refCurrentPage.current++;
   };
   useEffect(() => {
-    fetchRechargeList(true);
+    fetchPointIncomeList(true);
   }, []);
   useReachBottom(() => {
     // 是否还可加载
     if (hasMore) {
-      fetchRechargeList();
+      fetchPointIncomeList();
     }
   });
 
@@ -40,7 +40,7 @@ const RechargeList = () => {
   }, [list, refTotal.current]);
 
   return (
-    <View className='u-recharge-list'>
+    <View className='u-point-income-list'>
       {
         list?.length ?
           <View>
@@ -53,7 +53,7 @@ const RechargeList = () => {
                 </View>
               </View>)}
             {hasMore ? 
-              <View className='tip' onClick={() => fetchRechargeList()}>加载更多</View> : 
+              <View className='tip' onClick={() => fetchPointIncomeList()}>加载更多</View> : 
               <View className='tip'>没有更多了</View>
             }
           </View>
@@ -63,4 +63,4 @@ const RechargeList = () => {
     </View>
   );
 };
-export default RechargeList;
+export default IncomeList;

@@ -2,8 +2,8 @@ import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { useState } from 'react';
 import { AtTabs, AtTabsPane } from 'taro-ui';
-import ReChargeList from './components/recharge-list';
-import ConsumptionList from './components/consumption-list';
+import IncomeList from './components/income-list';
+import WithdrawList from './components/withdraw-list';
 import './index.less';
 
 // const { statusBarHeight } = Taro.getSystemInfoSync();
@@ -26,11 +26,11 @@ const PageBalanceRecord = () => {
     <View className='m-reward-record'>
       <AtTabs className='u-tabs' current={current} tabList={tabList} onClick={onClick}>
         <AtTabsPane className='content' current={current} index={0} >
-          <ReChargeList />
+          <IncomeList />
         </AtTabsPane>
 
         <AtTabsPane className='content'  current={current} index={1}>
-          <ConsumptionList />
+          <WithdrawList />
         </AtTabsPane>
       </AtTabs>
     </View>
