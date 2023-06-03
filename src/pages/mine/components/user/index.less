@@ -46,6 +46,21 @@
       letter-spacing: 0.93px;
       font-weight: 400;
     }
+
+    .btn-improve {
+      position: absolute;
+      top: 41px;
+      right: 0;
+      width: 70px;
+      height: 23px;
+      border-radius: 12px;
+      color: #666666;
+      border: 1px solid #666666;
+      // background-image: linear-gradient(135deg, #6C7C89 0%, #152736 100%);;
+      font-size: 12px;
+      text-align: center;
+      line-height: 23px;
+    }
   }
 
   .no-login {
@@ -100,7 +115,7 @@
     }
 
     .wallet-wrapper {
-      height: 242px;
+      // height: 242px;
       padding: 0 28px;
       margin-top: -30px;
       background: #FFFFFF;
@@ -155,14 +170,18 @@
         }
 
         .btn-wrapper {
-          display: flex;
-          justify-content: space-around;
+          // display: flex;
+          // justify-content: space-between;
           margin-top: 18px;
+          flex-wrap: wrap;
 
           .btn {
-            width: 64px;
-            height: 64px;
+            display: inline-block;
+            width: 80px;
+            // height: 80px;
             text-align: center;
+            margin-right: 8px;
+            margin-bottom: 20px;
 
             .icon {
               width: 40px;

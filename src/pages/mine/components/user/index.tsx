@@ -52,6 +52,10 @@ const User = () => {
     });
   };
 
+  const improveInfo = () => {
+    Taro.navigateTo({ url: `/pages/book-detail/index` });
+  };
+
   return (
     <View className='u-mine-user'>
       <View className='u-info'>
@@ -61,6 +65,7 @@ const User = () => {
           <View className='phone'>
             {userInfo.mobileNumber}
           </View>
+          <View className='btn-improve' onClick={improveInfo}>资料完善</View>
         </View> : 
           <View className='no-login' onClick={goLogin}>
             <View className='tip'>
@@ -119,6 +124,24 @@ const User = () => {
               <View className='btn' onClick={doCall}>
                 <View className='icon contract'></View>
                 <View className='label'>联系客服</View>
+              </View>
+              <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/gift-store/index` })}>
+                <View className='icon contract'></View>
+                <View className='label'>积分商城</View>
+              </View>
+            </View>
+          </View>
+
+          <View className='service'>
+            <View className='title'>员工专区</View>
+            <View className='btn-wrapper'>
+              <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/reward-record/index` })}>
+                <View className='icon recharge'></View>
+                <View className='label'>奖励金明细</View>
+              </View>
+              <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/reward/index` })}>
+                <View className='icon recharge'></View>
+                <View className='label'>奖励金提现</View>
               </View>
             </View>
           </View>
