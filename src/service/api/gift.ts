@@ -6,6 +6,9 @@ export const getPointBalance = () => get(`/api/point/balance`);
 // 获取积分商城签到状态
 export const getCheckInStatus = () => get(`/api/point/mall/checkIn/status`);
 
+// 获得积分商城礼品列表
+export const getPointGiftList = () => get(`/api/point/mall/list`);
+
 // 积分收入明细
 export const getPointIncomeList = (params) => get(`/api/point/income/list`, params);
 
