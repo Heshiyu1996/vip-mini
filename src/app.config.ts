@@ -19,6 +19,9 @@ export default defineAppConfig({
     // 奖励金
     'pages/reward/index',
     'pages/reward-record/index',
+
+    // 资料完善
+    'pages/improve-info/index',
   ],
   window: {
     backgroundTextStyle: 'light',

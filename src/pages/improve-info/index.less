@@ -1,0 +1,80 @@
+.m-improve-info {
+  min-height: 100vh;
+  background-color: #F7F7F7;
+  padding-bottom: 120px;
+
+  .form-wrapper {
+    .item {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 18px;
+      background-color: #FFF;
+      margin-top: 10px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      .label {
+        width: 80px;
+        margin-right: 20px;
+        font-size: 16px;
+        color: #333;
+        text-align: left;
+
+        &.required::after {
+          content: '*';
+          color: red;
+          margin-left: 4px;
+        }
+      }
+
+      .value {
+        display: flex;
+        flex: 1;
+        font-size: 16px;
+        display: inline-block;
+      }
+
+      .room-amount {
+        display: flex;
+        border: 0;
+
+        .at-input-number__btn {
+          color: #152736;
+          transform: scale(0.6);
+        }
+
+        input {
+          flex: 1;
+          border: 0;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .operate-wrapper {
+    height: 54px;
+    padding: 0 10px;
+    margin-top: 50px;
+
+    .btn-submit {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 43px;
+      background: #3D7DFF;
+      background-image: linear-gradient(135deg, #6C7C89 0%, #152736 100%);
+      border-radius: 21.5px;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.29px;
+      text-align: center;
+      font-weight: 400;
+    }
+  }
+}
