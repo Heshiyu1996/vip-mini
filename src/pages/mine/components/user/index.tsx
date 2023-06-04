@@ -93,12 +93,12 @@ const User = () => {
             </View>
             <View className='item'>
               <View className='value'>
-                {calcBalance(userInfo.giftBalance)}
+                {calcBalance(userInfo.rewardBalance)}
               </View>
               <View className='label'>奖励金</View>
             </View>
-            <View className='item' onClick={refTicketModal?.current?.show}>
-              <View className='value'>{userInfo.totalPointBalance ?? '-'}</View>
+            <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/gift-store/index` })}>
+              <View className='value'>{calcBalance(userInfo.totalPointBalance)}</View>
               <View className='label'>
                 积分
               </View>
@@ -136,11 +136,11 @@ const User = () => {
             <View className='title'>员工专区</View>
             <View className='btn-wrapper'>
               <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/reward-record/index` })}>
-                <View className='icon recharge'></View>
+                <View className='icon reward-detail'></View>
                 <View className='label'>奖励金明细</View>
               </View>
               <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/reward/index` })}>
-                <View className='icon recharge'></View>
+                <View className='icon reward-withdraw'></View>
                 <View className='label'>奖励金提现</View>
               </View>
             </View>

@@ -20,3 +20,6 @@ export const regist = (params?) => post(`/api/user/register`, params);
 
 // 获取当前用户信息
 export const getUserInfo = () => get(`/api/user/info`);
+
+// 更新用户头像和昵称（新增兴趣爱好）
+export const updateUserInfo = (params?) => post(`/api/user/update`, params);

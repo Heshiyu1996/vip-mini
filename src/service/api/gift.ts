@@ -17,3 +17,6 @@ export const getPointConsumptionList = (params) => get(`/api/point/consumption/l
 
 // 商城签到
 export const pointCheckIn = () => post(`/api/point/mall/checkIn`);
+
+// 兑换商品
+export const exchangePoint = (params) => post(`/api/point/mall/exchange/${params?.itemId}`, params);
