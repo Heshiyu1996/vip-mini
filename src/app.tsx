@@ -1,23 +1,9 @@
-import Taro from '@tarojs/taro';
-import { useEffect } from 'react';
 import 'taro-ui/dist/style/index.scss';
 import './app.less';
-import { getUserInfo } from './service';
+import Provider from './components/context';
 
 const App = (props) => {
-  const fetchUserInfo = async () => {
-    const data = await getUserInfo();
-    Taro.setStorageSync('userInfo', data);
-  };
-
-  const init = () => {
-    fetchUserInfo();
-  };
-  useEffect(() => {
-    init ();
-  }, []);
-
-  return props.children;
+  return <Provider>{props.children}</Provider>;
 };
 
 export default App;
