@@ -32,6 +32,7 @@ const PageGiftStore = () => {
         icon: 'success',
         duration: 2000
       });
+      fetchCheckInStatus();
     } catch (error) {
       
     }

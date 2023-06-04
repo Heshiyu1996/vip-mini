@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, Image } from '@tarojs/components';
-import { getPointGiftList } from '@/service';
-import { useReachBottom } from '@tarojs/taro';
+import { getPointGiftList, exchangePoint } from '@/service';
+import Taro, { useReachBottom } from '@tarojs/taro';
 import './index.less';
 
 const defaultImage = 'https://vip.gdxsjt.com/medias/uploads/null_mp_20220930105542_0ef927.png';
@@ -46,8 +46,28 @@ const Activity = () => {
     }
   });
 
-  const exchange = () => {
-
+  const exchange = (item) => {
+    console.log(item, 3);
+    
+    Taro.showModal({
+      title: '请确认',
+      content: `是否兑换“${item?.itemName}？”`,
+      success: async function (res) {
+        if (res.confirm) {
+          const params = {
+            itemId: item?.id
+          };
+          await exchangePoint(params);
+          
+          Taro.showToast({
+            title: '兑换成功!',
+            icon: 'success',
+            duration: 2000
+          });
+          
+        }
+      }
+    });   
   };
 
 
@@ -62,10 +82,24 @@ const Activity = () => {
             return <View key={item.id} className={`item-wrapper ${isSellout ? 'is-sellout' : ''}`}>
               <Image className='poster' src={item?.images?.[0] || defaultImage} />
               <View className='label'>{item.itemName}</View>
-              <View className='btn-exchange' onClick={!isSellout ? exchange : () => null}>
+              <View 
+                className='btn-exchange' 
+                onClick={() => {
+                  if (isSellout) {
+                    Taro.showToast({
+                      title: '该礼品兑完啦，看看其它吧~',
+                      icon: 'error',
+                      duration: 2000
+                    });
+                    return;
+                  }
+                  exchange(item);
+                }}
+              >
                 <Text className='price'>{item?.points}积分</Text>
                 <Text className='action'>兑换</Text>
               </View>
+              {isSellout && <View className='icon-sellout' />}
               <View className='btn-already-amount'>已兑换 {item?.sold} 件</View>
             </View>;
           })

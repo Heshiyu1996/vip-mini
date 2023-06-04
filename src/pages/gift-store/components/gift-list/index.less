@@ -19,6 +19,7 @@
     // flex-wrap: wrap;
 
     .item-wrapper {
+      position: relative;
       display: inline-block;
       width: 180px;
       // height: 246px;
@@ -41,8 +42,6 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        // TODO:
-        background-color: red;
       }
 
       .label {
@@ -78,6 +77,19 @@
         font-size: 18px;
         text-align: center;
         line-height: 43px;
+      }
+
+      .icon-sellout {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: inline-block;
+        width: 52px;
+        height: 52px;
+        background-image: url('https://vip.gdxsjt.com/medias/uploads/null_1_20230604221051_0887f9.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
       }
 
       .btn-already-amount {

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useReachBottom } from '@tarojs/taro';
 import { getPointConsumptionList } from '@/service/api/gift';
-import { View } from '@tarojs/components';
+import { View, Image } from '@tarojs/components';
 import Empty from '@/components/empty';
 import { RechargeChannelMap } from '../../type';
 import './index.less';
@@ -47,10 +47,13 @@ const ConsumptionList = () => {
           <View>
             {list?.map((item) => 
               <View key={item.id} className='item'>
-                <View className='channel'>{item.assetsTypeText}</View>
-                <View className='time'>{item.createTime || '-'}</View>
+                <Image className='poster' src={item?.images?.[0]} />
+                <View className='info-wrapper'>
+                  <View className='channel'>{item.flowDescription}</View>
+                  <View className='time'>{item.createTime || '-'}</View>
+                </View>
                 <View className='price'>
-                  {item.amount}
+                  {item.amount} 积分
                 </View>
               </View>)}
             {hasMore ? 
