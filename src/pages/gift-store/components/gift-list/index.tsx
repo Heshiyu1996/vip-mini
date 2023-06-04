@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, Image } from '@tarojs/components';
 import { getPointGiftList } from '@/service';
-import './index.less';
 import { useReachBottom } from '@tarojs/taro';
+import './index.less';
 
 const defaultImage = 'https://vip.gdxsjt.com/medias/uploads/null_mp_20220930105542_0ef927.png';
 
@@ -46,21 +46,29 @@ const Activity = () => {
     }
   });
 
+  const exchange = () => {
+
+  };
+
 
   return (
     <View className='u-gift-list'>
       <View className='u-title'>礼品兑换</View>
       <View className='u-content'>
         {
-          list?.map((item) => <View key={item.id} className='item-wrapper'>
-            <Image className='poster' src={item?.images?.[0] || defaultImage} />
-            <View className='label'>{item.itemName}</View>
-            <View className='btn-exchange'>
-              <Text className='price'>{item?.points}积分</Text>
-              <Text className='action'>兑换</Text>
-            </View>
-            <View className='btn-already-amount'>已兑换 {item?.sold} 件</View>
-          </View>)
+          list?.map((item) => {
+            const isSellout = item?.restBalance === 0;
+
+            return <View key={item.id} className={`item-wrapper ${isSellout ? 'is-sellout' : ''}`}>
+              <Image className='poster' src={item?.images?.[0] || defaultImage} />
+              <View className='label'>{item.itemName}</View>
+              <View className='btn-exchange' onClick={!isSellout ? exchange : () => null}>
+                <Text className='price'>{item?.points}积分</Text>
+                <Text className='action'>兑换</Text>
+              </View>
+              <View className='btn-already-amount'>已兑换 {item?.sold} 件</View>
+            </View>;
+          })
         }
         { hasMore ? 
           <View className='tip' onClick={() => fetchData()}>加载更多</View> : 

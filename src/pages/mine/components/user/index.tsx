@@ -53,7 +53,7 @@ const User = () => {
   };
 
   const improveInfo = () => {
-    Taro.navigateTo({ url: `/pages/book-detail/index` });
+    Taro.navigateTo({ url: `/pages/improve-info/index` });
   };
 
   return (
@@ -95,12 +95,12 @@ const User = () => {
               <View className='value'>
                 {calcBalance(userInfo.giftBalance)}
               </View>
-              <View className='label'>赠送金</View>
+              <View className='label'>奖励金</View>
             </View>
             <View className='item' onClick={refTicketModal?.current?.show}>
-              <View className='value'>{userInfo.roomTicket ?? '-'}</View>
+              <View className='value'>{userInfo.totalPointBalance ?? '-'}</View>
               <View className='label'>
-                住房券
+                积分
               </View>
             </View>
             {/* 住房券使用范围 */}
