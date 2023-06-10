@@ -1,13 +1,23 @@
 import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Image, CoverView } from '@tarojs/components';
+import bus from '@/utils/bus';
 // import ImgCode from '../images/tab-bar/code.png';
 import ImgBg from '../images/tab-bar/bg.png';
 import './index.less';
 
 // 自定义导航栏（仅小程序模式有效，H5无效）
 export default class CustomTabbar extends Component {
+  constructor(props) {
+    super(props);
+
+    bus.on('switchTabbar', (visible) => {
+      this.setState({ visible });
+    });
+  }
+
   state = {
+    visible: true,
     selected: 0,
     color: '#AEAEAE',
     selectedColor: '#152736',
@@ -63,10 +73,10 @@ export default class CustomTabbar extends Component {
 
 
   render() {
-    const { list, selected, color, selectedColor } = this.state;
+    const { visible, list, selected, color, selectedColor } = this.state;
 
     return (
-      <View className='tab-bar'>
+      <View className={`tab-bar ${visible ? '' : 'hidden'}`}>
         <Image className='tab-bar-bg' src={ImgBg} />
         <View className='tab-bar-bg-bottom'></View>
 

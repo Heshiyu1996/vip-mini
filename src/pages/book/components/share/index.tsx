@@ -1,4 +1,5 @@
-import { useState } from "react";
+import bus from "@/utils/bus";
+import { useEffect, useState } from "react";
 import { AtActionSheet, AtActionSheetItem } from "taro-ui";
 import ModalShareLink from "./components/modal-share-link";
 import ModalShareMessage from "./components/modal-share-message";
@@ -12,8 +13,7 @@ const RoomShare = (props) => {
   const [visibleModalShareLink, setVisibleModalShareLink] = useState(false);
   const [visibleModalShareMessage, setVisibleModalShareMessage] = useState(false);
   const [visibleModalShareScan, setVisibleModalShareScan] = useState(false);
-  // TODO: 
-  const [visibleModalSharePoster, setVisibleModalSharePoster] = useState(true);
+  const [visibleModalSharePoster, setVisibleModalSharePoster] = useState(false);
 
   const onSelect = (type) => {
     switch (type) {
@@ -38,12 +38,16 @@ const RoomShare = (props) => {
     close();
   };
 
+  useEffect(() => {
+    bus.trigger('switchTabbar', !visible);
+  }, [visible]);
 
   return (
     <>
       <AtActionSheet 
         className='u-room-share' 
         isOpened={visible} 
+        onCancel={close}
         cancelText='取消' 
       >
         <AtActionSheetItem onClick={() => onSelect('scan')}>扫码分享</AtActionSheetItem>
