@@ -84,8 +84,7 @@ const PageBook = (props) => {
     Taro.setStorageSync('endDate', endDate);
   };
 
-  // TODO: 默认false
-  const [visibleRoomShare, setVisibleRoomShare] = useState(true);
+  const [visibleRoomShare, setVisibleRoomShare] = useState(false);
   const [roomShareInfo, setRoomShareInfo] = useState({});
   const shareRoom = (item) => {
     setRoomShareInfo(item);
