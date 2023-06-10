@@ -6,15 +6,15 @@ import { withContext } from '@/components/context';
 import './index.less';
 
 const PageImproveInfo = (props) => {
-  
-  const [nickname, setNickname] = useState(props?.userInfo?.nickname);
+
+  const [ownerName, setOwnerName] = useState(props?.userInfo?.ownerName);
   const [hobby, setHobby] = useState(props?.userInfo?.hobby);
   const [disabled, setDisabled] = useState(false);
   
   useEffect(() => {
     if (!props?.userInfo) return;
-    const { nickname: currentNickname, hobby: currenThobby } = props?.userInfo || {};
-    setNickname(currentNickname);
+    const { ownerName: currentOwnerName, hobby: currenThobby } = props?.userInfo || {};
+    setOwnerName(currentOwnerName);
     setHobby(currenThobby);
   }, [props?.userInfo]);
 
@@ -25,7 +25,7 @@ const PageImproveInfo = (props) => {
       title: '正在提交...',
     });
     const params = {
-      nickname,
+      ownerName,
       hobby,
     };
     setDisabled(true);
@@ -35,7 +35,7 @@ const PageImproveInfo = (props) => {
       Taro.showToast({
         title: '提交成功，正在跳转',
         icon: 'none',
-        duration: 2000,
+        duration: 300,
       });
       // 2s后跳转订单页面
       setTimeout(() => {
@@ -58,7 +58,7 @@ const PageImproveInfo = (props) => {
     // try {
     //   const inputStorage = Taro.getStorageSync('bookInput');
     //   const { username, contactNumber } = inputStorage || {};
-    //   setNickname(username);
+    //   setOwnerName(username);
     //   setContactNumber(contactNumber);
     // } catch (error) {
       
@@ -74,7 +74,7 @@ const PageImproveInfo = (props) => {
         <View className='content'>
           <View className='item'>
             <Text className='label'>会员名</Text>
-            <Input className='value' placeholder='请输入' value={nickname} onInput={val => setNickname(val.detail.value)} />
+            <Input className='value' placeholder='请输入' value={ownerName} onInput={val => setOwnerName(val.detail.value)} />
           </View>
           <View className='item'>
             <Text className='label'>兴趣爱好</Text>

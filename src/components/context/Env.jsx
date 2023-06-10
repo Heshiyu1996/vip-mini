@@ -26,6 +26,7 @@ const EnvComponent = ({ children }) => {
     <Provider
       value={{
         userInfo,
+        fetchUserInfo,
       }}
     >
       {children}

@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useReachBottom } from '@tarojs/taro';
-import { getConsumptionList } from '@/service/api/recharge';
+import { getRewardWithdrawList } from '@/service/api/reward';
 import { View } from '@tarojs/components';
 import Empty from '@/components/empty';
 import { RechargeChannelMap } from '../../type';
 import './index.less';
 
-const ConsumptionList = () => {
+const WithdrawList = () => {
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
   const refTotal = useRef(1);
@@ -16,7 +16,7 @@ const ConsumptionList = () => {
       currentPage,
       pageSize: 10
     };
-    const res = await getConsumptionList(params);
+    const res = await getRewardWithdrawList(params);
     const { list: data, total } = res || {};
     // 记录总数
     refTotal.current = total;
@@ -64,4 +64,4 @@ const ConsumptionList = () => {
     </View>
   );
 };
-export default ConsumptionList;
+export default WithdrawList;

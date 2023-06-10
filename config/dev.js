@@ -10,7 +10,7 @@ module.exports = {
       proxy: {
         '/api':{
           target: 'http://vip.gdxsjt.com/mp',
-          changeOrigin: true,
+          // changeOrigin: true,
           secure: false
         }
       }
