@@ -1,0 +1,106 @@
+.u-modal-share-link {
+  .at-modal__overlay {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .at-modal__container {
+    width: 354px;
+    min-height: 278px;
+    
+    .at-modal__header {
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      
+      &::after {
+        display: none;
+      }
+    }
+
+    .at-modal__content {
+      min-height: 133px;
+      // max-height: 133px;
+      padding: 0 27px;
+      font-size: 14px;
+      color: #333333;
+
+      &::-webkit-scrollbar {
+        width: 0 !important;
+      }
+
+      .info {
+        width: 100%;
+        height: 66px;
+        padding: 7px 13px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        background-color: rgba(111, 139, 161, 0.15);
+        
+        .title {
+          font-size: 20px;
+          color:rgba(0, 0, 0, 0.66);
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .desc {
+          color: #AEAEAE;
+          font-size: 12px;
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .link {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        padding-left: 14px;
+        border: 1px solid #CCCCCC;
+        color: #999999;
+        min-height: 46px;
+        border-radius: 6px;
+      }
+
+    }
+
+    .at-modal__footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+
+      &::before {
+        display: none;
+      }
+      
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 146px;
+        height: 43px;
+        border-radius: 21.5px;
+        font-size: 18px;
+        &:first-child {
+          margin-right: 4px;
+          background-image: none;
+          border: 1px solid #152736;
+          color: #152736;
+        }
+
+        &:last-child {
+          margin-left: 4px;
+          background-image: linear-gradient(135deg, #6C7C89 0%, #152736 100%);
+          border: 1px solid #152736;
+          color: #FFFFFF;  
+        }
+      }
+    }
+  }
+}

@@ -3,9 +3,11 @@ import Taro, { useDidHide, useDidShow } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import { getRoomList } from '@/service/api/book';
 import { getToday } from '@/utils/tool';
+import { withContext } from '@/components/context';
 import type CustomTabBar from '../../custom-tab-bar';
 import Book from '../index/components/book';
 import './index.less';
+import RoomShare from './components/share';
 
 const today = getToday();
 const { statusBarHeight } = Taro.getSystemInfoSync();
@@ -14,9 +16,13 @@ const titleBarHeight = statusBarHeight + height + 10;
 
 const DefaultImg = 'https://vip.gdxsjt.com/medias/uploads/room_room-config_20220823222146_e97996.png';
 
-const PageBook = () => {
+const PageBook = (props) => {
+  const { userInfo } = props || {};
+  const { isStaff } = userInfo || {};
+  
   const [defaultStartDate, setDefaultStartDate] = useState('');
-  const [defaultEndDate, setDefaultEndDate] = useState('');
+  // TODO: 
+  const [defaultEndDate, setDefaultEndDate] = useState('2023-06-12');
   const [list ,setList] = useState([]);
   const refCurrentPage = useRef(1);
   const fetchBookList = async (startDate, endDate) => {
@@ -78,6 +84,14 @@ const PageBook = () => {
     Taro.setStorageSync('endDate', endDate);
   };
 
+  // TODO: 默认false
+  const [visibleRoomShare, setVisibleRoomShare] = useState(true);
+  const [roomShareInfo, setRoomShareInfo] = useState({});
+  const shareRoom = (item) => {
+    setRoomShareInfo(item);
+    setVisibleRoomShare(true);
+  };
+
   return (
     <View className='m-book' style={{ paddingTop: `${titleBarHeight}px` }}>
       <Book 
@@ -103,18 +117,33 @@ const PageBook = () => {
               <View className='tag-count'>{item?.images?.length}</View>
               <View className='info' onClick={() => goToDetail(item.id)}>
                 <View className='type'>{item.roomType}</View>
+                {isStaff && <View className='icon-share' onClick={(ev) =>{
+                  ev.stopPropagation();
+                  shareRoom(item);
+                }}
+                />}
                 <View className='desc'>{item.roomFacility}</View>
                 {/* <View className='icon down' /> */}
                 <View className='price-wrapper'>
                   {(item.currentPrice !== item.originPrice) && <Text className='price origin'>{item.originPrice}</Text>}
                   <Text className='price current'>{item.currentPrice}</Text>
                 </View>
-                {!!item.tag && <View className='tag'>{item.tag}</View>}
+                {
+                  item?.tag?.length && <View className='tag-wrapper'>
+                    {item?.tag?.map((tag) => <View className='tag'>{tag}</View>)}
+                  </View>
+                }
               </View>
             </View>)
         }
       </View>
+
+      <RoomShare 
+        visible={visibleRoomShare} 
+        roomShareInfo={roomShareInfo} 
+        close={() => setVisibleRoomShare(false)} 
+      />
     </View>
   );
 };
-export default PageBook;
+export default withContext(PageBook);

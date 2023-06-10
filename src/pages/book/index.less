@@ -62,6 +62,24 @@
           color: #000000;
           letter-spacing: 1.4px;
           font-weight: 400;
+
+          max-width: 80%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .icon-share {
+          position: absolute;
+          top: 20px;
+          right: 0;
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+          background-image: url('https://vip.gdxsjt.com/medias/uploads/null_1_20230604220344_5c01ee.svg');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
 
         .desc {
@@ -73,7 +91,7 @@
           display: -webkit-box;
           text-overflow: ellipsis;
           -webkit-box-orient: vertical;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 1;
           overflow: hidden;
         }
 
@@ -119,25 +137,31 @@
           }
         }
 
-        .tag {
-          display: inline-block;
-          position: absolute;
-          bottom: 18px;
-          right: 0;
-          min-width: 80px;
-          max-width: 100px;
-          padding: 0 4px;
-          height: 24px;
-          line-height: 24px;
-          font-size: 12px;
-          color: #FF8B33;
-          letter-spacing: 0.19px;
-          font-weight: 400;
-          border: 1px solid #FF8B33;
-          text-align: center;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
+        .tag-wrapper {
+          text-align: right;
+
+          .tag {
+            display: inline-block;
+            min-width: 80px;
+            max-width: 100px;
+            padding: 0 4px;
+            height: 24px;
+            line-height: 24px;
+            font-size: 12px;
+            color: #FF8B33;
+            letter-spacing: 0.19px;
+            font-weight: 400;
+            border: 1px solid #FF8B33;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-left: 8px;
+
+            &:first-child {
+              margin-right: 0;
+            }
+          }
         }
       }
     }
