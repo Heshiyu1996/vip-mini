@@ -2,19 +2,20 @@ import { useState } from "react";
 import { AtActionSheet, AtActionSheetItem } from "taro-ui";
 import ModalShareLink from "./components/modal-share-link";
 import ModalShareMessage from "./components/modal-share-message";
+import ModalShareScan from "./components/modal-share-scan";
 import './index.less';
 
 const RoomShare = (props) => {
   const { visible, close, roomShareInfo } = props;
   
-  // TODO: 默认false
   const [visibleModalShareLink, setVisibleModalShareLink] = useState(false);
   const [visibleModalShareMessage, setVisibleModalShareMessage] = useState(false);
+  const [visibleModalShareScan, setVisibleModalShareScan] = useState(false);
 
   const onSelect = (type) => {
     switch (type) {
     case 'scan':
-        
+      setVisibleModalShareScan(true);
       break;
     case 'poster':
           
@@ -50,6 +51,8 @@ const RoomShare = (props) => {
 
       <ModalShareLink visible={visibleModalShareLink} data={roomShareInfo} onClose={() => setVisibleModalShareLink(false)} />
       <ModalShareMessage visible={visibleModalShareMessage} data={roomShareInfo} onClose={() => setVisibleModalShareMessage(false)} />
+      <ModalShareScan visible={visibleModalShareScan} data={roomShareInfo} onClose={() => setVisibleModalShareScan(false)} />
+      {/* <ModalSharePoster visible={visibleModalShareScan} data={roomShareInfo} onClose={() => setVisibleModalShareScan(false)} /> */}
     </>
   );
 };
