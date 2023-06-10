@@ -6,3 +6,4 @@ export * from './api/recharge';
 export * from './api/home';
 export * from './api/reward';
 export * from './api/gift';
+export * from './api/share';

@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { AtActionSheet, AtActionSheetItem } from "taro-ui";
 import ModalShareLink from "./components/modal-share-link";
+import ModalShareMessage from "./components/modal-share-message";
 import './index.less';
 
 const RoomShare = (props) => {
-  const { visible, close } = props;
+  const { visible, close, roomShareInfo } = props;
   
   // TODO: 默认false
   const [visibleModalShareLink, setVisibleModalShareLink] = useState(false);
+  const [visibleModalShareMessage, setVisibleModalShareMessage] = useState(false);
+
   const onSelect = (type) => {
     switch (type) {
     case 'scan':
@@ -21,7 +24,7 @@ const RoomShare = (props) => {
       setVisibleModalShareLink(true);
       break; 
     case 'message':
-              
+      setVisibleModalShareMessage(true);
       break;   
     default:
       break;
@@ -45,7 +48,8 @@ const RoomShare = (props) => {
         <AtActionSheetItem onClick={() => onSelect('message')}>短信分享</AtActionSheetItem>
       </AtActionSheet>
 
-      <ModalShareLink visible={visibleModalShareLink} />
+      <ModalShareLink visible={visibleModalShareLink} data={roomShareInfo} onClose={() => setVisibleModalShareLink(false)} />
+      <ModalShareMessage visible={visibleModalShareMessage} data={roomShareInfo} onClose={() => setVisibleModalShareMessage(false)} />
     </>
   );
 };

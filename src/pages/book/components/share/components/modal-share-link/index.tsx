@@ -1,33 +1,47 @@
 // import { useState } from 'react';
 import { Button, View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
+import { useState } from "react";
 import { AtModal, AtModalAction, AtModalContent, AtModalHeader } from "taro-ui";
 import './index.less';
 
 const ModalShareLink = (props) => {
-  const { visible, onOk, onClose } = props;
+  const { visible, data, onClose } = props;
   console.log(props, 12321);
+  const { id, roomType, roomFacility } = data || {};
+  
+  const [link, setLink] = useState('default link');
+  const onOk = () => {
+    Taro.setClipboardData({
+      data: link,
+      success: function (res) {
+        Taro.getClipboardData({
+          success: function (res) {
+            console.log(res.data, 94848); // data
+          }
+        });
+      }
+    });
+    // onClose();
+  };
 
   return (
     <AtModal
       className='u-modal-share-link'
       isOpened={visible}
-      confirmText='同意'
-      cancelText='取消'
-      onConfirm={onOk}
-      onCancel={onClose}
       closeOnClickOverlay={false}
     >
       <AtModalHeader>链接分享</AtModalHeader>
       <AtModalContent>
         <View className='info'>
-          <View className='title'>高级大床房</View>
-          <View className='desc'>大床1.8m（1张）</View>
+          <View className='title'>{roomType}</View>
+          <View className='desc'>{roomFacility}</View>
         </View>
-        <View className='link'>http://vip.gdxsjt.com/xxx/xxx?id=123456</View>
+        <View className='link'>{link}</View>
       </AtModalContent>
       <AtModalAction> 
-        <Button>取消</Button> 
-        <Button>确定</Button> 
+        <Button onClick={onClose}>取消</Button> 
+        <Button onClick={onOk}>复制</Button> 
       </AtModalAction>
     </AtModal>
   );

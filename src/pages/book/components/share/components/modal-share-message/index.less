@@ -1,4 +1,4 @@
-.u-modal-share-link {
+.u-modal-share-message {
   .at-modal__overlay {
     width: 100vw;
     height: 100vh;
@@ -29,6 +29,58 @@
         width: 0 !important;
       }
 
+      .item {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        line-height: 50px;
+        background-color: #FFF;
+        margin-top: 10px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #EEEEEE;
+        font-size: 16px;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        .label {
+          width: 80px;
+          margin-right: 20px;
+          color: #333;
+          text-align: left;
+
+          &.required::after {
+            content: '*';
+            color: red;
+            margin-left: 4px;
+          }
+        }
+
+        .value {
+          display: flex;
+          flex: 1;
+          font-size: 16px;
+          display: inline-block;
+        }
+
+        .room-amount {
+          display: flex;
+          border: 0;
+
+          .at-input-number__btn {
+            color: #152736;
+            transform: scale(0.6);
+          }
+
+          input {
+            flex: 1;
+            border: 0;
+            font-size: 18px;
+          }
+        }
+      }
+
       .info {
         width: 100%;
         height: 66px;
@@ -56,7 +108,7 @@
         }
       }
 
-      .link {
+      .message {
         display: flex;
         align-items: center;
         margin-top: 15px;
