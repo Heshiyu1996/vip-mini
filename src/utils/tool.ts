@@ -174,3 +174,17 @@ export const previewVipDoc = () => {
     }
   });
 };
+
+// 打开《金水台VIP会员卡操作流程》
+export const previewVipOperateDoc = () => {
+  Taro.downloadFile({
+    url: 'https://vip.gdxsjt.com/medias/uploads/null_1_20230611121219_1870e1.doc',
+    success: function (res) {
+      var filePath = res.tempFilePath;
+      Taro.openDocument({
+        filePath: filePath,
+        fileType: 'docx'
+      });
+    }
+  });
+};

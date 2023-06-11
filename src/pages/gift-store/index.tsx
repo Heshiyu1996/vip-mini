@@ -1,9 +1,10 @@
 import Taro from '@tarojs/taro';
 import { useState, useEffect } from 'react';
-import { View, Text } from '@tarojs/components';
+import { View, Text, Image } from '@tarojs/components';
 import { getPointBalance, pointCheckIn, getCheckInStatus } from '@/service';
 import GiftList from './components/gift-list';
 import './index.less';
+import { previewVipOperateDoc } from '@/utils/tool';
 
 const PageGiftStore = () => {
   // 获取当前积分
@@ -41,7 +42,11 @@ const PageGiftStore = () => {
   return (
     <View className='m-page-gift-store'>
       <View className='u-gift-balance'>
-        <Text className='label'>当前积分</Text>
+        <View className='label'>
+          当前积分
+          <Text className='icon-rule' onClick={previewVipOperateDoc} />
+        </View>
+        
         <Text className='value'>{totalBalance}</Text>
         <Text className='btn-history' onClick={() => Taro.navigateTo({ url: `/pages/gift-record/index` })}>积分记录</Text>
         {
