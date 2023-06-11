@@ -1,6 +1,7 @@
 import bus from "@/utils/bus";
 import { useEffect, useState } from "react";
 import { AtActionSheet, AtActionSheetItem } from "taro-ui";
+import { getShareRoomLink } from "@/service";
 import ModalShareLink from "./components/modal-share-link";
 import ModalShareMessage from "./components/modal-share-message";
 import ModalSharePoster from "./components/modal-share-poster";
@@ -14,6 +15,22 @@ const RoomShare = (props) => {
   const [visibleModalShareMessage, setVisibleModalShareMessage] = useState(false);
   const [visibleModalShareScan, setVisibleModalShareScan] = useState(false);
   const [visibleModalSharePoster, setVisibleModalSharePoster] = useState(false);
+  
+  const [rewardParams, setRewardParams] = useState('');
+  useEffect(() => {
+    if (!Object.keys(roomShareInfo).length) return;
+    console.log(roomShareInfo, 1992);
+    (async () => {
+      const { id: roomId } = roomShareInfo;
+      // TODO: 接口403
+      const res = await getShareRoomLink({ roomId });
+      console.log(res, 1993);
+      // const res = 'invitation=eyJpZCI6MzB9';
+      setRewardParams(res);
+    })();
+    
+  }, [roomShareInfo]);
+
 
   const onSelect = (type) => {
     switch (type) {
@@ -56,10 +73,10 @@ const RoomShare = (props) => {
         <AtActionSheetItem onClick={() => onSelect('message')}>短信分享</AtActionSheetItem>
       </AtActionSheet>
 
-      <ModalShareLink visible={visibleModalShareLink} data={roomShareInfo} onClose={() => setVisibleModalShareLink(false)} />
-      <ModalShareMessage visible={visibleModalShareMessage} data={roomShareInfo} onClose={() => setVisibleModalShareMessage(false)} />
-      <ModalShareScan visible={visibleModalShareScan} data={roomShareInfo} onClose={() => setVisibleModalShareScan(false)} />
-      <ModalSharePoster visible={visibleModalSharePoster} data={roomShareInfo} onClose={() => setVisibleModalSharePoster(false)} />
+      <ModalShareLink visible={visibleModalShareLink} data={roomShareInfo} rewardParams={rewardParams} onClose={() => setVisibleModalShareLink(false)} />
+      <ModalShareMessage visible={visibleModalShareMessage} data={roomShareInfo} rewardParams={rewardParams} onClose={() => setVisibleModalShareMessage(false)} />
+      <ModalShareScan visible={visibleModalShareScan} data={roomShareInfo} rewardParams={rewardParams} onClose={() => setVisibleModalShareScan(false)} />
+      <ModalSharePoster visible={visibleModalSharePoster} data={roomShareInfo} rewardParams={rewardParams} onClose={() => setVisibleModalSharePoster(false)} />
     </>
   );
 };
