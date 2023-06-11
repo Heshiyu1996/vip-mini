@@ -47,7 +47,7 @@ const WithdrawList = () => {
           <View>
             {list?.map((item) => 
               <View key={item.id} className='item'>
-                <View className='channel'>{item.assetsTypeText}</View>
+                <View className='channel'>{item.description}</View>
                 <View className='time'>{item.createTime || '-'}</View>
                 <View className='price'>
                   {item.amount}
