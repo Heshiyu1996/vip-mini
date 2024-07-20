@@ -6,7 +6,7 @@ import './index.less';
 
 const defaultImage = 'https://vip.gdxsjt.com/medias/uploads/null_mp_20220930105542_0ef927.png';
 
-const Activity = () => {
+const Activity = (props) => {
   const [list, setList] = useState([]);
   const refTotal = useRef(1);
   const refCurrentPage = useRef(1);
@@ -64,7 +64,7 @@ const Activity = () => {
             icon: 'success',
             duration: 2000
           });
-          
+          props?.onUpdate();
         }
       }
     });   

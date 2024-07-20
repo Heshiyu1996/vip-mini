@@ -33,6 +33,7 @@ const PageGiftStore = () => {
         icon: 'success',
         duration: 2000
       });
+      fetchPointBalance();
       fetchCheckInStatus();
     } catch (error) {
       
@@ -57,7 +58,7 @@ const PageGiftStore = () => {
         }
       </View>
 
-      <GiftList />
+      <GiftList onUpdate={fetchPointBalance} />
     </View>
   );
 };
