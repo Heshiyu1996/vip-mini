@@ -116,7 +116,7 @@ export function getDateGap (dateStart, dateEnd) {
 }
 
 // 根据日期（格式：YYYY-MM-DD）获取当天后一天
-export function getTomorrow (date) {
+export function getTomorrow (date = getToday()) {
   if (!date) return '1970-01-01';
   const newDate = new Date(date);
   const tomorrow = newDate.setDate(newDate.getDate() + 1);

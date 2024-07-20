@@ -1,26 +1,47 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { View, Picker } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { getDay, getDateGap, getYesterday, getTomorrow, getToday } from '@/utils/tool';
 import './index.less';
 
 const Book = (props) => {
-  const { className, visibleBtn = true, defaultStartDate = '', defaultEndDate = '', btnText = '提交', onChange = () => '', onSearch } = props;
+  const { className, visibleBtn = true, defaultStartDate = '', defaultEndDate = '', from = '', btnText = '提交', onChange = () => '', onSearch } = props;
   
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [startDay, setStartDay] = useState('');
   const [endDate, setEndDate] = useState(defaultEndDate);
   const [endDay, setEndDay] = useState('');
 
-  useEffect(() => {
-    if (!defaultStartDate) return;
-    setStartDate(defaultStartDate);
-  }, [defaultStartDate]);
+  const startDateRef = useRef({ current: defaultStartDate });
+  const endDateRef = useRef({ current: defaultEndDate });
 
   useEffect(() => {
-    if (!defaultEndDate) return;
+    if (!defaultStartDate || !defaultEndDate) return;
+    setStartDate(defaultStartDate);
     setEndDate(defaultEndDate);
-  }, [defaultEndDate]);
+    if (from === 'book') {
+      setTimeout(() => {
+        onSearch(startDateRef.current, endDateRef.current);
+      }, 1000)
+    }
+  }, [defaultStartDate, defaultEndDate]);
+
+
+  const gapDays = useMemo(() => {
+    if (!startDate || !endDate) return '';
+    console.log(startDate, endDate);
+    startDateRef.current = startDate;
+    endDateRef.current = endDate;
+    
+    return getDateGap(startDate, endDate);
+  }, [startDate, endDate]);
+
+  useEffect(() => {
+    // 如果 gap 为负数或同一天，离店时间默认为后一天
+    if (gapDays <= 0) {
+      setEndDate(getTomorrow(startDate));
+    }
+  }, [gapDays]);
 
   const onChangeStartDate = e => {
     const date = e.detail.value;
@@ -51,13 +72,6 @@ const Book = (props) => {
     return shortDate;
   }, [endDate]);
 
-  const gapDays = useMemo(() => {
-    if (!startDate || !endDate) return '';
-    console.log(startDate, endDate);
-    
-    return getDateGap(startDate, endDate);
-  }, [startDate, endDate]);
-
   const handleSearch = () => {
     if (onSearch) {
       onSearch(startDate, endDate);
@@ -68,7 +82,8 @@ const Book = (props) => {
     <View className={`u-book ${className}`}>
       <View className='date-wrapper'>
         {/* 入住日期 */}
-        <Picker mode='date' start={getToday()} end={getYesterday(endDate)} onChange={onChangeStartDate}>
+        {/* <Picker mode='date' start={getToday()} end={getYesterday(endDate)} onChange={onChangeStartDate}> */}
+        <Picker mode='date' value={startDate} start={getToday()} onChange={onChangeStartDate}>
           <View className='date-item'>
             <View className='label'>入住</View>
             <View className='value-date'>{modifiedStartDate}</View>
@@ -77,7 +92,7 @@ const Book = (props) => {
         </Picker>
 
         {/* 离店日期 */}
-        <Picker mode='date' start={getTomorrow(startDate)} onChange={onChangeEndDate}>
+        <Picker mode='date' value={endDate} start={getTomorrow(startDate)} onChange={onChangeEndDate}>
           <View className='date-item'>
             <View className='label'>离店</View>
             <View className='value-date'>{modifiedEndDate}</View>

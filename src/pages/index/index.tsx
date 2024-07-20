@@ -1,6 +1,6 @@
 import Taro, { useDidShow } from '@tarojs/taro';
 import { View } from '@tarojs/components';
-import { getToday } from '@/utils/tool';
+import { getToday, getTomorrow } from '@/utils/tool';
 import User from './components/user';
 import Book from './components/book';
 import Service from './components/service';
@@ -9,6 +9,7 @@ import type CustomTabBar from '../../custom-tab-bar';
 import './index.less';
 
 const today = getToday();
+const tomorrow = getTomorrow();
 
 const Index = () => {
   useDidShow (() => {
@@ -41,7 +42,7 @@ const Index = () => {
       </View>
         
       <User />
-      <Book className='item-book' defaultStartDate={today} btnText='立即预约' onSearch={goToBook} />
+      <Book className='item-book' defaultStartDate={today} defaultEndDate={tomorrow} btnText='立即预约' onSearch={goToBook} />
       <Service />
       <Activity />
 
