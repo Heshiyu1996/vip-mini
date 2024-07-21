@@ -77,9 +77,10 @@ const User = () => {
           icon: 'success',
           duration: 2000
         });
+        fetchUserInfo();
       },
-    })
-  }
+    });
+  };
 
   return (
     <View className='u-mine-user'>
