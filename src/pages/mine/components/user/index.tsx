@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Taro, { useDidShow } from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
 import { View, Text, Image } from '@tarojs/components';
-import { getUserInfo } from '@/service';
+import { getUserInfo, updateUserInfo } from '@/service';
 import { SERVICE_PHONE_NUMBER } from '@/utils/config';
 import { formatPrice } from '@/utils/tool';
 import bus from '@/utils/bus';
@@ -56,10 +56,35 @@ const User = () => {
     Taro.navigateTo({ url: `/pages/improve-info/index` });
   };
 
+  const getWxAvatar = () => {
+    // 获取用户微信信息
+    Taro.getUserProfile({
+      desc: '用于完善金水台vip资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: async (data) => {
+        console.log(data, 993);
+        
+        const { nickName, avatarUrl } = data?.userInfo || {};
+        console.log(nickName, avatarUrl, 666666);
+
+        // 更新用户头像
+        const params = {
+          avatarUrl,
+        };
+
+        await updateUserInfo(params);
+        Taro.showToast({
+          title: '头像更新成功!',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+    })
+  }
+
   return (
     <View className='u-mine-user'>
       <View className='u-info'>
-        <Image className='avatar' src={userInfo.avatarUrl || defaultAvatarUrl} />
+        <Image className='avatar' src={userInfo.avatarUrl || defaultAvatarUrl} onClick={getWxAvatar} />
         {ifLogin ? <View className='if-login'>
           <View className='nickname'>{userInfo.ownerName}</View>
           <View className='phone'>

@@ -2,14 +2,14 @@
   "miniprogramRoot": "dist/",
   "projectname": "vip-mini",
   "description": "",
-  "appid": "wxc31dae55c24f30aa",
+  "appid": "wx75c662a075422b62",
   "setting": {
     "urlCheck": true,
-    "es6": false,
-    "enhance": false,
+    "es6": true,
+    "enhance": true,
     "postcss": false,
     "preloadBackgroundData": false,
-    "minified": false,
+    "minified": true,
     "newFeature": false,
     "coverView": true,
     "nodeModules": false,
@@ -39,5 +39,15 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "condition": {}
+  "condition": {},
+  "libVersion": "2.27.0",
+  "srcMiniprogramRoot": "dist/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
 }
