@@ -122,7 +122,8 @@ export function getTomorrow (date = getToday()) {
   const tomorrow = newDate.setDate(newDate.getDate() + 1);
   const year = new Date(tomorrow).getFullYear();
   const month = (new Date(tomorrow).getMonth() + 1) < 10 ? `0${new Date(tomorrow).getMonth() + 1}` : `${new Date(tomorrow).getMonth() + 1}`;
-  const day = new Date(tomorrow).getDate();
+  const day = new Date(tomorrow).getDate() < 10 ? `0${new Date(tomorrow).getDate()}` : `${new Date(tomorrow).getDate()}`;
+  // const day = new Date(tomorrow).getDate();
   return `${year}-${month}-${day}`;
 }
 // 根据日期（格式：YYYY-MM-DD）获取当天后两天
@@ -132,7 +133,8 @@ export function getAfterTomorrow (date) {
   const afterTomorrow = newDate.setDate(newDate.getDate() + 2);
   const year = new Date(afterTomorrow).getFullYear();
   const month = (new Date(afterTomorrow).getMonth() + 1) < 10 ? `0${new Date(afterTomorrow).getMonth() + 1}` : `${new Date(afterTomorrow).getMonth() + 1}`;
-  const day = new Date(afterTomorrow).getDate();
+  const day = new Date(afterTomorrow).getDate() < 10 ? `0${new Date(afterTomorrow).getDate()}` : `${new Date(afterTomorrow).getDate()}`;
+  // const day = new Date(afterTomorrow).getDate();
   return `${year}-${month}-${day}`;
 }
 
@@ -143,7 +145,8 @@ export function getYesterday (date) {
   const yesterday = newDate.setDate(newDate.getDate() - 1);
   const year = new Date(yesterday).getFullYear();
   const month = (new Date(yesterday).getMonth() + 1) < 10 ? `0${new Date(yesterday).getMonth() + 1}` : `${new Date(yesterday).getMonth() + 1}`;
-  const day = new Date(yesterday).getDate();
+  const day = new Date(yesterday).getDate() < 10 ? `0${new Date(yesterday).getDate()}` : `${new Date(yesterday).getDate()}`;
+  // const day = new Date(yesterday).getDate();
   return `${year}-${month}-${day}`;
 }
 export function getToday () {
