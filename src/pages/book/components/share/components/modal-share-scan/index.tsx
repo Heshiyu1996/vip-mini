@@ -1,17 +1,17 @@
 // import { useState } from 'react';
 import { Button, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { useState } from "react";
+// import { useState } from "react";
 import { QRCode } from "taro-code";
 import { AtModal, AtModalAction, AtModalContent, AtModalHeader } from "taro-ui";
 import './index.less';
 
 const ModalShareScan = (props) => {
-  const { visible, data, onClose } = props;
+  const { visible, data, link, onClose } = props;
   console.log(props, 12321);
   const { id, roomType, roomFacility } = data || {};
   
-  const [link, setLink] = useState('default link');
+  // const [link, setLink] = useState('default link');
   // TODO: 保存图片
   const onOk = () => {
     Taro.saveImageToPhotosAlbum({
@@ -26,14 +26,14 @@ const ModalShareScan = (props) => {
       isOpened={visible}
       closeOnClickOverlay={false}
     >
-      <AtModalHeader>链接分享</AtModalHeader>
+      <AtModalHeader>扫码分享</AtModalHeader>
       <AtModalContent>
         <View className='info'>
           <View className='title'>{roomType}</View>
           <View className='desc'>{roomFacility}</View>
         </View>
         <View className='link'>
-          <QRCode
+          {link && <QRCode
             // TODO: 扫码后的url
             className='code'
             text={link}
@@ -41,7 +41,7 @@ const ModalShareScan = (props) => {
             scale={4}
             errorCorrectLevel='M'
             typeNumber={2}
-          />
+          />}
         </View>
       </AtModalContent>
       <AtModalAction> 

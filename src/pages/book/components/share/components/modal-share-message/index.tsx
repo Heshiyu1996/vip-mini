@@ -7,7 +7,7 @@ import { sendShareRoomMsg } from "@/service";
 import './index.less';
 
 const ModalShareMessage = (props) => {
-  const { visible, data, onClose } = props;
+  const { visible, data, link, onClose } = props;
 
   const { id, roomType, roomFacility } = data || {};
   
@@ -35,7 +35,7 @@ const ModalShareMessage = (props) => {
       isOpened={visible}
       closeOnClickOverlay={false}
     >
-      <AtModalHeader>链接分享</AtModalHeader>
+      <AtModalHeader>短信分享</AtModalHeader>
       <AtModalContent>
 
         <View className='item'>
@@ -46,7 +46,7 @@ const ModalShareMessage = (props) => {
           <View className='title'>{roomType}</View>
           <View className='desc'>{roomFacility}</View>
         </View>
-        <View className='message'>【温泉好房推荐】你的朋友分享给您翔顺金水台温泉特色小镇的特色好房，点击链接 https://s.jdzd.cn/400WAN 可查看或预订客房，咨询电话0766-2513333</View>
+        <View className='message'>【温泉好房推荐】你的朋友分享给您翔顺金水台温泉特色小镇的特色好房，点击链接 {link} 可查看或预订客房，咨询电话0766-2513333</View>
       </AtModalContent>
       <AtModalAction> 
         <Button onClick={onClose}>取消</Button> 

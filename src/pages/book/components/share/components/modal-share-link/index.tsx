@@ -1,16 +1,16 @@
 // import { useState } from 'react';
 import { Button, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { useState } from "react";
+// import { useState } from "react";
 import { AtModal, AtModalAction, AtModalContent, AtModalHeader } from "taro-ui";
 import './index.less';
 
 const ModalShareLink = (props) => {
-  const { visible, data, onClose } = props;
+  const { visible, data, link, onClose } = props;
   console.log(props, 12321);
   const { id, roomType, roomFacility } = data || {};
   
-  const [link, setLink] = useState('default link');
+  // const [link, setLink] = useState('default link');
   const onOk = () => {
     Taro.setClipboardData({
       data: link,

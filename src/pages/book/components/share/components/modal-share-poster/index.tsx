@@ -1,7 +1,8 @@
 // import { useState } from 'react';
 import { Button, View, Image } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 // import Taro from "@tarojs/taro";
-import { useState } from "react";
+// import { useState } from "react";
 import { QRCode } from "taro-code";
 import { AtModal, AtModalAction, AtModalContent, AtModalHeader } from "taro-ui";
 import './index.less';
@@ -9,12 +10,15 @@ import './index.less';
 const DefaultImg = 'https://vip.gdxsjt.com/medias/uploads/room_room-config_20220823222146_e97996.png';
 
 const ModalSharePoster = (props) => {
-  const { visible, data, onClose } = props;
+  const { visible, data, link, onClose } = props;
   const { id, images, originPrice, roomType, roomFacility } = data || {};
   
-  const [link, setLink] = useState('default link');
+  // const [link, setLink] = useState('default link');
   // TODO: 保存图片
   const onOk = () => {
+    Taro.saveImageToPhotosAlbum({
+      success: function (res) { }
+    });
     // onClose();
   };
 
