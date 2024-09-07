@@ -70,7 +70,9 @@ export default class Login extends Component {
 
         <View className='u-operation'>
           {/* 微信用户一键登录 */}
-          <Button className='u-wx-login' openType='getPhoneNumber' onGetPhoneNumber={this.fetUserMobileNumber} plain />
+          <Button className='u-wx-login' openType='getPhoneNumber' onGetPhoneNumber={this.fetUserMobileNumber} plain>
+            一键登录
+          </Button>
         </View>
       </View>
     );
