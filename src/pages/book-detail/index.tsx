@@ -28,6 +28,11 @@ const PageBookDetail = () => {
     fetchDetail();
   }, []);
 
+  useEffect(() => {
+    Taro.setStorageSync('startDate', startDate);
+    Taro.setStorageSync('endDate', endDate);
+  }, []);
+
   const beforeSubmit = () => {
     if (!selectedReadList?.length) {
       Taro.showToast({

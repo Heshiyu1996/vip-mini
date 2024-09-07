@@ -22,7 +22,7 @@ const Book = (props) => {
     if (from === 'book') {
       setTimeout(() => {
         onSearch(startDateRef.current, endDateRef.current);
-      }, 1000)
+      }, 1000);
     }
   }, [defaultStartDate, defaultEndDate]);
 
@@ -33,20 +33,25 @@ const Book = (props) => {
     startDateRef.current = startDate;
     endDateRef.current = endDate;
     
+    // TODO: test
+    // onChange(startDate, endDate);
+
     return getDateGap(startDate, endDate);
   }, [startDate, endDate]);
 
-  useEffect(() => {
-    // 如果 gap 为负数或同一天，离店时间默认为后一天
-    if (gapDays <= 0) {
-      setEndDate(getTomorrow(startDate));
-    }
-  }, [gapDays]);
+  // useEffect(() => {
+  //   // 如果 gap 为负数或同一天，离店时间默认为后一天
+  //   if (gapDays <= 0) {
+  //     setEndDate(getTomorrow(startDate));
+  //   }
+  // }, [gapDays]);
 
   const onChangeStartDate = e => {
     const date = e.detail.value;
     setStartDate(date);
-    onChange(date, endDate);
+    const newEndDate = getTomorrow(date);
+    setEndDate(newEndDate);
+    onChange(date, newEndDate);
   };
   const onChangeEndDate = e => {
     const date = e.detail.value;
