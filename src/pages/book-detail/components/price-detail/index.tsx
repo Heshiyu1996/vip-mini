@@ -6,7 +6,9 @@ import Taro from '@tarojs/taro';
 import './index.less';
 
 const ModalPriceDetail = (props) => {
-  const { amount, roomId, startDate, endDate, getActualPrice } = props;
+  const { amount, roomId, startDate, endDate, 
+    // getActualPrice
+  } = props;
   const [visible, setVisible] = useState(false);
 
   const [data, setData] = useState({});
@@ -20,7 +22,7 @@ const ModalPriceDetail = (props) => {
     };
     const res = await getPriceDetail(params) || {};
     setData(res);
-    getActualPrice(res?.actualPrice);
+    // getActualPrice(res?.actualPrice);
     Taro.hideLoading();
   };
   useEffect(() => {
