@@ -19,7 +19,7 @@ const DefaultImg = 'https://vip.gdxsjt.com/medias/uploads/room_room-config_20220
 
 const PageBook = (props) => {
   const { userInfo } = props || {};
-  const { isStaff } = userInfo || {};
+  const { isStaff } = userInfo || Taro.getStorageSync('userInfo') || {};
   
   const [defaultStartDate, setDefaultStartDate] = useState(today);
   // const [startDate, setStartDate] = useState(defaultStartDate);
@@ -115,7 +115,7 @@ const PageBook = (props) => {
         visibleBtn={false}
         onChange={onChange}
         onSearch={fetchBookList}
-        from="book"
+        from='book'
       />
 
       <View className='room-list'>

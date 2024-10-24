@@ -33,6 +33,7 @@ const User = () => {
       const data = await getUserInfo();
       console.log(data, 1234);
       setUserInfo(data);
+      Taro.setStorageSync('userInfo', data);
       // 手动设置ifLogin
       setIfLogin(true);
     } catch (error) {

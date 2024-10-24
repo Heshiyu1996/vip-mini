@@ -1,5 +1,5 @@
 import { View, Text, Input } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import Taro, { useLoad } from '@tarojs/taro';
 import { useEffect, useMemo, useState } from 'react';
 import { AtInputNumber, AtCheckbox, AtButton } from 'taro-ui';
 import { getDateGap, getDay } from '@/utils/tool';
@@ -24,6 +24,14 @@ const PageBookDetail = () => {
     const info = res?.find((item) => item.id === Number(id)) || {};
     setData(info);
   };
+
+  const [invitationValue, setInvitationValue] = useState('');
+  // onLoad
+  useLoad((options) => {
+    const { invitation } = options || {};
+    setInvitationValue(invitation);
+  });
+  
   useEffect(() => {
     fetchDetail();
   }, []);
@@ -244,7 +252,7 @@ const PageBookDetail = () => {
 
       <View className='bottom-wrapper'>
         {/* 总价与账单明细 */}
-        <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} />
+        <PriceDetail amount={amount} roomId={data.id} startDate={startDate} endDate={endDate} invitation={invitationValue} />
 
         <AtButton className='btn-submit' onClick={beforeSubmit}>提交订单</AtButton>
       </View>
