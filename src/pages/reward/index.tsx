@@ -46,13 +46,16 @@ const PageReward = () => {
 
       <View className='operate-wrapper'>
         <View className='title'>提现金额</View>
-        <Input 
-          placeholderStyle='color: #999999, font-size: 14px' 
-          className='value amount'
-          placeholder='请输入要提现的金额' 
-          value={amount} 
-          onInput={val => setAmount(val.detail.value)}
-        />
+        <View className='input-wrapper'>
+          <Text className='sign'>￥</Text>
+          <Input 
+            placeholderStyle='color: #999999, font-size: 14px' 
+            className='value amount'
+            placeholder='请输入要提现的金额' 
+            value={amount} 
+            onInput={val => setAmount(val.detail.value)}
+          />
+        </View>
         <View className='btn-input-all' onClick={onInputAll}>全部提现</View>
         <View className='tip'>预计实时到账</View>
       </View>
