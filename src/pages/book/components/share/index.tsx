@@ -71,7 +71,7 @@ const RoomShare = (props) => {
         cancelText='取消' 
       >
         <AtActionSheetItem onClick={() => onSelect('scan')}>扫码分享</AtActionSheetItem>
-        <AtActionSheetItem onClick={() => onSelect('poster')}>海报分享</AtActionSheetItem>
+        {/* <AtActionSheetItem onClick={() => onSelect('poster')}>海报分享</AtActionSheetItem> */}
         <AtActionSheetItem onClick={() => onSelect('link')}>链接分享</AtActionSheetItem>
         <AtActionSheetItem onClick={() => onSelect('message')}>短信分享</AtActionSheetItem>
       </AtActionSheet>
