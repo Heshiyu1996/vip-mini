@@ -15,7 +15,7 @@ const FULL_TIME = 60;
 
 const PageRegister = () => {
   const [ownerName, setOwnerName] = useState('');
-  const [idNumber, setIdNumber] = useState('');
+  // const [idNumber, setIdNumber] = useState('');
   const [smsCode, setSmsCode] = useState('');
   const [encryMobile, setEncryMobile] = useState('');
   const [countdown, setCountdown] = useState(FULL_TIME);
@@ -35,14 +35,14 @@ const PageRegister = () => {
     }
 
     // 检查身份证
-    if (!isIdCard(idNumber)) {
-      Taro.showToast({
-        title: '请填写正确的身份证号码',
-        icon: 'none',
-        duration: 2000
-      });
-      return false;
-    }
+    // if (!isIdCard(idNumber)) {
+    //   Taro.showToast({
+    //     title: '请填写正确的身份证号码',
+    //     icon: 'none',
+    //     duration: 2000
+    //   });
+    //   return false;
+    // }
 
     // 检查验证码
     if (!refAnswer?.current) {
@@ -89,7 +89,7 @@ const PageRegister = () => {
           // 真实名称
           ownerName,
           avatarUrl,
-          identityNumber: idNumber
+          // identityNumber: idNumber
         };
         try {
           const res = await regist(params);
@@ -160,8 +160,12 @@ const PageRegister = () => {
   }, [isTimerStart, countdown]);
 
   const isRequired = useMemo(() => {
-    return ownerName?.length && idNumber?.length && smsCode?.length === MAX_LENGTH_CODE;
-  }, [ownerName, idNumber, smsCode]);
+    return ownerName?.length&& smsCode?.length === MAX_LENGTH_CODE 
+    // && idNumber?.length 
+    ;
+  }, [ownerName, smsCode,
+    // idNumber
+  ]);
 
   return (
     <View className='m-page-register'>
@@ -173,13 +177,13 @@ const PageRegister = () => {
           value={ownerName} 
           onChange={setOwnerName} 
         />
-        <AtInput 
+        {/* <AtInput 
           name='value' 
           type='text' 
           placeholder='请输入身份证' 
           value={idNumber} 
           onChange={setIdNumber} 
-        />
+        /> */}
 
         <AtInput
           focus

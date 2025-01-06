@@ -13,6 +13,15 @@ const ModalShareMessage = (props) => {
   
   const [mobile, setMobile] = useState();
   const onOk = async () => {
+    if (!mobile || mobile?.length <= 11)  {
+      Taro.showToast({
+        title: '请输入正确手机号!',
+        icon: 'none',
+        duration: 1000,
+      });
+      return;
+    }
+
     const params = {
       targetMobileNumber: mobile,
       roomId: id,
