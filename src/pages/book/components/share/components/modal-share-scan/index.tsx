@@ -54,7 +54,8 @@ const ModalShareScan = (props) => {
       return new Error('ERROR_BASE64SRC_PARSE');
     }
     let FILE_BASE_NAME = new Date().getTime();
-    const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.${format}`;
+    // const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.${format}`;
+    const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.png`;
     const buffer = wx.base64ToArrayBuffer(bodyData);
     const fsm = wx.getFileSystemManager();
     fsm.writeFile({
