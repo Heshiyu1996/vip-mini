@@ -165,7 +165,16 @@ const User = () => {
                 <View className='icon reward-detail'></View>
                 <View className='label'>奖励金明细</View>
               </View>
-              <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/reward/index` })}>
+              {/* TODO: 暂时不开放 */}
+              {/* <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/reward/index` })}> */}
+              <View className='btn' onClick={() => 
+                Taro.showModal({
+                  title: '敬请期待',
+                  content: '“奖励金提现功能”待开放',
+                  showCancel: false,
+                  confirmText: '好的'
+                })}
+              >
                 <View className='icon reward-withdraw'></View>
                 <View className='label'>奖励金提现</View>
               </View>
