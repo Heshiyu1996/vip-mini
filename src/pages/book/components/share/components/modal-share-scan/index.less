@@ -5,7 +5,7 @@
   }
 
   .at-modal__container {
-    width: 354px;
+    width: 360px;
     min-height: 278px;
     
     .at-modal__header {
@@ -19,9 +19,10 @@
     }
 
     .at-modal__content {
+      box-sizing: border-box;
       min-height: 133px;
       // max-height: 133px;
-      padding: 0 27px;
+      padding: 0 18px;
       font-size: 14px;
       color: #333333;
 
@@ -29,48 +30,58 @@
         width: 0 !important;
       }
 
-      .info {
+      .content {
         width: 100%;
-        height: 66px;
-        padding: 7px 13px;
-        box-sizing: border-box;
-        border-radius: 8px;
-        background-color: rgba(111, 139, 161, 0.15);
-        
-        .title {
-          font-size: 20px;
-          color:rgba(0, 0, 0, 0.66);
-          max-width: 100%;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+        height: 100%;
+
+        .info {
+          width: 100%;
+          height: 66px;
+          padding: 7px 13px;
+          box-sizing: border-box;
+          border-radius: 8px;
+          background-color: rgba(111, 139, 161, 0.15);
+          
+          .title {
+            font-size: 20px;
+            color:rgba(0, 0, 0, 0.66);
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .desc {
+            color: #AEAEAE;
+            font-size: 12px;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
 
-        .desc {
-          color: #AEAEAE;
-          font-size: 12px;
-          max-width: 100%;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+        .link {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 15px;
+          padding: 14px;
+          // border: 1px solid #CCCCCC;
+          // color: #999999;
+          min-height: 46px;
+          border-radius: 6px;
+
+          .code {
+            // width: 170px;
+            // height: 170px;
+          }
         }
       }
 
-      .link {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 15px;
-        padding: 14px;
-        // border: 1px solid #CCCCCC;
-        // color: #999999;
-        min-height: 46px;
-        border-radius: 6px;
-
-        // .code {
-        //   width: 170px;
-        //   height: 170px;
-        // }
+      .qrcode-canvas {
+        width: 100%;
+        height: 360px;
       }
 
     }
