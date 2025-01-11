@@ -191,3 +191,55 @@ export const previewVipOperateDoc = () => {
     }
   });
 };
+
+export const base64ToBuffer = (base64data, calback) => {
+  const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64data) || [];
+  if (!format) {
+    return new Error('ERROR_BASE64SRC_PARSE');
+  }
+  let FILE_BASE_NAME = new Date().getTime();
+  // const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.${format}`;
+  const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.png`;
+  const buffer = wx.base64ToArrayBuffer(bodyData);
+  const fsm = wx.getFileSystemManager();
+  fsm.writeFile({
+    filePath,
+    data: buffer,
+    encoding: 'binary',
+    success() {
+      calback(filePath);
+    },
+    fail() {
+      calback(base64data); // return (new Error(‘ERROR_BASE64SRC_WRITE’));
+    }
+  });
+};
+/****绘制自动换行的字符串****/
+
+export function drawText(t, x, y, w, context){
+	
+  var chr = t.split("");
+  var temp = "";				
+  var row = [];
+	
+  context.font = `normal 500 12px PingFangSC-Light,PingFang`;
+  context.fillStyle = '#666';
+  context.textBaseline = "middle";
+	
+  for(var a = 0; a < chr.length; a++){
+    if( context.measureText(temp).width < w ){
+      ;
+    }
+    else{
+      row.push(temp);
+      temp = "";
+    }
+    temp += chr[a];
+  }
+	
+  row.push(temp);
+	
+  for(var b = 0; b < row.length; b++){
+    context.fillText(row[b],x,y+(b+1)*20);
+  }
+}

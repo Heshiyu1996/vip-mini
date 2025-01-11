@@ -76,10 +76,10 @@ const RoomShare = (props) => {
         <AtActionSheetItem onClick={() => onSelect('message')}>短信分享</AtActionSheetItem>
       </AtActionSheet>
 
-      <ModalShareScan visible={visibleModalShareScan} data={roomShareInfo} link={link} onClose={() => setVisibleModalShareScan(false)} />
-      <ModalSharePoster visible={visibleModalSharePoster} data={roomShareInfo} link={link} onClose={() => setVisibleModalSharePoster(false)} />
-      <ModalShareLink visible={visibleModalShareLink} data={roomShareInfo} link={link} onClose={() => setVisibleModalShareLink(false)} />
-      <ModalShareMessage visible={visibleModalShareMessage} data={roomShareInfo} link={link} onClose={() => setVisibleModalShareMessage(false)} />
+      {visibleModalShareScan && <ModalShareScan visible data={roomShareInfo} link={link} onClose={() => setVisibleModalShareScan(false)} />}
+      {visibleModalSharePoster && <ModalSharePoster visible data={roomShareInfo} link={link} onClose={() => setVisibleModalSharePoster(false)} />}
+      {visibleModalShareLink && <ModalShareLink visible data={roomShareInfo} link={link} onClose={() => setVisibleModalShareLink(false)} />}
+      {visibleModalShareMessage && <ModalShareMessage visible data={roomShareInfo} link={link} onClose={() => setVisibleModalShareMessage(false)} />}
     </>
   );
 };

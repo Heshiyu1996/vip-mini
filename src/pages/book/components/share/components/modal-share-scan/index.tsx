@@ -1,3 +1,4 @@
+import { base64ToBuffer } from "@/utils/tool";
 import { Button, Canvas, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useEffect, useRef } from "react";
@@ -8,29 +9,6 @@ import './index.less';
 const ModalShareScan = (props) => {
   const { visible, data, link, onClose } = props;
   const { roomType, roomFacility } = data || {};
-
-  const base64ToBuffer = (base64data, calback) => {
-    const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64data) || [];
-    if (!format) {
-      return new Error('ERROR_BASE64SRC_PARSE');
-    }
-    let FILE_BASE_NAME = new Date().getTime();
-    // const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.${format}`;
-    const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.png`;
-    const buffer = wx.base64ToArrayBuffer(bodyData);
-    const fsm = wx.getFileSystemManager();
-    fsm.writeFile({
-      filePath,
-      data: buffer,
-      encoding: 'binary',
-      success() {
-        calback(filePath);
-      },
-      fail() {
-        calback(base64data); // return (new Error(‘ERROR_BASE64SRC_WRITE’));
-      }
-    });
-  };
 
   const qrCodeRef = useRef<any>();
 
@@ -154,11 +132,11 @@ const ModalShareScan = (props) => {
         <View className='content'>
           <Canvas
             id='qrcodeCanvasId'
-            // canvas-id='qrcodeCanvasId'
             className='qrcode-canvas'
+            canvasId='qrcodeCanvasId'
+            canvas-id='qrcodeCanvasId'
             // style='width: 320px; height: 450px'
             type='2d'
-            // canvasId='qrcodeCanvasId'
           >
           </Canvas>
           {link && <QRCode
